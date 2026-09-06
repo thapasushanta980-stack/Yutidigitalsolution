@@ -105,9 +105,13 @@ npm test                   # api (vitest) + web (vitest + Testing Library)
 ## 11. Production build
 
 ```bash
-npm run build              # builds database client, types, api (typecheck), web, admin
-npm start --workspace @yukti/api   # serve API (tsx runtime)
+npm run build              # prisma client, types, api (typecheck + tsup bundle → dist/), web, admin
+npm start --workspace @yukti/api   # serve compiled API (node dist/server.js)
 ```
+
+The API is bundled with **tsup** to `apps/api/dist/server.js` (ESM, Node 20). The Prisma
+client stays external and is loaded from `node_modules` at runtime, so run `npm run db:generate`
+on the deploy host (or ship `node_modules/.prisma`).
 
 Serve `apps/web/dist` and `apps/admin/dist` behind a reverse proxy / CDN (see §14).
 

@@ -1,13 +1,24 @@
 import { config } from 'dotenv';
 import { fileURLToPath } from 'node:url';
+import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { z } from 'zod';
 
-// Load the single root .env regardless of which workspace cwd we run from.
-// env.ts lives at apps/api/src/config → repo root is four levels up.
+// Load the single root .env regardless of which workspace cwd we run from or
+// whether we run from source (tsx) or a bundled dist. Real process env always
+// wins (dotenv does not override already-set variables), so production hosts
+// that inject env vars work with no .env file present.
 const here = path.dirname(fileURLToPath(import.meta.url));
-config({ path: path.resolve(here, '../../../../.env') });
-config(); // also honour a local .env / real process env if present
+let dir = here;
+for (let i = 0; i < 6; i += 1) {
+  const candidate = path.join(dir, '.env');
+  if (existsSync(candidate)) {
+    config({ path: candidate });
+    break;
+  }
+  dir = path.dirname(dir);
+}
+config(); // also honour cwd/.env and real process env
 
 // Validate environment at boot — fail fast on misconfiguration.
 const schema = z.object({

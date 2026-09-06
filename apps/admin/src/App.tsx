@@ -7,7 +7,17 @@ import { Dashboard } from './pages/Dashboard.js';
 import { Leads } from './pages/Leads.js';
 import { LeadDetail } from './pages/LeadDetail.js';
 import { ServicesCms } from './pages/ServicesCms.js';
-import { Placeholder } from './pages/Placeholder.js';
+import { Settings } from './pages/Settings.js';
+import { Media } from './pages/Media.js';
+import {
+  ProjectsCms,
+  CaseStudiesCms,
+  InsightsCms,
+  TestimonialsCms,
+  ClientsCms,
+  TeamCms,
+  MetricsCms,
+} from './pages/resources.js';
 
 function Protected({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -37,15 +47,15 @@ export default function App() {
         <Route path="leads" element={<Leads />} />
         <Route path="leads/:id" element={<LeadDetail />} />
         <Route path="services" element={<ServicesCms />} />
-        <Route path="projects" element={<Placeholder title="Projects" endpoint="projects" />} />
-        <Route path="case-studies" element={<Placeholder title="Case Studies" endpoint="case-studies" />} />
-        <Route path="insights" element={<Placeholder title="Insights" endpoint="insights" />} />
-        <Route path="testimonials" element={<Placeholder title="Testimonials" endpoint="testimonials" />} />
-        <Route path="clients" element={<Placeholder title="Clients" endpoint="clients" />} />
-        <Route path="team" element={<Placeholder title="Team" endpoint="team" />} />
-        <Route path="metrics" element={<Placeholder title="Metrics" endpoint="metrics" />} />
-        <Route path="media" element={<Placeholder title="Media" endpoint="media" />} />
-        <Route path="settings" element={<Placeholder title="Settings" endpoint="settings" />} />
+        <Route path="projects" element={<ProjectsCms />} />
+        <Route path="case-studies" element={<CaseStudiesCms />} />
+        <Route path="insights" element={<InsightsCms />} />
+        <Route path="testimonials" element={<TestimonialsCms />} />
+        <Route path="clients" element={<ClientsCms />} />
+        <Route path="team" element={<TeamCms />} />
+        <Route path="metrics" element={<MetricsCms />} />
+        <Route path="media" element={<Media />} />
+        <Route path="settings" element={<Settings />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>

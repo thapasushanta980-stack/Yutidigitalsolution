@@ -89,8 +89,8 @@ PUBLISHED. Slugs are unique and auto-deduplicated (`-2`, `-3`, …).
 
 ## Known limitations & future work
 
-- **Runtime:** API runs via `tsx` (TypeScript at runtime) rather than a pre-compiled `dist/`. For maximum cold-start performance, add a bundler (tsup/esbuild) build step.
-- **Admin CMS depth:** Services has a full CRUD form; Projects/Case Studies/Insights/Testimonials/Clients/Team/Metrics/Media/Settings ship with read scaffolds wired to their (already complete) admin APIs — full edit forms follow the identical `ServicesCms.tsx` pattern.
+- **Runtime:** dev uses `tsx` (TS at runtime); production is a compiled `tsup` bundle (`dist/server.js`). Prisma client is external and loaded from `node_modules`.
+- **Admin CMS depth:** every collection (Services, Projects, Case Studies, Insights, Testimonials, Clients, Team, Metrics) has a full create/edit/delete form via the shared config-driven `ResourceCrud`; Leads, Media (upload) and Settings have bespoke screens. Case-study metrics and insight tags are editable inline. Category creation for insights currently expects an existing category id (a category picker is a small future addition).
 - **Email:** SMTP is optional and fire-and-forget; wire a queue (BullMQ) for retries at scale.
 - **Media:** local disk driver by default; `storage.ts` is an abstraction ready for S3/R2/Cloudinary. Responsive image derivatives (sharp) are a future addition.
 - **Search:** simple `LIKE` search; move to full-text / a search engine as content grows.
