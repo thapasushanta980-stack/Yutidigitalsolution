@@ -42,13 +42,19 @@ code {
   padding: var(--space-8);
 }
 .admin-logo {
-  font-family: var(--font-heading);
-  font-size: 1.3rem;
-  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin-bottom: var(--space-4);
 }
-.admin-logo span {
-  color: var(--color-accent);
+.admin-logo__tag {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: rgba(246, 244, 239, 0.6);
+}
+.admin-logo__tag--ink {
+  color: var(--color-muted);
 }
 
 /* Shell */

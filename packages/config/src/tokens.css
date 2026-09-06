@@ -12,7 +12,10 @@
   --color-paper-alt: #efece4;
   --color-muted: #6b6b63;
   --color-line: #d8d4c8;
-  --color-accent: #b4432f;
+  /* Brand palette (from the YUKTI logo) */
+  --color-accent: #2f2fe4; /* royal blue */
+  --color-accent-hover: #2323b8;
+  --color-gold: #ffc300; /* golden Y accent */
   --color-white: #ffffff;
 
   /* Spacing scale (px) */

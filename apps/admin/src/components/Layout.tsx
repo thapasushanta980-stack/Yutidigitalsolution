@@ -13,6 +13,7 @@ import {
   Settings,
   LogOut,
 } from 'lucide-react';
+import { Logo } from '@yukti/ui';
 import { useAuth } from '../lib/auth.js';
 
 const NAV = [
@@ -36,7 +37,8 @@ export function Layout() {
     <div className="admin-shell">
       <aside className="admin-sidebar">
         <div className="admin-logo">
-          Yukti<span>·</span>Admin
+          <Logo variant="light" height={22} title="Yukti" />
+          <span className="admin-logo__tag">Admin</span>
         </div>
         <nav>
           {NAV.map(([path, label, Icon]) => (

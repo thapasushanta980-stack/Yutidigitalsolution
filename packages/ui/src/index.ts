@@ -1,4 +1,5 @@
 export { Button } from './Button.js';
+export { Logo } from './Logo.js';
 export { Container } from './Container.js';
 export { Section } from './Section.js';
 export { FormField } from './FormField.js';

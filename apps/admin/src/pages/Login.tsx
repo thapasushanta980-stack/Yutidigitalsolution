@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { Button, FormField } from '@yukti/ui';
+import { Button, FormField, Logo } from '@yukti/ui';
 import { useAuth } from '../lib/auth.js';
 
 export function Login() {
@@ -31,7 +31,8 @@ export function Login() {
     <div className="admin-center">
       <form onSubmit={onSubmit} className="admin-login">
         <div className="admin-logo">
-          Yukti<span>·</span>Admin
+          <Logo height={26} title="Yukti" />
+          <span className="admin-logo__tag admin-logo__tag--ink">Admin</span>
         </div>
         <p className="muted">Sign in to manage content and leads.</p>
         <FormField label="Email" htmlFor="email" required>

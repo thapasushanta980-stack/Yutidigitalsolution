@@ -164,6 +164,53 @@ select:focus-visible {
   }
 }
 
+/* Logo */
+.yk-logo {
+  display: block;
+  height: auto;
+}
+.yk-logo__blue,
+.yk-logo__gold {
+  transition: transform var(--duration-fast) var(--ease);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+/* Hover micro-interaction: the golden Y accent gives a subtle nod. */
+a:hover > .yk-logo .yk-logo__gold,
+button:hover > .yk-logo .yk-logo__gold {
+  transform: translateY(-8%) rotate(-3deg);
+}
+/* One-time reveal on mount */
+.yk-logo--animated .yk-logo__blue {
+  animation: yk-logo-rise 0.7s var(--ease) both;
+}
+.yk-logo--animated .yk-logo__gold {
+  animation: yk-logo-pop 0.6s var(--ease) 0.35s both;
+}
+@keyframes yk-logo-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes yk-logo-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.4) rotate(-12deg);
+  }
+  60% {
+    transform: scale(1.12) rotate(4deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
 /* Screen-reader only + skip link */
 .yk-sr-only {
   position: absolute;

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
-import { Button } from '@yukti/ui';
+import { Button, Logo } from '@yukti/ui';
 
 interface Props {
   open: boolean;
@@ -40,9 +40,7 @@ export function MobileMenu({ open, onClose, items }: Props) {
           transition={{ duration: 0.25 }}
         >
           <div className="mobile-menu__head">
-            <span className="nav__logo">
-              Yukti<span className="nav__logo-accent">.</span>
-            </span>
+            <Logo height={26} />
             <button ref={closeRef} className="nav__icon" aria-label="Close menu" onClick={onClose}>
               <X size={22} aria-hidden="true" />
             </button>

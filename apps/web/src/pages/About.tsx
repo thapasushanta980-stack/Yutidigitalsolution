@@ -3,6 +3,7 @@ import { Seo } from '../lib/Seo.js';
 import { SectionHeader } from '../components/SectionHeader.js';
 import { QueryState } from '../components/QueryState.js';
 import { useTeam, useValues, useMetrics, useSiteSettings } from '../lib/queries.js';
+import { AnimatedNumber } from '../components/AnimatedNumber.js';
 
 export default function About() {
   const team = useTeam();
@@ -36,7 +37,9 @@ export default function About() {
               {metrics.data?.map((m) => (
                 <div key={m.id} className="metric">
                   <p className="metric__code">{m.code}</p>
-                  <p className="metric__value">{m.value}</p>
+                  <p className="metric__value">
+                    <AnimatedNumber value={m.value} />
+                  </p>
                   <p className="metric__label">{m.label}</p>
                 </div>
               ))}

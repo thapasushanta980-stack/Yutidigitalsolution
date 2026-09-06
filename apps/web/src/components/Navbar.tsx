@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Menu, Search as SearchIcon } from 'lucide-react';
-import { Container, Button } from '@yukti/ui';
+import { Container, Button, Logo } from '@yukti/ui';
 import { MobileMenu } from './MobileMenu.js';
 import { SearchOverlay } from './SearchOverlay.js';
 
@@ -31,7 +31,7 @@ export function Navbar() {
         <Container>
           <div className="nav__inner">
             <Link to="/" className="nav__logo" aria-label="Yukti Digital Solutions — home">
-              Yukti<span className="nav__logo-accent">.</span>
+              <Logo animated height={26} />
             </Link>
 
             <nav className="nav__links" aria-label="Primary">

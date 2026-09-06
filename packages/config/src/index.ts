@@ -25,7 +25,8 @@ export const colors = {
   paperAlt: '#efece4',
   muted: '#6b6b63',
   line: '#d8d4c8',
-  accent: '#b4432f', // terracotta — used sparingly
+  accent: '#2f2fe4', // brand royal blue
+  gold: '#ffc300', // brand gold accent
   white: '#ffffff',
 } as const;
 

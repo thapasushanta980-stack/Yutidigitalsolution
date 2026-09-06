@@ -7,6 +7,7 @@ import { GrowthModel } from '../components/GrowthModel.js';
 import { ServiceCard, ProjectCard, CaseStudyCard } from '../components/Cards.js';
 import { QueryState } from '../components/QueryState.js';
 import { Testimonials } from '../components/Testimonials.js';
+import { AnimatedNumber } from '../components/AnimatedNumber.js';
 import {
   useServices,
   useMetrics,
@@ -42,7 +43,10 @@ export default function Home() {
             </p>
           </Reveal>
           <Reveal delay={0.05}>
-            <h1 className="hero__title">Turn Your Digital Presence Into Measurable Growth.</h1>
+            <h1 className="hero__title">
+              Turn Your Digital Presence Into Measurable{' '}
+              <span className="accent-underline">Growth.</span>
+            </h1>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="lead">
@@ -125,7 +129,9 @@ export default function Home() {
               {metrics.data?.map((m) => (
                 <div key={m.id} className="metric">
                   <p className="metric__code">{m.code}</p>
-                  <p className="metric__value">{m.value}</p>
+                  <p className="metric__value">
+                    <AnimatedNumber value={m.value} />
+                  </p>
                   <p className="metric__label">{m.label}</p>
                 </div>
               ))}

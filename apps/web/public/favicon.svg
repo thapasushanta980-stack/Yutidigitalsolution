@@ -1,4 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="4" fill="#14140f" />
-  <text x="16" y="22" font-family="Georgia, serif" font-size="18" fill="#f6f4ef" text-anchor="middle">Y</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="98 302 172 178">
+  <rect x="98" y="302" width="172" height="178" rx="28" fill="#2f2fe4" />
+  <!-- Left arm of the Y (white) -->
+  <g fill="#ffffff">
+    <path transform="matrix(1,0,0,-1,0,824)" d="M180.591 317.726H142.065V356.252H180.591Z" />
+    <path transform="matrix(1,0,0,-1,180.372,424.507)" d="M0 0C0-1.431-.036-2.862-.133-4.281H-36.265C-37.647 17.174-54.906 34.288-76.411 35.452V72.893C-75.27 72.954-74.13 72.978-72.978 72.978-32.675 72.978 0 40.303 0 0" />
+  </g>
+  <!-- Right arm of the Y (gold) -->
+  <g fill="#ffc300">
+    <path transform="matrix(1,0,0,-1,0,824)" d="M223.177 317.726H184.651V356.252H223.177Z" />
+    <path transform="matrix(1,0,0,-1,184.8718,424.507)" d="M0 0C0-1.431 .036-2.862 .133-4.281H36.265C37.647 17.174 54.906 34.288 76.411 35.452V72.893C75.27 72.954 74.13 72.978 72.978 72.978 32.675 72.978 0 40.303 0 0" />
+  </g>
 </svg>

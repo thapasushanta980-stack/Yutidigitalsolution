@@ -30,14 +30,10 @@
   gap: var(--space-6);
 }
 .nav__logo {
-  font-family: var(--font-heading);
-  font-size: 1.35rem;
-  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
   text-decoration: none;
   color: var(--color-ink);
-}
-.nav__logo-accent {
-  color: var(--color-accent);
 }
 .nav__links {
   display: none;
@@ -203,6 +199,29 @@
   text-transform: uppercase;
 }
 
+/* Animated gold underline accent (e.g. the hero's "Growth.") */
+.accent-underline {
+  position: relative;
+  white-space: nowrap;
+}
+.accent-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0.08em;
+  width: 100%;
+  height: 0.09em;
+  background: var(--color-gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: yk-underline 0.7s var(--ease) 0.9s both;
+}
+@keyframes yk-underline {
+  to {
+    transform: scaleX(1);
+  }
+}
+
 /* ── Growth model ───────────────────────────────────── */
 .growth-model {
   margin: 0;
@@ -217,9 +236,9 @@
   stroke: var(--color-line);
   stroke-width: 1;
 }
-.gm-box--accent {
-  fill: var(--color-accent);
-  stroke: var(--color-accent);
+.gm-box--gold {
+  fill: var(--color-gold);
+  stroke: var(--color-gold);
 }
 .gm-box--ink {
   fill: var(--color-ink);
@@ -237,6 +256,9 @@
 }
 .gm-text--light {
   fill: var(--color-paper);
+}
+.gm-text--ink {
+  fill: var(--color-ink);
 }
 .growth-model figcaption {
   margin-top: var(--space-4);

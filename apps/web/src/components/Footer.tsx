@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Container, Button } from '@yukti/ui';
+import { Container, Button, Logo } from '@yukti/ui';
 import { useSiteSettings } from '../lib/queries.js';
 
 const COLUMNS = [
@@ -47,9 +47,7 @@ export function Footer() {
 
         <div className="footer__grid">
           <div className="footer__brand">
-            <span className="nav__logo">
-              Yukti<span className="nav__logo-accent">.</span>
-            </span>
+            <Logo variant="light" height={28} />
             <p className="muted">{settings?.address ?? 'Kathmandu, Nepal'}</p>
             <p className="muted">{settings?.coverage ?? 'South Asia · The Gulf · Australia'}</p>
             {settings?.email && (
