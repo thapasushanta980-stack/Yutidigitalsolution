@@ -1,0 +1,191 @@
+/* Shared component styles for @yukti/ui primitives. Depends on tokens.css. */
+
+.yk-container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--space-6);
+}
+
+.yk-section {
+  padding-block: var(--space-24);
+}
+.yk-section--paper {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+.yk-section--alt {
+  background: var(--color-paper-alt);
+  color: var(--color-ink);
+}
+.yk-section--ink {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+/* Buttons — consistent height/padding/border/hover/focus */
+.yk-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-weight: 500;
+  line-height: 1;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background var(--duration-fast) var(--ease),
+    color var(--duration-fast) var(--ease),
+    border-color var(--duration-fast) var(--ease);
+  min-height: 44px; /* accessible touch target */
+}
+.yk-btn--sm {
+  padding: 8px 14px;
+  font-size: 0.875rem;
+  min-height: 40px;
+}
+.yk-btn--md {
+  padding: 12px 20px;
+  font-size: 0.95rem;
+}
+.yk-btn--lg {
+  padding: 15px 26px;
+  font-size: 1rem;
+}
+.yk-btn--primary {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+.yk-btn--primary:hover {
+  background: var(--color-accent);
+}
+.yk-btn--secondary {
+  background: transparent;
+  color: var(--color-ink);
+  border-color: var(--color-line);
+}
+.yk-btn--secondary:hover {
+  border-color: var(--color-ink);
+}
+.yk-btn--text {
+  background: transparent;
+  color: var(--color-ink);
+  min-height: auto;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--color-ink);
+  border-radius: 0;
+}
+.yk-btn--text:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.yk-btn:focus-visible,
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+.yk-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Form fields */
+.yk-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: var(--space-4);
+}
+.yk-field__label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+.yk-field__required {
+  color: var(--color-accent);
+}
+.yk-field__hint {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  margin: 0;
+}
+.yk-field__error {
+  font-size: 0.85rem;
+  color: var(--color-accent);
+  margin: 0;
+}
+.yk-input,
+.yk-textarea,
+.yk-select {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-ink);
+  background: var(--color-white);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  width: 100%;
+}
+.yk-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+.yk-input:focus,
+.yk-textarea:focus,
+.yk-select:focus {
+  border-color: var(--color-ink);
+}
+
+/* Spinner */
+.yk-spinner {
+  display: inline-flex;
+  align-items: center;
+}
+.yk-spinner__dot {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--color-line);
+  border-top-color: var(--color-ink);
+  border-radius: 50%;
+  animation: yk-spin 0.7s linear infinite;
+}
+@keyframes yk-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Screen-reader only + skip link */
+.yk-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.yk-skip-link {
+  position: absolute;
+  left: -999px;
+  top: 8px;
+  z-index: 1000;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+}
+.yk-skip-link:focus {
+  left: 8px;
+}

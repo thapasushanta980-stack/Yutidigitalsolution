@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Env & secrets
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Prisma
+packages/database/prisma/*.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Uploads (local media storage)
+apps/api/uploads/
+!apps/api/uploads/.gitkeep
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Test / coverage
+coverage/
+.nyc_output/
+
+# Docker volumes
+docker/mysql-data/

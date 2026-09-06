@@ -1,0 +1,48 @@
+{
+  "name": "yukti-digital-solutions",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Yukti Digital Solutions — full-stack digital growth agency platform (web + api + admin + CMS).",
+  "author": "Yukti Digital Solutions",
+  "license": "UNLICENSED",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "scripts": {
+    "dev": "npm-run-all --parallel dev:api dev:web dev:admin",
+    "dev:api": "npm run dev --workspace @yukti/api",
+    "dev:web": "npm run dev --workspace @yukti/web",
+    "dev:admin": "npm run dev --workspace @yukti/admin",
+    "build": "npm-run-all build:database build:types build:api build:web build:admin",
+    "build:database": "npm run build --workspace @yukti/database",
+    "build:types": "npm run build --workspace @yukti/types",
+    "build:api": "npm run build --workspace @yukti/api",
+    "build:web": "npm run build --workspace @yukti/web",
+    "build:admin": "npm run build --workspace @yukti/admin",
+    "db:generate": "npm run generate --workspace @yukti/database",
+    "db:migrate": "npm run migrate --workspace @yukti/database",
+    "db:deploy": "npm run deploy --workspace @yukti/database",
+    "db:seed": "npm run seed --workspace @yukti/database",
+    "db:studio": "npm run studio --workspace @yukti/database",
+    "lint": "eslint . --ext .ts,.tsx",
+    "format": "prettier --write \"**/*.{ts,tsx,json,md}\"",
+    "test": "npm-run-all test:api test:web",
+    "test:api": "npm run test --workspace @yukti/api",
+    "test:web": "npm run test --workspace @yukti/web"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "@typescript-eslint/parser": "^8.18.0",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2"
+  }
+}

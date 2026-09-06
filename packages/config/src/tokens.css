@@ -1,0 +1,58 @@
+/* Yukti design tokens — single source of truth for both web and admin. */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  /* Typography */
+  --font-heading: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Colour — editorial, ink-on-paper with one restrained accent */
+  --color-ink: #14140f;
+  --color-paper: #f6f4ef;
+  --color-paper-alt: #efece4;
+  --color-muted: #6b6b63;
+  --color-line: #d8d4c8;
+  --color-accent: #b4432f;
+  --color-white: #ffffff;
+
+  /* Spacing scale (px) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-30: 120px;
+
+  /* Radius — restrained */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+
+  /* Elevation — subtle */
+  --shadow-sm: 0 1px 2px rgba(20, 20, 15, 0.06);
+  --shadow-nav: 0 1px 0 rgba(20, 20, 15, 0.06), 0 8px 24px rgba(20, 20, 15, 0.04);
+
+  /* Layout */
+  --container-max: 1200px;
+  --nav-height: 72px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration: 0.5s;
+  --duration-fast: 0.25s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

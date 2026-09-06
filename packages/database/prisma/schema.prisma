@@ -1,0 +1,419 @@
+// Yukti Digital Solutions — Prisma schema (MySQL)
+// Content model is CMS-driven: no hardcoded business statistics.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────
+// Shared enums
+// ─────────────────────────────────────────────
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum RoleName {
+  SUPER_ADMIN
+  ADMIN
+  EDITOR
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  CONVERTED
+  LOST
+}
+
+enum LeadSource {
+  GROWTH_AUDIT
+  CONTACT
+  OTHER
+}
+
+// ─────────────────────────────────────────────
+// Auth & users
+// ─────────────────────────────────────────────
+model Role {
+  id    Int      @id @default(autoincrement())
+  name  RoleName @unique
+  users User[]
+}
+
+model User {
+  id           String    @id @default(cuid())
+  name         String
+  email        String    @unique
+  passwordHash String
+  roleId       Int
+  role         Role      @relation(fields: [roleId], references: [id])
+  isActive     Boolean   @default(true)
+  lastLoginAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  teamMember   TeamMember?
+  media        Media[]
+  auditLogs    AuditLog[]
+  assignedLeads Lead[]     @relation("LeadAssignee")
+
+  @@index([roleId])
+}
+
+// ─────────────────────────────────────────────
+// Services
+// ─────────────────────────────────────────────
+model Service {
+  id               String        @id @default(cuid())
+  title            String
+  slug             String        @unique
+  shortDescription String        @db.Text
+  description      String        @db.LongText
+  icon             String? // lucide icon name
+  featured         Boolean       @default(false)
+  displayOrder     Int           @default(0)
+  status           ContentStatus @default(DRAFT)
+  seoTitle         String?
+  seoDescription   String?       @db.Text
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  @@index([status, displayOrder])
+}
+
+// ─────────────────────────────────────────────
+// Clients & logos
+// ─────────────────────────────────────────────
+model Client {
+  id           String        @id @default(cuid())
+  name         String
+  websiteUrl   String?
+  logoUrl      String?
+  displayOrder Int           @default(0)
+  status       ContentStatus @default(PUBLISHED)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  projects Project[]
+
+  @@index([status, displayOrder])
+}
+
+// ─────────────────────────────────────────────
+// Projects / Work
+// ─────────────────────────────────────────────
+model Project {
+  id          String        @id @default(cuid())
+  title       String
+  slug        String        @unique
+  clientId    String?
+  client      Client?       @relation(fields: [clientId], references: [id])
+  industry    String?
+  service     String?
+  description String        @db.Text
+  challenge   String?       @db.Text
+  solution    String?       @db.Text
+  result      String?       @db.Text
+  coverImage  String?
+  featured    Boolean       @default(false)
+  status      ContentStatus @default(DRAFT)
+  publishedAt DateTime?
+  seoTitle    String?
+  seoDescription String?     @db.Text
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  images ProjectImage[]
+
+  @@index([status, featured])
+  @@index([clientId])
+}
+
+model ProjectImage {
+  id           String   @id @default(cuid())
+  projectId    String
+  project      Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  url          String
+  altText      String?
+  caption      String?
+  displayOrder Int      @default(0)
+
+  @@index([projectId])
+}
+
+// ─────────────────────────────────────────────
+// Case studies
+// ─────────────────────────────────────────────
+model CaseStudy {
+  id             String        @id @default(cuid())
+  title          String
+  slug           String        @unique
+  client         String?
+  industry       String?
+  service        String?
+  challenge      String        @db.Text
+  strategy       String?       @db.Text
+  implementation String?       @db.Text
+  results        String?       @db.Text
+  coverImage     String?
+  featured       Boolean       @default(false)
+  status         ContentStatus @default(DRAFT)
+  publishedAt    DateTime?
+  seoTitle       String?
+  seoDescription String?       @db.Text
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  metrics      CaseStudyMetric[]
+  images       CaseStudyImage[]
+  testimonials Testimonial[]
+
+  @@index([status, featured])
+}
+
+model CaseStudyMetric {
+  id           String    @id @default(cuid())
+  caseStudyId  String
+  caseStudy    CaseStudy @relation(fields: [caseStudyId], references: [id], onDelete: Cascade)
+  label        String // e.g. "Organic Traffic"
+  value        String // e.g. "+42%" — editable, never hardcoded
+  displayOrder Int       @default(0)
+
+  @@index([caseStudyId])
+}
+
+model CaseStudyImage {
+  id           String    @id @default(cuid())
+  caseStudyId  String
+  caseStudy    CaseStudy @relation(fields: [caseStudyId], references: [id], onDelete: Cascade)
+  url          String
+  altText      String?
+  caption      String?
+  displayOrder Int       @default(0)
+
+  @@index([caseStudyId])
+}
+
+// ─────────────────────────────────────────────
+// Testimonials
+// ─────────────────────────────────────────────
+model Testimonial {
+  id           String        @id @default(cuid())
+  clientName   String
+  clientRole   String?
+  company      String?
+  quote        String        @db.Text
+  avatar       String?
+  rating       Int? // 1..5
+  featured     Boolean       @default(false)
+  displayOrder Int           @default(0)
+  status       ContentStatus @default(PUBLISHED)
+  caseStudyId  String?
+  caseStudy    CaseStudy?    @relation(fields: [caseStudyId], references: [id])
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([status, featured, displayOrder])
+}
+
+// ─────────────────────────────────────────────
+// Insights (blog)
+// ─────────────────────────────────────────────
+model Category {
+  id       String    @id @default(cuid())
+  name     String    @unique
+  slug     String    @unique
+  insights Insight[]
+}
+
+model Tag {
+  id       String       @id @default(cuid())
+  name     String       @unique
+  slug     String       @unique
+  insights InsightTag[]
+}
+
+model Insight {
+  id             String        @id @default(cuid())
+  title          String
+  slug           String        @unique
+  excerpt        String        @db.Text
+  content        String        @db.LongText
+  coverImage     String?
+  author         String
+  categoryId     String?
+  category       Category?     @relation(fields: [categoryId], references: [id])
+  readingMinutes Int           @default(0)
+  seoTitle       String?
+  seoDescription String?       @db.Text
+  canonicalUrl   String?
+  status         ContentStatus @default(DRAFT)
+  publishedAt    DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  tags InsightTag[]
+
+  @@index([status, publishedAt])
+  @@index([categoryId])
+}
+
+model InsightTag {
+  insightId String
+  insight   Insight @relation(fields: [insightId], references: [id], onDelete: Cascade)
+  tagId     String
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([insightId, tagId])
+  @@index([tagId])
+}
+
+// ─────────────────────────────────────────────
+// Leads & contact
+// ─────────────────────────────────────────────
+model Lead {
+  id           String     @id @default(cuid())
+  name         String
+  company      String?
+  email        String
+  phone        String?
+  website      String?
+  industry     String?
+  budget       String?
+  challenge    String     @db.Text
+  services     String?    @db.Text // JSON string of selected services
+  message      String?    @db.Text
+  status       LeadStatus @default(NEW)
+  source       LeadSource @default(GROWTH_AUDIT)
+  internalNote String?    @db.Text // NEVER exposed via public API
+  assignedToId String?
+  assignedTo   User?      @relation("LeadAssignee", fields: [assignedToId], references: [id])
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@index([status, createdAt])
+  @@index([assignedToId])
+}
+
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String?
+  message   String   @db.Text
+  handled   Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([handled, createdAt])
+}
+
+// ─────────────────────────────────────────────
+// Team & values (About page)
+// ─────────────────────────────────────────────
+model TeamMember {
+  id           String        @id @default(cuid())
+  name         String
+  role         String
+  bio          String?       @db.Text
+  photo        String?
+  linkedin     String?
+  displayOrder Int           @default(0)
+  status       ContentStatus @default(PUBLISHED)
+  userId       String?       @unique
+  user         User?         @relation(fields: [userId], references: [id])
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([status, displayOrder])
+}
+
+model Value {
+  id           String        @id @default(cuid())
+  title        String // e.g. "Outcomes First"
+  description  String        @db.Text
+  displayOrder Int           @default(0)
+  status       ContentStatus @default(PUBLISHED)
+
+  @@index([status, displayOrder])
+}
+
+// ─────────────────────────────────────────────
+// Metrics (homepage / about stats — CMS-driven)
+// ─────────────────────────────────────────────
+model Metric {
+  id           String        @id @default(cuid())
+  code         String        @unique // e.g. "F-01"
+  label        String // e.g. "Founded"
+  value        String // e.g. "2026" — editable, never hardcoded fake stats
+  displayOrder Int           @default(0)
+  status       ContentStatus @default(PUBLISHED)
+
+  @@index([status, displayOrder])
+}
+
+// ─────────────────────────────────────────────
+// Site settings (key/value) & navigation
+// ─────────────────────────────────────────────
+model SiteSetting {
+  id    Int    @id @default(autoincrement())
+  key   String @unique
+  value String @db.Text
+}
+
+model NavigationItem {
+  id           String  @id @default(cuid())
+  label        String
+  href         String
+  location     String  @default("header") // header | footer
+  displayOrder Int     @default(0)
+  isActive     Boolean @default(true)
+  parentId     String?
+
+  @@index([location, displayOrder])
+}
+
+// ─────────────────────────────────────────────
+// Media library
+// ─────────────────────────────────────────────
+model Media {
+  id           String   @id @default(cuid())
+  fileName     String // stored (generated) name
+  originalName String
+  mimeType     String
+  fileSize     Int
+  url          String
+  altText      String?
+  caption      String?
+  uploadedById String?
+  uploadedBy   User?    @relation(fields: [uploadedById], references: [id])
+  createdAt    DateTime @default(now())
+
+  @@index([uploadedById])
+}
+
+// ─────────────────────────────────────────────
+// Audit log
+// ─────────────────────────────────────────────
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  action    String // CREATED | UPDATED | DELETED | LOGIN | ...
+  entity    String // e.g. CASE_STUDY
+  entityId  String?
+  metadata  String?  @db.Text // JSON string
+  ipAddress String?
+  createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@index([entity, entityId])
+}
