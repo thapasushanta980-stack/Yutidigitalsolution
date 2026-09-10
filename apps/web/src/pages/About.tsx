@@ -54,7 +54,7 @@ export default function About() {
           <div className="split">
             <SectionHeader eyebrow="Our story" title="Senior hands, plain reporting, real outcomes." />
             <div className="prose muted">
-              <p>
+              <p className="dropcap">
                 Yukti was built on a simple belief: digital marketing should generate business growth,
                 not just attention. We pair senior specialists with clear measurement so you always
                 know what worked and why.

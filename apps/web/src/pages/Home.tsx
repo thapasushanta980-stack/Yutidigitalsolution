@@ -164,7 +164,7 @@ export default function Home() {
       {/* Services */}
       <Section tone="alt">
         <Container>
-          <SectionHeader eyebrow="Services" title="Everything You Need to Grow." />
+          <SectionHeader index="01" eyebrow="Services" title="Everything You Need to Grow." />
           <QueryState
             isLoading={services.isLoading}
             isError={services.isError}
@@ -180,7 +180,7 @@ export default function Home() {
       {/* Featured work */}
       <Section tone="paper">
         <Container>
-          <SectionHeader eyebrow="Selected work" title="Built to create impact." />
+          <SectionHeader index="02" eyebrow="Selected work" title="Built to create impact." />
           <QueryState
             isLoading={projects.isLoading}
             isError={projects.isError}
@@ -202,7 +202,7 @@ export default function Home() {
       {/* Case studies */}
       <Section tone="alt">
         <Container>
-          <SectionHeader eyebrow="Proof" title="The Proof Is in the Numbers." />
+          <SectionHeader index="03" eyebrow="Proof" title="The Proof Is in the Numbers." />
           <QueryState
             isLoading={caseStudies.isLoading}
             isError={caseStudies.isError}
