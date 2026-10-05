@@ -44,6 +44,7 @@ export default function Insights() {
         title="Insights"
         description="Perspectives on SEO, performance marketing, and digital growth."
         path="/insights"
+        noindex={!data?.items.length}
       />
       <Section className="page-hero" tone="paper">
         <Container>

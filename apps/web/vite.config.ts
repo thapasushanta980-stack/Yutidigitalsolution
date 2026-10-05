@@ -1,17 +1,13 @@
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
+import { loadEnv } from 'vite';
+import { seoBuild } from './seo-build';
 
-// Proxy /api and SEO files to the backend during development.
-export default defineConfig({
-  plugins: [react()],
+// Standalone marketing site: development and production need no backend.
+export default defineConfig(({ mode }) => ({
+  plugins: [react(), seoBuild(loadEnv(mode, process.cwd(), 'VITE_').VITE_SITE_URL || 'https://yuktids.com')],
   server: {
     port: 5173,
-    proxy: {
-      '/api': { target: 'http://localhost:4000', changeOrigin: true },
-      '/uploads': { target: 'http://localhost:4000', changeOrigin: true },
-      '/sitemap.xml': { target: 'http://localhost:4000', changeOrigin: true },
-      '/robots.txt': { target: 'http://localhost:4000', changeOrigin: true },
-    },
   },
   build: {
     // Code-splitting: keep vendor libs in a separate chunk.
@@ -30,4 +26,4 @@ export default defineConfig({
     globals: true,
     setupFiles: './src/test/setup.ts',
   },
-});
+}));

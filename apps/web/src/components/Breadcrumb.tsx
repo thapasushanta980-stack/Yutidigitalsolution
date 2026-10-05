@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Seo } from '../lib/Seo.js';
+import { SITE_ORIGIN } from '../lib/siteUrl.js';
 
 interface Crumb {
   label: string;
@@ -8,7 +9,7 @@ interface Crumb {
 
 // Renders a visible breadcrumb + emits BreadcrumbList JSON-LD.
 export function Breadcrumb({ items }: { items: Crumb[] }) {
-  const origin = typeof window !== 'undefined' ? window.location.origin : '';
+  const origin = SITE_ORIGIN;
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',

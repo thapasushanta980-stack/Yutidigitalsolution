@@ -2,8 +2,7 @@ import type { ApiResponse } from '@yukti/types';
 import * as data from './staticData.js';
 
 // Static build: content is served from ./staticData.ts instead of the API.
-// The same fetchData/postData signatures are kept so pages need no changes
-// and the CMS-backed API can be re-enabled later.
+// Keep content reads behind this adapter for a future CMS integration.
 
 function resolve(url: string, params: Record<string, unknown> = {}): { data: unknown; meta?: unknown } {
   const path = url.replace(/^\/+/, '');
@@ -55,15 +54,4 @@ export async function fetchData<T>(url: string, params?: Record<string, unknown>
   const res = await api.get<ApiResponse<T>>(url, { params });
   if (!res.data.success) throw new Error(res.data.error.message);
   return res.data.data;
-}
-
-// No backend: forms open the visitor's email client addressed to the agency.
-export async function postData<T>(url: string, body: unknown): Promise<T> {
-  const fields = Object.entries((body ?? {}) as Record<string, unknown>)
-    .filter(([k, v]) => v !== '' && v != null && k !== 'website')
-    .map(([k, v]) => `${k}: ${String(v)}`)
-    .join('\n');
-  const subject = url.includes('leads') ? 'Free Growth Audit request' : 'Website enquiry';
-  window.location.href = `mailto:${data.siteSettings.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(fields)}`;
-  return {} as T;
 }

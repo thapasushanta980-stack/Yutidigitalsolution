@@ -24,6 +24,7 @@ config(); // also honour cwd/.env and real process env
 const schema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   PORT: z.coerce.number().default(4000),
+  HOST: z.string().default('127.0.0.1'),
   DATABASE_URL: z.string().min(1, 'DATABASE_URL is required'),
   JWT_SECRET: z.string().min(16, 'JWT_SECRET must be at least 16 chars'),
   JWT_EXPIRES_IN: z.string().default('7d'),
@@ -41,6 +42,16 @@ const schema = z.object({
   MAIL_TO_INTERNAL: z.string().optional(),
   RATE_LIMIT_WINDOW_MS: z.coerce.number().default(15 * 60 * 1000),
   RATE_LIMIT_MAX: z.coerce.number().default(100),
+}).superRefine((value, ctx) => {
+  if (value.NODE_ENV !== 'production') return;
+  if (value.JWT_SECRET.length < 32 || /change-me|changeme/i.test(value.JWT_SECRET)) {
+    ctx.addIssue({ code: z.ZodIssueCode.custom, path: ['JWT_SECRET'], message: 'Production requires a unique random secret of at least 32 characters' });
+  }
+  for (const key of ['FRONTEND_URL', 'ADMIN_URL', 'PUBLIC_SITE_URL'] as const) {
+    if (!value[key].startsWith('https://')) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, path: [key], message: 'Production requires HTTPS' });
+    }
+  }
 });
 
 const parsed = schema.safeParse(process.env);

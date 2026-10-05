@@ -9,7 +9,7 @@ export default function Work() {
   const { data, isLoading, isError } = useProjects();
   return (
     <>
-      <Seo title="Work" description="Selected projects and outcomes for brands we partner with." path="/work" />
+      <Seo title="Work" description="Selected projects and outcomes for brands we partner with." path="/work" noindex={!data?.length} />
       <Section className="page-hero" tone="paper">
         <Container>
           <SectionHeader as="h1" eyebrow="Work" title="Built to create impact." />

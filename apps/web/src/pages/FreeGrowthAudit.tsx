@@ -6,10 +6,11 @@ import { CheckCircle2 } from 'lucide-react';
 import { Section, Container, Button, FormField } from '@yukti/ui';
 import { Seo } from '../lib/Seo.js';
 import { SectionHeader } from '../components/SectionHeader.js';
-import { postData } from '../lib/api.js';
+import { openEnquiryEmail } from '../lib/enquiry.js';
+import { siteSettings } from '../lib/staticData.js';
 import { useServices } from '../lib/queries.js';
 
-// Client-side schema mirrors the server (server validates again — never trust client only).
+// Validate the details used to prepare the visitor's email draft.
 const schema = z.object({
   name: z.string().min(2, 'Please enter your full name'),
   company: z.string().optional(),
@@ -43,7 +44,7 @@ export default function FreeGrowthAudit() {
 
   const onSubmit = async (values: FormValues) => {
     try {
-      await postData('/leads', values);
+      openEnquiryEmail('Free Growth Audit request', values);
       setSubmitted(true);
     } catch (err) {
       setError('root', {
@@ -75,13 +76,12 @@ export default function FreeGrowthAudit() {
           {submitted ? (
             <div className="form-success" role="status">
               <CheckCircle2 size={40} aria-hidden="true" color="var(--color-accent)" />
-              <h2>Request received.</h2>
+              <h2>Finish in your email app.</h2>
               <p className="muted">
-                Thank you. Our team will review your details and get back to you shortly. A
-                confirmation has been sent to your email.
+                Send the prepared email to request your audit. If no app opened, email {siteSettings.email} directly.
               </p>
-              <Button as="a" href="/">
-                Back to home
+              <Button type="button" onClick={() => setSubmitted(false)}>
+                Edit request
               </Button>
             </div>
           ) : (
@@ -155,8 +155,9 @@ export default function FreeGrowthAudit() {
                 </p>
               )}
 
+              <p className="muted">This opens an email draft. Review and send it from your email app.</p>
               <Button size="lg" type="submit" disabled={isSubmitting}>
-                {isSubmitting ? 'Sending…' : 'Request my free audit'}
+                {isSubmitting ? 'Preparing…' : 'Continue to email'}
               </Button>
             </form>
           )}

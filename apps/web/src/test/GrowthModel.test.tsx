@@ -9,6 +9,6 @@ describe('GrowthModel', () => {
     expect(screen.getByText('Organic')).toBeInTheDocument();
     expect(screen.getByText('Paid')).toBeInTheDocument();
     expect(screen.getByText('Compounding')).toBeInTheDocument();
-    expect(screen.getByText(/Fig\. 01/)).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: /growth model/i })).toHaveAccessibleName(/organic and paid channels/i);
   });
 });

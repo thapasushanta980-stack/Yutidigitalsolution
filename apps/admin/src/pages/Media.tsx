@@ -42,13 +42,13 @@ export function Media() {
   return (
     <div>
       <h1>Media</h1>
-      <p className="muted">Upload images (JPEG, PNG, WebP, SVG). Paste the returned URL into content fields.</p>
+      <p className="muted">Upload images (JPEG, PNG, WebP). Paste the returned URL into content fields.</p>
 
       <div className="admin-card">
         <input
           ref={fileRef}
           type="file"
-          accept="image/jpeg,image/png,image/webp,image/svg+xml"
+          accept="image/jpeg,image/png,image/webp"
           onChange={(e) => e.target.files?.[0] && uploadMutation.mutate(e.target.files[0])}
         />
         {uploadMutation.isPending && <p className="muted">Uploading…</p>}

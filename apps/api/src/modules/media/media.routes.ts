@@ -10,7 +10,7 @@ import { storage } from './storage.js';
 import { idParamSchema } from '../services/service.schema.js';
 import { validate } from '../../middlewares/validate.js';
 
-const ALLOWED = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml']);
+const ALLOWED = new Set(['image/jpeg', 'image/png', 'image/webp']);
 
 // In-memory storage so we can validate before persisting anywhere.
 const upload = multer({

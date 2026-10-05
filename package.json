@@ -14,6 +14,10 @@
     "npm": ">=10.0.0"
   },
   "scripts": {
+    "dev:landing": "npm run dev --workspace @yukti/web",
+    "build:landing": "npm run build --workspace @yukti/web",
+    "preview:landing": "npm run preview --workspace @yukti/web",
+    "test:landing": "npm run test --workspace @yukti/web",
     "dev": "npm-run-all --parallel dev:api dev:web dev:admin",
     "dev:api": "npm run dev --workspace @yukti/api",
     "dev:web": "npm run dev --workspace @yukti/web",

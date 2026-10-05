@@ -1,5 +1,6 @@
 # Dependencies
 node_modules/
+.npm-cache/
 .pnp
 .pnp.js
 
@@ -12,6 +13,7 @@ build/
 .env
 .env.local
 .env.*.local
+deploy/*.env
 !.env.example
 
 # Prisma

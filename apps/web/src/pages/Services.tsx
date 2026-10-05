@@ -11,7 +11,7 @@ export default function Services() {
     <>
       <Seo
         title="Services"
-        description="SEO, performance marketing, social, video, web development, brand strategy, content and creative."
+        description="Explore Yukti's SEO, social media marketing, Meta ads, video production and TVC services from our team in Biratnagar, Nepal."
         path="/services"
       />
       <Section className="page-hero" tone="paper">

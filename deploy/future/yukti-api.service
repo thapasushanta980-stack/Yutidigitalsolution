@@ -1,0 +1,25 @@
+[Unit]
+Description=Yukti API
+After=network.target mysql.service
+
+[Service]
+Type=simple
+User=yukti
+Group=yukti
+WorkingDirectory=/srv/yukti/current/apps/api
+EnvironmentFile=/etc/yukti/api.env
+ExecStart=/usr/bin/node /srv/yukti/current/apps/api/dist/server.js
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=30
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/yukti/uploads
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

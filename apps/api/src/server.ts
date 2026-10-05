@@ -6,7 +6,8 @@ import { prisma } from '@yukti/database';
 async function bootstrap() {
   const app = createApp();
 
-  const server = app.listen(env.PORT, () => {
+  await prisma.$connect();
+  const server = app.listen(env.PORT, env.HOST, () => {
     logger.info(`🚀 Yukti API listening on http://localhost:${env.PORT} (${env.NODE_ENV})`);
   });
 

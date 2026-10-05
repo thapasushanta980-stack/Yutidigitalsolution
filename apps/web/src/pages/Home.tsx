@@ -38,7 +38,7 @@ export default function Home() {
     <>
       <Seo
         title="Yukti Digital Solutions | Digital Growth Agency in Biratnagar"
-        description={settings?.seo_description}
+        description="Yukti Digital Solutions is a digital marketing agency in Biratnagar, Nepal, offering SEO, social media management, Meta ads and video production."
         path="/"
         jsonLd={organizationJsonLd()}
       />
@@ -67,7 +67,7 @@ export default function Home() {
           </Reveal>
           <Reveal delay={0.1}>
             <p className="lead">
-              One-stop solutions for all digital marketing services: SEO, social media, Meta ads and video production. We DESIGN | ADVERTISE | VISUALISE.
+              Digital marketing from Biratnagar, Nepal: SEO, social media management, Meta ads and video production to help customers find and choose your business.
             </p>
           </Reveal>
           <Reveal delay={0.15}>

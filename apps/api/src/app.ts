@@ -43,7 +43,11 @@ export function createApp() {
   app.use(pinoHttp({ logger }));
 
   // Static media (local storage driver). In production this is typically a CDN.
-  app.use('/uploads', express.static(path.resolve(env.UPLOAD_DIR)));
+  app.use('/uploads', (_req, res, next) => {
+    // Also isolate any legacy SVG files already stored on disk.
+    res.setHeader('Content-Security-Policy', "sandbox; default-src 'none'");
+    next();
+  }, express.static(path.resolve(env.UPLOAD_DIR)));
 
   // Health check
   app.get('/health', (_req, res) => res.json({ success: true, data: { status: 'ok' } }));

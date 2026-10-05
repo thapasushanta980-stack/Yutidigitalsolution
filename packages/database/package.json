@@ -13,6 +13,7 @@
     "migrate": "dotenv -e ../../.env -- prisma migrate dev",
     "deploy": "dotenv -e ../../.env -- prisma migrate deploy",
     "seed": "dotenv -e ../../.env -- tsx prisma/seed.ts",
+    "bootstrap:admin": "dotenv -e ../../.env -- tsx prisma/bootstrap-admin.ts",
     "studio": "dotenv -e ../../.env -- prisma studio",
     "build": "prisma generate"
   },

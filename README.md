@@ -1,5 +1,11 @@
 # Yukti Digital Solutions — Full-Stack Platform
 
+> **Current release: agency landing site.** Use `npm run dev:landing` and
+> `npm run build:landing`. Deploy only `apps/web/dist` with Nginx; enquiries open
+> email drafts. API, admin, database and CMS are deferred. Start with the
+> [landing-site deployment guide](docs/VPS-DEPLOYMENT.md). The full-stack sections
+> below describe the future platform.
+
 A production-oriented, full-stack website + CMS for **Yukti Digital Solutions**, a digital
 growth agency based in Kathmandu, Nepal. Built as a modular monorepo: a public marketing
 site, a REST API, and a secure admin dashboard, all backed by MySQL.
@@ -138,6 +144,11 @@ yukti-digital-solutions/
 ```
 
 ## 14. Deployment
+
+For VPS hosting, see [the deployment runbook and readiness review](docs/VPS-DEPLOYMENT.md).
+The active static Nginx template is in `deploy/`; deferred backend templates are in `deploy/future/`. Public page content uses
+`staticData.ts`; contact/audit forms open email drafts. Do not run the development
+seed against a production database; use `bootstrap:admin` for initial admin setup.
 
 - Frontend (web/admin): static hosting / CDN. Set API base or proxy `/api` to the backend.
 - API: Node host behind Nginx; terminate TLS at the proxy. Set `NODE_ENV=production` (enables secure cookies).

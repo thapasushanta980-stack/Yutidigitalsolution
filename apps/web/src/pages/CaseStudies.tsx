@@ -13,6 +13,7 @@ export default function CaseStudies() {
         title="Case Studies"
         description="Measurable outcomes for the brands we work with."
         path="/case-studies"
+        noindex={!data?.length}
       />
       <Section className="page-hero" tone="paper">
         <Container>

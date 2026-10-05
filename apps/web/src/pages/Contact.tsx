@@ -6,7 +6,7 @@ import { CheckCircle2 } from 'lucide-react';
 import { Section, Container, Button, FormField } from '@yukti/ui';
 import { Seo } from '../lib/Seo.js';
 import { SectionHeader } from '../components/SectionHeader.js';
-import { postData } from '../lib/api.js';
+import { openEnquiryEmail } from '../lib/enquiry.js';
 import { useSiteSettings } from '../lib/queries.js';
 
 const schema = z.object({
@@ -31,7 +31,7 @@ export default function Contact() {
 
   const onSubmit = async (values: FormValues) => {
     try {
-      await postData('/contact', values);
+      openEnquiryEmail('Website enquiry', values);
       setSubmitted(true);
     } catch (err) {
       setError('root', { message: err instanceof Error ? err.message : 'Something went wrong.' });
@@ -99,8 +99,9 @@ export default function Contact() {
               {submitted ? (
                 <div className="form-success" role="status">
                   <CheckCircle2 size={36} aria-hidden="true" color="var(--color-accent)" />
-                  <h3>Message sent.</h3>
-                  <p className="muted">Thanks for reaching out. We'll be in touch shortly.</p>
+                  <h3>Finish in your email app.</h3>
+                  <p className="muted">Send the prepared email to complete your enquiry. If no app opened, email {settings?.email} directly.</p>
+                  <Button type="button" onClick={() => setSubmitted(false)}>Edit enquiry</Button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -128,8 +129,9 @@ export default function Contact() {
                       {errors.root.message}
                     </p>
                   )}
+                  <p className="muted">This opens an email draft. Review and send it from your email app.</p>
                   <Button type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? 'Sending…' : 'Send message'}
+                    {isSubmitting ? 'Preparing…' : 'Continue to email'}
                   </Button>
                 </form>
               )}
