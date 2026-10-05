@@ -7,10 +7,8 @@ import { SearchOverlay } from './SearchOverlay.js';
 
 const NAV = [
   { label: 'Services', href: '/services' },
-  { label: 'Work', href: '/work' },
-  { label: 'Case Studies', href: '/case-studies' },
   { label: 'About', href: '/about' },
-  { label: 'Insights', href: '/insights' },
+  { label: 'Contact', href: '/contact' },
 ];
 
 export function Navbar() {
@@ -30,7 +28,7 @@ export function Navbar() {
       <header className={`nav ${scrolled ? 'nav--scrolled' : ''}`}>
         <Container>
           <div className="nav__inner">
-            <Link to="/" className="nav__logo" aria-label="Yukti Digital Solutions — home">
+            <Link to="/" className="nav__logo" aria-label="Yukti Digital Solutions, home">
               <Logo animated height={26} />
             </Link>
 

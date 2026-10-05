@@ -303,7 +303,7 @@
 }
 .gm-text {
   font-family: var(--font-body);
-  font-size: 15px;
+  font-size: 17px;
   fill: var(--color-ink);
 }
 .gm-text--light {
@@ -436,7 +436,8 @@
   text-align: center;
 }
 .logo-grid__cell img {
-  max-height: 40px;
+  max-height: 88px;
+  max-width: 100%;
   width: auto;
   object-fit: contain;
 }

@@ -28,7 +28,7 @@ export function Logo({
       className={`yk-logo ${animated ? 'yk-logo--animated' : ''} ${className}`.trim()}
       width={width}
       height={height}
-      viewBox="102 313 648 162"
+      viewBox="102 349 648 162"
       xmlns="http://www.w3.org/2000/svg"
       role={title ? 'img' : 'presentation'}
       aria-label={title || undefined}

@@ -101,7 +101,7 @@ export default function CaseStudyDetail() {
                     <p>“{t.quote}”</p>
                     <cite>
                       <strong>{t.clientName}</strong>
-                      {t.company && <span className="muted"> — {t.company}</span>}
+                      {t.company && <span className="muted"> | {t.company}</span>}
                     </cite>
                   </blockquote>
                 ))}

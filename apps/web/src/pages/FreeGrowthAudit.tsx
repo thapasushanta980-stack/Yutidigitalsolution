@@ -65,7 +65,7 @@ export default function FreeGrowthAudit() {
             as="h1"
             eyebrow="Free Growth Audit"
             title="See where your growth is hiding."
-            intro="Tell us about your brand and we'll review your website, search visibility and paid opportunities — no obligation."
+            intro="Tell us about your brand and we'll review your website, search visibility and paid opportunities, with no obligation."
           />
         </Container>
       </Section>
@@ -77,7 +77,7 @@ export default function FreeGrowthAudit() {
               <CheckCircle2 size={40} aria-hidden="true" color="var(--color-accent)" />
               <h2>Request received.</h2>
               <p className="muted">
-                Thank you — our team will review your details and get back to you shortly. A
+                Thank you. Our team will review your details and get back to you shortly. A
                 confirmation has been sent to your email.
               </p>
               <Button as="a" href="/">
@@ -86,7 +86,7 @@ export default function FreeGrowthAudit() {
             </div>
           ) : (
             <form onSubmit={handleSubmit(onSubmit)} noValidate style={{ maxWidth: 720 }}>
-              {/* Honeypot — visually hidden, must stay empty */}
+              {/* Honeypot: visually hidden, must stay empty */}
               <input
                 type="text"
                 tabIndex={-1}

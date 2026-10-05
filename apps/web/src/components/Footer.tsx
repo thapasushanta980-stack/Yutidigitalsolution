@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { ArrowUp, ArrowUpRight, Mail, Youtube } from 'lucide-react';
 import { Container, Button, Logo } from '@yukti/ui';
 import { useSiteSettings } from '../lib/queries.js';
 
@@ -7,9 +8,6 @@ const COLUMNS = [
     title: 'Explore',
     links: [
       ['Services', '/services'],
-      ['Work', '/work'],
-      ['Case Studies', '/case-studies'],
-      ['Insights', '/insights'],
     ],
   },
   {
@@ -38,7 +36,9 @@ export function Footer() {
         <div className="footer__cta">
           <div>
             <p className="eyebrow">Ready when you are</p>
-            <h2>Turn your digital presence into measurable growth.</h2>
+            <h2>
+              Turn your digital presence into measurable <span className="accent-underline">growth.</span>
+            </h2>
           </div>
           <Button as="a" href="/free-growth-audit" size="lg">
             Get Your Free Growth Audit
@@ -48,11 +48,19 @@ export function Footer() {
         <div className="footer__grid">
           <div className="footer__brand">
             <Logo variant="light" height={28} />
-            <p className="muted">{settings?.address ?? 'Kathmandu, Nepal'}</p>
-            <p className="muted">{settings?.coverage ?? 'South Asia · The Gulf · Australia'}</p>
+            <p className="muted">{settings?.address ?? 'Biratnagar, Nepal'}</p>
             {settings?.email && (
               <p>
-                <a href={`mailto:${settings.email}`}>{settings.email}</a>
+                <a className="footer__mail" href={`mailto:${settings.email}`}>
+                  <Mail size={16} aria-hidden="true" /> {settings.email}
+                </a>
+              </p>
+            )}
+            {settings?.social_youtube && (
+              <p>
+                <a className="footer__mail" href={settings.social_youtube} target="_blank" rel="noopener noreferrer">
+                  <Youtube size={16} aria-hidden="true" /> YouTube <ArrowUpRight size={14} aria-hidden="true" />
+                </a>
               </p>
             )}
           </div>
@@ -72,6 +80,9 @@ export function Footer() {
 
         <div className="footer__bar">
           <p className="muted">{settings?.footer_note ?? `© ${year} Yukti Digital Solutions`}</p>
+          <button type="button" className="footer__top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            Back to top <ArrowUp size={14} aria-hidden="true" />
+          </button>
         </div>
       </Container>
     </footer>

@@ -20,7 +20,7 @@ export default function Services() {
             as="h1"
             eyebrow="Services"
             title="Everything You Need to Grow."
-            intro="Strategy, creative, technology and performance marketing — integrated to compound results."
+            intro="Strategy, creative, technology and performance marketing, integrated to compound results."
           />
         </Container>
       </Section>

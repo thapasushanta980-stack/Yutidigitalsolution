@@ -15,7 +15,7 @@ const ORIGIN = typeof window !== 'undefined' ? window.location.origin : '';
 
 // Centralised head management: title, meta, canonical, OpenGraph, Twitter, JSON-LD.
 export function Seo({ title, description, path = '', image, type = 'website', jsonLd, noindex }: SeoProps) {
-  const fullTitle = title ? (title.includes(SITE_NAME) ? title : `${title} — ${SITE_NAME}`) : undefined;
+  const fullTitle = title ? (title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`) : undefined;
   const canonical = path ? `${ORIGIN}${path}` : undefined;
   return (
     <Helmet>
@@ -49,7 +49,7 @@ export function organizationJsonLd() {
       '@type': 'Organization',
       name: SITE_NAME,
       url: ORIGIN,
-      address: { '@type': 'PostalAddress', addressLocality: 'Kathmandu', addressCountry: 'NP' },
+      address: { '@type': 'PostalAddress', addressLocality: 'Biratnagar', addressCountry: 'NP' },
     },
     {
       '@context': 'https://schema.org',

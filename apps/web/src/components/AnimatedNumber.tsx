@@ -25,7 +25,8 @@ export function AnimatedNumber({ value, duration = 1200 }: { value: string; dura
       const tick = (now: number) => {
         const t = Math.min(1, (now - start) / duration);
         const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
-        const current = Math.round(target * eased).toLocaleString();
+        const rounded = Math.round(target * eased);
+        const current = match![1].includes(',') ? rounded.toLocaleString() : String(rounded);
         setDisplay(value.replace(match![1], current));
         if (t < 1) raf = requestAnimationFrame(tick);
       };

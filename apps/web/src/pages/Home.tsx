@@ -1,34 +1,43 @@
-import { MapPin } from 'lucide-react';
+import { BarChart3, Clapperboard, FileText, Smartphone, Tv, MousePointerClick, Palette, Search, Target } from 'lucide-react';
 import { Section, Container, Button } from '@yukti/ui';
+import { ChannelPlayer } from '../components/ChannelPlayer.js';
+import { CameraHUD } from '../components/CameraHUD.js';
+import { Marquee } from '../components/Marquee.js';
+import { team } from '../lib/staticData.js';
 import { Seo, organizationJsonLd } from '../lib/Seo.js';
 import { Reveal } from '../components/Reveal.js';
 import { SectionHeader } from '../components/SectionHeader.js';
 import { GrowthModel } from '../components/GrowthModel.js';
-import { ServiceCard, ProjectCard, CaseStudyCard } from '../components/Cards.js';
+import { ServiceCard } from '../components/Cards.js';
 import { QueryState } from '../components/QueryState.js';
-import { Testimonials } from '../components/Testimonials.js';
-import { AnimatedNumber } from '../components/AnimatedNumber.js';
+import { Stats } from '../components/Stats.js';
 import {
   useServices,
-  useMetrics,
   useClients,
-  useProjects,
-  useCaseStudies,
   useSiteSettings,
 } from '../lib/queries.js';
+
+const HEADLINE = 'Turn Your Digital Presence Into Measurable Growth.'.split(' ');
+const TICKER = ['Social Media Marketing', 'Video Production', 'TVC Ads', 'Meta Ads', 'SEO', 'Web Design', 'Content Marketing', 'Branding'];
+
+const PILLARS = [
+  { icon: Search, title: 'Search', text: 'Be found by customers already looking for you.' },
+  { icon: Palette, title: 'Creative', text: 'Design and video that make your brand stand out.' },
+  { icon: MousePointerClick, title: 'Website conversion', text: 'Turn visitors into enquiries and sales.' },
+  { icon: Target, title: 'Paid media', text: 'Meta ads that reach the right people at the right cost.' },
+  { icon: BarChart3, title: 'Measurement', text: 'Track every result so you know what works.' },
+  { icon: FileText, title: 'Reporting', text: 'Clear, simple reports with no jargon.' },
+];
 
 export default function Home() {
   const { data: settings } = useSiteSettings();
   const services = useServices();
-  const metrics = useMetrics();
   const clients = useClients();
-  const projects = useProjects(true);
-  const caseStudies = useCaseStudies(true);
 
   return (
     <>
       <Seo
-        title="Yukti Digital Solutions — Digital Growth Agency in Kathmandu"
+        title="Yukti Digital Solutions | Digital Growth Agency in Biratnagar"
         description={settings?.seo_description}
         path="/"
         jsonLd={organizationJsonLd()}
@@ -36,22 +45,29 @@ export default function Home() {
 
       {/* Hero */}
       <Section className="hero" tone="paper">
+        <CameraHUD />
+        <span className="hero__orb hero__orb--a" aria-hidden="true" />
+        <span className="hero__orb hero__orb--b" aria-hidden="true" />
+        <span className="hero__orb hero__orb--c" aria-hidden="true" />
+        <span className="hero__shape hero__shape--ring" aria-hidden="true" />
+        <span className="hero__shape hero__shape--square" aria-hidden="true" />
+        <span className="hero__shape hero__shape--dot" aria-hidden="true" />
+        <span className="hero__shape hero__shape--cross" aria-hidden="true" />
         <Container>
-          <Reveal>
-            <p className="hero__location eyebrow">
-              <MapPin size={14} aria-hidden="true" /> Kathmandu, Nepal
-            </p>
-          </Reveal>
           <Reveal delay={0.05}>
-            <h1 className="hero__title">
-              Turn Your Digital Presence Into Measurable{' '}
-              <span className="accent-underline">Growth.</span>
+            <h1 className="hero__title" aria-label="Turn Your Digital Presence Into Measurable Growth.">
+              {HEADLINE.map((w, i) => (
+                <span key={i} className="word" aria-hidden="true">
+                  <span style={{ ['--i' as string]: i }} className={w === 'Growth.' ? 'accent-underline' : undefined}>
+                    {w}&nbsp;
+                  </span>
+                </span>
+              ))}
             </h1>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="lead">
-              We combine strategy, creativity, technology and performance marketing to help ambitious
-              brands grow.
+              One-stop solutions for all digital marketing services: SEO, social media, Meta ads and video production. We DESIGN | ADVERTISE | VISUALISE.
             </p>
           </Reveal>
           <Reveal delay={0.15}>
@@ -77,6 +93,29 @@ export default function Home() {
           </Reveal>
         </Container>
       </Section>
+
+      <div className="ribbons" aria-hidden="true">
+        <div className="ribbon ribbon--gold">
+          <Marquee speed={34}>
+            {TICKER.map((t) => (
+              <span key={t} className="ribbon__item">
+                {t}
+                <i />
+              </span>
+            ))}
+          </Marquee>
+        </div>
+        <div className="ribbon ribbon--blue">
+          <Marquee speed={40} reverse>
+            {[...TICKER].reverse().map((t) => (
+              <span key={t} className="ribbon__item">
+                {t}
+                <i />
+              </span>
+            ))}
+          </Marquee>
+        </div>
+      </div>
 
       {/* Growth model */}
       <Section tone="alt">
@@ -106,11 +145,17 @@ export default function Home() {
             isEmpty={!clients.data?.length}
             emptyMessage="Client logos will appear here as they are added."
           >
-            <div className="logo-grid">
-              {clients.data?.map((c) => (
-                <div key={c.id} className="logo-grid__cell">
-                  {c.logoUrl ? <img src={c.logoUrl} alt={c.name} loading="lazy" /> : c.name}
-                </div>
+            <div className="logo-marquee">
+              {[0, 1].map((row) => (
+                <Marquee key={row} speed={row ? 55 : 48} reverse={row === 1}>
+                  {(clients.data ?? [])
+                    .filter((_, i) => i % 2 === row)
+                    .map((c) => (
+                      <div key={c.id} className="logo-tile">
+                        {c.logoUrl ? <img src={c.logoUrl} alt={c.name} loading="lazy" /> : c.name}
+                      </div>
+                    ))}
+                </Marquee>
               ))}
             </div>
           </QueryState>
@@ -120,23 +165,7 @@ export default function Home() {
       {/* Metrics */}
       <Section tone="ink">
         <Container>
-          <QueryState
-            isLoading={metrics.isLoading}
-            isError={metrics.isError}
-            isEmpty={!metrics.data?.length}
-          >
-            <div className="metrics">
-              {metrics.data?.map((m) => (
-                <div key={m.id} className="metric">
-                  <p className="metric__code">{m.code}</p>
-                  <p className="metric__value">
-                    <AnimatedNumber value={m.value} />
-                  </p>
-                  <p className="metric__label">{m.label}</p>
-                </div>
-              ))}
-            </div>
-          </QueryState>
+          <Stats />
         </Container>
       </Section>
 
@@ -149,14 +178,20 @@ export default function Home() {
               title="Growth You Can Measure."
               intro="Digital marketing should generate business growth, not just attention. Every engagement starts with numbers and ends with numbers."
             />
-            <ul className="prose muted" style={{ lineHeight: 2 }}>
-              <li>Search</li>
-              <li>Creative</li>
-              <li>Website conversion</li>
-              <li>Paid media</li>
-              <li>Measurement</li>
-              <li>Reporting</li>
-            </ul>
+            <div className="pillars">
+              {PILLARS.map((p, i) => (
+                <Reveal key={p.title} delay={i * 0.07}>
+                  <div className="pillar">
+                    <span className="pillar__no">0{i + 1}</span>
+                    <span className="pillar__icon" aria-hidden="true">
+                      <p.icon size={22} />
+                    </span>
+                    <h3>{p.title}</h3>
+                    <p>{p.text}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </Container>
       </Section>
@@ -177,49 +212,53 @@ export default function Home() {
         </Container>
       </Section>
 
-      {/* Featured work */}
+      {/* Showreel */}
       <Section tone="paper">
         <Container>
-          <SectionHeader index="02" eyebrow="Selected work" title="Built to create impact." />
-          <QueryState
-            isLoading={projects.isLoading}
-            isError={projects.isError}
-            isEmpty={!projects.data?.length}
-            emptyMessage="Featured projects will appear here."
-          >
-            <div className="grid grid-3">
-              {projects.data?.map((p) => <ProjectCard key={p.id} project={p} />)}
+          <div className="showcase">
+            <div className="showcase__text">
+              <SectionHeader
+                index="02"
+                eyebrow="Watch"
+                title="Our work, on screen."
+                intro="Motion graphics, brand films and ads, straight from the Yukti studio. Press play and scroll through our latest videos."
+              />
+              <ul className="showcase__list">
+                <li><Clapperboard size={18} aria-hidden="true" /> Motion graphics and brand films</li>
+                <li><Tv size={18} aria-hidden="true" /> TVC ads built for screens big and small</li>
+                <li><Smartphone size={18} aria-hidden="true" /> Reels and social videos that get watched</li>
+              </ul>
+              {settings?.social_youtube && (
+                <Button as="a" href={settings.social_youtube} target="_blank" rel="noopener noreferrer">
+                  Visit our YouTube channel
+                </Button>
+              )}
             </div>
-          </QueryState>
-          <div style={{ marginTop: 'var(--space-8)' }}>
-            <Button as="a" href="/work" variant="text">
-              View all work
-            </Button>
+
+            <Reveal>
+              <ChannelPlayer />
+            </Reveal>
           </div>
         </Container>
       </Section>
 
-      {/* Case studies */}
-      <Section tone="alt">
-        <Container>
-          <SectionHeader index="03" eyebrow="Proof" title="The Proof Is in the Numbers." />
-          <QueryState
-            isLoading={caseStudies.isLoading}
-            isError={caseStudies.isError}
-            isEmpty={!caseStudies.data?.length}
-            emptyMessage="Case studies will appear here."
-          >
-            <div className="grid grid-3">
-              {caseStudies.data?.map((c) => <CaseStudyCard key={c.id} item={c} />)}
-            </div>
-          </QueryState>
-        </Container>
-      </Section>
-
-      {/* Testimonial */}
+      {/* Founders */}
       <Section tone="paper">
         <Container>
-          <Testimonials />
+          <SectionHeader index="03" eyebrow="Leadership" title="The people behind Yukti." />
+          <div className="grid grid-2 team-grid">
+            {team.map((m) => (
+              <div key={m.id} className="card card--project">
+                <div className="card__media">
+                  <img src={m.photo ?? ''} alt={m.name} loading="lazy" />
+                </div>
+                <div className="card__body">
+                  <h3>{m.name}</h3>
+                  <p className="muted">{m.role}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </Container>
       </Section>
     </>

@@ -63,7 +63,7 @@ export function MobileMenu({ open, onClose, items }: Props) {
             <Button as="a" href="/free-growth-audit" onClick={onClose}>
               Get Your Free Growth Audit
             </Button>
-            <p className="muted">Kathmandu, Nepal</p>
+            <p className="muted">Biratnagar, Nepal</p>
           </div>
         </motion.div>
       )}

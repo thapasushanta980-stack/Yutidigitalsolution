@@ -20,7 +20,7 @@ export function Testimonials() {
           {(t.clientRole || t.company) && (
             <span className="muted">
               {' '}
-              — {[t.clientRole, t.company].filter(Boolean).join(', ')}
+              {[t.clientRole, t.company].filter(Boolean).join(', ')}
             </span>
           )}
         </cite>

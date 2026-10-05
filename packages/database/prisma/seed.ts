@@ -38,27 +38,24 @@ async function main() {
 
   // ── Services (real service catalogue, DRAFT-free = PUBLISHED) ──
   const services = [
-    ['SEO', 'seo', 'Search visibility that compounds.', 'search'],
-    ['Performance Marketing', 'performance-marketing', 'Paid media engineered for ROAS.', 'target'],
-    ['Social Media Marketing', 'social-media-marketing', 'Audience growth and engagement.', 'share-2'],
-    ['Video Production', 'video-production', 'Story-driven video that converts.', 'video'],
-    ['Web Development', 'web-development', 'Fast, accessible, conversion-first sites.', 'code'],
-    ['Brand Strategy', 'brand-strategy', 'Positioning that earns preference.', 'compass'],
-    ['Content Marketing', 'content-marketing', 'Content that ranks and resonates.', 'file-text'],
-    ['Creative & Design', 'creative-and-design', 'Editorial, high-end visual systems.', 'palette'],
+    ['Social Media Marketing', 'social-media-marketing', 'Audience growth and engagement across the platforms your customers use.', 'share-2'],
+    ['Video Production and TVC Ads', 'video-production-tvc-ads', 'Story-driven video and TV commercials that convert.', 'video'],
+    ['Meta Ads Services', 'meta-ads-services', 'Facebook and Instagram advertising built for measurable results.', 'target'],
+    ['SEO', 'seo', 'Search Engine Optimization that grows visibility and compounds over time.', 'search'],
   ];
+  await prisma.service.deleteMany({ where: { slug: { notIn: services.map((x) => x[1]) } } });
   await Promise.all(
     services.map(([title, slug, shortDescription, icon], i) =>
       prisma.service.upsert({
         where: { slug },
-        update: {},
+        update: { title, shortDescription, description: shortDescription, icon, featured: true, displayOrder: i },
         create: {
           title,
           slug,
           shortDescription,
-          description: `${shortDescription} [Placeholder body — edit in admin CMS.]`,
+          description: shortDescription,
           icon,
-          featured: i < 4,
+          featured: true,
           displayOrder: i,
           status: ContentStatus.PUBLISHED,
         },
@@ -67,9 +64,50 @@ async function main() {
   );
   console.log(`✓ ${services.length} services`);
 
+  // ── Clients (logos live in apps/web/public/clients) ────
+  const clientList = [
+    ['Greenleaf Builders', 'greenleaf-builders.jpeg'],
+    ['Ayu Superspeciality Clinic', 'ayu-superspeciality-clinic.jpeg'],
+    ['Birat School of Hospitality Management', 'bshm.jpeg'],
+    ['Sazilo Automation', 'sazilo-automation.jpeg'],
+    ['Sigma Kitchen & Home Appliances', 'sigma-kitchen.jpeg'],
+    ['A&A Builders and Construction', 'aa-builders.jpeg'],
+    ['Group Three Multipurpose Pvt. Ltd.', 'group-three-multipurpose.jpeg'],
+    ['Inspire Connect College', 'inspire-connect-college.jpeg'],
+    ['Kuti Home Decor', 'kuti-home-decor.png'],
+    ['Saptakoshi Hospital', 'saptakoshi-hospital.jpeg'],
+    ['Sahara Animal Care', 'sahara-animal-care.jpeg'],
+    ['Delight Paints', 'delight-paints.jpeg'],
+    ['Sumeru Food Production House', 'sumeru-food.jpeg'],
+    ['The IELTS Institute', 'ielts-institute.png'],
+    ['Chef Fork Brand', 'chef-fork-brand.jpeg'],
+    ['Saraswati Brand', 'saraswati-brand.jpeg'],
+    ['MS Brand', 'ms-brand.jpeg'],
+  ];
+  await prisma.client.deleteMany({});
+  await prisma.client.createMany({
+    data: clientList.map(([name, file], i) => ({
+      name,
+      logoUrl: `/clients/${file}`,
+      displayOrder: i,
+      status: ContentStatus.PUBLISHED,
+    })),
+  });
+  console.log(`✓ ${clientList.length} clients`);
+
+  // ── Team (photos live in apps/web/public/team) ─────────
+  await prisma.teamMember.deleteMany({});
+  await prisma.teamMember.createMany({
+    data: [
+      { name: 'Sanjay Raut', role: 'Founder', photo: '/team/sanjay-raut.jpg', displayOrder: 0 },
+      { name: 'Saugat Tamang', role: 'Co-Founder', photo: '/team/saugat-tamang.jpg', displayOrder: 1 },
+    ].map((m) => ({ ...m, status: ContentStatus.PUBLISHED })),
+  });
+  console.log('✓ 2 team members');
+
   // ── Metrics (placeholder values — edit in CMS, no fake stats) ──
   const metrics = [
-    ['F-01', 'Founded', '2026'],
+    ['F-01', 'Founded', '2021'],
     ['F-02', 'Specialists', '—'],
     ['F-03', 'Brands Served', '—'],
     ['F-04', 'Markets', '4'],
@@ -78,7 +116,7 @@ async function main() {
     metrics.map(([code, label, value], i) =>
       prisma.metric.upsert({
         where: { code },
-        update: {},
+        update: { label, value },
         create: { code, label, value, displayOrder: i, status: ContentStatus.PUBLISHED },
       }),
     ),
@@ -108,25 +146,25 @@ async function main() {
   // ── Site settings ──────────────────────────────────────
   const settings: Record<string, string> = {
     company_name: 'Yukti Digital Solutions',
-    tagline: 'Turn Your Digital Presence Into Measurable Growth.',
-    email: 'hello@yukti.example',
+    tagline: 'We DESIGN | ADVERTISE | VISUALISE.',
+    email: 'contact@yuktidigital.com',
     phone: '+977-0000000000',
-    address: 'Kathmandu, Nepal',
+    address: 'Biratnagar, Nepal',
     coverage: 'South Asia · The Gulf · Australia',
     social_instagram: '',
     social_facebook: '',
     social_linkedin: '',
-    social_youtube: '',
+    social_youtube: 'https://www.youtube.com/@Yuktids',
     social_tiktok: '',
     social_x: '',
     google_maps_url: '',
-    seo_title: 'Yukti Digital Solutions — Digital Growth Agency in Kathmandu',
+    seo_title: 'Yukti Digital Solutions | Digital Growth Agency in Biratnagar',
     seo_description:
       'We combine strategy, creativity, technology and performance marketing to help ambitious brands grow.',
-    footer_note: '© 2026 Yukti Digital Solutions',
+    footer_note: '© 2026 Yukti Digital Solutions · Business Intelligence Agency',
   };
   for (const [key, value] of Object.entries(settings)) {
-    await prisma.siteSetting.upsert({ where: { key }, update: {}, create: { key, value } });
+    await prisma.siteSetting.upsert({ where: { key }, update: ['email', 'social_youtube', 'tagline', 'footer_note'].includes(key) ? { value } : {}, create: { key, value } });
   }
   console.log(`✓ ${Object.keys(settings).length} site settings`);
 

@@ -44,13 +44,13 @@ export default function Contact() {
     <>
       <Seo
         title="Contact"
-        description="Get in touch with Yukti Digital Solutions in Kathmandu, Nepal."
+        description="Get in touch with Yukti Digital Solutions in Biratnagar, Nepal."
         path="/contact"
         jsonLd={{
           '@context': 'https://schema.org',
           '@type': 'LocalBusiness',
           name: 'Yukti Digital Solutions',
-          address: { '@type': 'PostalAddress', addressLocality: 'Kathmandu', addressCountry: 'NP' },
+          address: { '@type': 'PostalAddress', addressLocality: 'Biratnagar', addressCountry: 'NP' },
           email: settings?.email,
           telephone: settings?.phone,
         }}
@@ -61,7 +61,7 @@ export default function Contact() {
             as="h1"
             eyebrow="Contact"
             title="Let's talk growth."
-            intro={`Yukti Digital Solutions — ${settings?.address ?? 'Kathmandu, Nepal'}. Working with brands across ${settings?.coverage ?? 'South Asia, the Gulf and Australia'}.`}
+            intro={`Yukti Digital Solutions, ${settings?.address ?? 'Biratnagar, Nepal'}.`}
           />
         </Container>
       </Section>
@@ -82,7 +82,7 @@ export default function Contact() {
                     Phone: <a href={`tel:${settings.phone}`}>{settings.phone}</a>
                   </li>
                 )}
-                <li>{settings?.address ?? 'Kathmandu, Nepal'}</li>
+                <li>{settings?.address ?? 'Biratnagar, Nepal'}</li>
               </ul>
               {mapsUrl ? (
                 <div className="map-embed">
@@ -100,7 +100,7 @@ export default function Contact() {
                 <div className="form-success" role="status">
                   <CheckCircle2 size={36} aria-hidden="true" color="var(--color-accent)" />
                   <h3>Message sent.</h3>
-                  <p className="muted">Thanks for reaching out — we'll be in touch shortly.</p>
+                  <p className="muted">Thanks for reaching out. We'll be in touch shortly.</p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>

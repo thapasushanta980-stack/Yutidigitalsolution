@@ -2,20 +2,18 @@ import { Section, Container, Button } from '@yukti/ui';
 import { Seo } from '../lib/Seo.js';
 import { SectionHeader } from '../components/SectionHeader.js';
 import { QueryState } from '../components/QueryState.js';
-import { useTeam, useValues, useMetrics, useSiteSettings } from '../lib/queries.js';
-import { AnimatedNumber } from '../components/AnimatedNumber.js';
+import { useTeam, useValues } from '../lib/queries.js';
+import { Stats } from '../components/Stats.js';
 
 export default function About() {
   const team = useTeam();
   const values = useValues();
-  const metrics = useMetrics();
-  const { data: settings } = useSiteSettings();
 
   return (
     <>
       <Seo
         title="About"
-        description="A growth agency built in Kathmandu, working with brands across South Asia, the Gulf and Australia."
+        description="A digital marketing agency based in Biratnagar, Nepal."
         path="/about"
       />
       <Section className="page-hero" tone="paper">
@@ -23,8 +21,8 @@ export default function About() {
           <SectionHeader
             as="h1"
             eyebrow="About"
-            title="A Growth Agency Built in Kathmandu."
-            intro="We help ambitious brands turn digital presence into measurable growth — combining strategy, creativity, technology and performance marketing."
+            title="One-Stop Solutions for Digital Marketing."
+            intro="End-to-end solutions to bring your company's digital presence into existence. We DESIGN | ADVERTISE | VISUALISE."
           />
         </Container>
       </Section>
@@ -32,19 +30,7 @@ export default function About() {
       {/* At a glance */}
       <Section tone="ink">
         <Container>
-          <QueryState isLoading={metrics.isLoading} isError={metrics.isError} isEmpty={!metrics.data?.length}>
-            <div className="metrics">
-              {metrics.data?.map((m) => (
-                <div key={m.id} className="metric">
-                  <p className="metric__code">{m.code}</p>
-                  <p className="metric__value">
-                    <AnimatedNumber value={m.value} />
-                  </p>
-                  <p className="metric__label">{m.label}</p>
-                </div>
-              ))}
-            </div>
-          </QueryState>
+          <Stats />
         </Container>
       </Section>
 
@@ -52,15 +38,18 @@ export default function About() {
       <Section tone="paper">
         <Container>
           <div className="split">
-            <SectionHeader eyebrow="Our story" title="Senior hands, plain reporting, real outcomes." />
+            <SectionHeader eyebrow="Our story" title="Founded in 2021. Built on experience." />
             <div className="prose muted">
               <p className="dropcap">
-                Yukti was built on a simple belief: digital marketing should generate business growth,
-                not just attention. We pair senior specialists with clear measurement so you always
-                know what worked and why.
+                Yukti Digital Solutions is a Business Intelligence Agency offering one-stop solutions
+                for all digital marketing services. We are experienced in SEO (Search Engine
+                Optimization), Social Media Marketing, Web Design, Content Marketing and Advertising,
+                with core expertise across various languages and platforms.
               </p>
               <p>
-                From our base in Kathmandu, we work with brands across {settings?.coverage ?? 'South Asia, the Gulf and Australia'}.
+                Founded in 2021, Yukti provides a wide spectrum of technology solutions and services
+                to a diverse customer base. The promoters of the company have years of experience in
+                technology and enterprises.
               </p>
             </div>
           </div>
@@ -95,7 +84,7 @@ export default function About() {
             isEmpty={!team.data?.length}
             emptyMessage="Team profiles will appear here."
           >
-            <div className="grid grid-4">
+            <div className="grid grid-2 team-grid">
               {team.data?.map((m) => (
                 <div key={m.id} className="card card--project">
                   <div className="card__media">
