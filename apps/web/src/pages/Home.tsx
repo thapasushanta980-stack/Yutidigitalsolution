@@ -1,14 +1,20 @@
-import { BarChart3, Clapperboard, FileText, Smartphone, Tv, MousePointerClick, Palette, Search, Target } from 'lucide-react';
+import { Clapperboard, Smartphone, Tv } from 'lucide-react';
+import { useLayoutEffect } from 'react';
 import { Section, Container, Button } from '@yukti/ui';
 import { ChannelPlayer } from '../components/ChannelPlayer.js';
-import { CameraHUD } from '../components/CameraHUD.js';
 import { Marquee } from '../components/Marquee.js';
 import { team } from '../lib/staticData.js';
 import { Seo, organizationJsonLd } from '../lib/Seo.js';
 import { Reveal } from '../components/Reveal.js';
 import { SectionHeader } from '../components/SectionHeader.js';
 import { GrowthModel } from '../components/GrowthModel.js';
-import { ServiceCard } from '../components/Cards.js';
+import { ServiceStack } from '../components/ServiceStack.js';
+import { Capabilities } from '../components/Capabilities.js';
+import { ServiceMarquee } from '../components/ServiceMarquee.js';
+import { HeroArt } from '../components/HeroArt.js';
+import { HeroTitle } from '../components/HeroTitle.js';
+import { Stagger } from '../components/Stagger.js';
+import { gsap, whenMotionOK } from '../lib/motion.js';
 import { QueryState } from '../components/QueryState.js';
 import { Stats } from '../components/Stats.js';
 import {
@@ -21,18 +27,32 @@ const HEADLINE = 'Turn Your Digital Presence Into Measurable Growth.'.split(' ')
 const TICKER = ['Social Media Marketing', 'Video Production', 'TVC Ads', 'Meta Ads', 'SEO', 'Web Design', 'Content Marketing', 'Branding'];
 
 const PILLARS = [
-  { icon: Search, title: 'Search', text: 'Be found by customers already looking for you.' },
-  { icon: Palette, title: 'Creative', text: 'Design and video that make your brand stand out.' },
-  { icon: MousePointerClick, title: 'Website conversion', text: 'Turn visitors into enquiries and sales.' },
-  { icon: Target, title: 'Paid media', text: 'Meta ads that reach the right people at the right cost.' },
-  { icon: BarChart3, title: 'Measurement', text: 'Track every result so you know what works.' },
-  { icon: FileText, title: 'Reporting', text: 'Clear, simple reports with no jargon.' },
+  { title: 'Search', text: 'Be found by customers already looking for you.' },
+  { title: 'Creative', text: 'Design and video that make your brand stand out.' },
+  { title: 'Website conversion', text: 'Turn visitors into enquiries and sales.' },
+  { title: 'Paid media', text: 'Meta ads that reach the right people at the right cost.' },
+  { title: 'Measurement', text: 'Track every result so you know what works.' },
+  { title: 'Reporting', text: 'Clear, simple reports with no jargon.' },
 ];
 
 export default function Home() {
   const { data: settings } = useSiteSettings();
   const services = useServices();
   const clients = useClients();
+
+  // Hero recedes as the page scrolls: drifts up and softly fades.
+  useLayoutEffect(
+    () =>
+      whenMotionOK(() => {
+        gsap.to('.hero__inner', {
+          yPercent: -12,
+          opacity: 0.1,
+          ease: 'none',
+          scrollTrigger: { trigger: '.hero', start: 'center top', end: 'bottom top', scrub: true },
+        });
+      }),
+    [],
+  );
 
   return (
     <>
@@ -45,26 +65,11 @@ export default function Home() {
 
       {/* Hero */}
       <Section className="hero" tone="paper">
-        <CameraHUD />
-        <span className="hero__orb hero__orb--a" aria-hidden="true" />
-        <span className="hero__orb hero__orb--b" aria-hidden="true" />
-        <span className="hero__orb hero__orb--c" aria-hidden="true" />
-        <span className="hero__shape hero__shape--ring" aria-hidden="true" />
-        <span className="hero__shape hero__shape--square" aria-hidden="true" />
-        <span className="hero__shape hero__shape--dot" aria-hidden="true" />
-        <span className="hero__shape hero__shape--cross" aria-hidden="true" />
         <Container>
-          <Reveal delay={0.05}>
-            <h1 className="hero__title" aria-label="Turn Your Digital Presence Into Measurable Growth.">
-              {HEADLINE.map((w, i) => (
-                <span key={i} className="word" aria-hidden="true">
-                  <span style={{ ['--i' as string]: i }} className={w === 'Growth.' ? 'accent-underline' : undefined}>
-                    {w}&nbsp;
-                  </span>
-                </span>
-              ))}
-            </h1>
-          </Reveal>
+          <div className="hero__inner">
+          <div className="hero__layout">
+          <div className="hero__copy">
+          <HeroTitle words={HEADLINE} highlight={['Growth.']} />
           <Reveal delay={0.1}>
             <p className="lead">
               Digital marketing from Biratnagar, Nepal: SEO, social media management, Meta ads and video production to help customers find and choose your business.
@@ -80,42 +85,29 @@ export default function Home() {
               </Button>
             </div>
           </Reveal>
-          <Reveal delay={0.2}>
-            <div className="hero__pillars">
-              <span>Strategy</span>
-              <span aria-hidden="true">+</span>
-              <span>Creative</span>
-              <span aria-hidden="true">+</span>
-              <span>Technology</span>
-              <span aria-hidden="true">+</span>
-              <span>Performance</span>
-            </div>
-          </Reveal>
+          </div>
+          <div className="hero__visual"><HeroArt /></div>
+          </div>
+        </div>
         </Container>
       </Section>
 
-      <div className="ribbons" aria-hidden="true">
-        <div className="ribbon ribbon--gold">
-          <Marquee speed={34}>
-            {TICKER.map((t) => (
-              <span key={t} className="ribbon__item">
-                {t}
-                <i />
-              </span>
-            ))}
-          </Marquee>
-        </div>
-        <div className="ribbon ribbon--blue">
-          <Marquee speed={40} reverse>
-            {[...TICKER].reverse().map((t) => (
-              <span key={t} className="ribbon__item">
-                {t}
-                <i />
-              </span>
-            ))}
-          </Marquee>
-        </div>
-      </div>
+      <Capabilities />
+      <ServiceMarquee items={TICKER} />
+
+      {/* Services: stacking deck */}
+      <Section tone="paper">
+        <Container>
+          <SectionHeader index="01" eyebrow="Services" title="Everything You Need to Grow." />
+          <QueryState
+            isLoading={services.isLoading}
+            isError={services.isError}
+            isEmpty={!services.data?.length}
+          >
+            <ServiceStack services={services.data ?? []} />
+          </QueryState>
+        </Container>
+      </Section>
 
       {/* Growth model */}
       <Section tone="alt">
@@ -183,9 +175,6 @@ export default function Home() {
                 <Reveal key={p.title} delay={i * 0.07}>
                   <div className="pillar">
                     <span className="pillar__no">0{i + 1}</span>
-                    <span className="pillar__icon" aria-hidden="true">
-                      <p.icon size={22} />
-                    </span>
                     <h3>{p.title}</h3>
                     <p>{p.text}</p>
                   </div>
@@ -193,22 +182,6 @@ export default function Home() {
               ))}
             </div>
           </div>
-        </Container>
-      </Section>
-
-      {/* Services */}
-      <Section tone="alt">
-        <Container>
-          <SectionHeader index="01" eyebrow="Services" title="Everything You Need to Grow." />
-          <QueryState
-            isLoading={services.isLoading}
-            isError={services.isError}
-            isEmpty={!services.data?.length}
-          >
-            <div className="grid grid-4">
-              {services.data?.map((s, i) => <ServiceCard key={s.id} service={s} index={i} />)}
-            </div>
-          </QueryState>
         </Container>
       </Section>
 
@@ -246,7 +219,7 @@ export default function Home() {
       <Section tone="paper">
         <Container>
           <SectionHeader index="03" eyebrow="Leadership" title="The people behind Yukti." />
-          <div className="grid grid-2 team-grid">
+          <Stagger className="grid grid-2 team-grid">
             {team.map((m) => (
               <div key={m.id} className="card card--project">
                 <div className="card__media">
@@ -258,7 +231,7 @@ export default function Home() {
                 </div>
               </div>
             ))}
-          </div>
+          </Stagger>
         </Container>
       </Section>
     </>

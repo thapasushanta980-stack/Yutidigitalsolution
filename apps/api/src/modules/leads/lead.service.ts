@@ -1,6 +1,6 @@
 import { prisma, LeadSource, Prisma } from '@yukti/database';
 import { ApiError } from '../../utils/ApiError.js';
-import { sendEmail } from '../../utils/email.js';
+import { sendEmail, inquiryBody } from '../../utils/email.js';
 import { env } from '../../config/env.js';
 import type { CreateContactInput, CreateLeadInput, UpdateLeadInput } from './lead.schema.js';
 
@@ -28,8 +28,20 @@ export async function createLead(input: CreateLeadInput) {
   if (env.MAIL_TO_INTERNAL) {
     sendEmail({
       to: env.MAIL_TO_INTERNAL,
+      replyTo: lead.email,
       subject: `New growth audit request — ${lead.name}`,
-      text: `New lead:\nName: ${lead.name}\nEmail: ${lead.email}\nWebsite: ${lead.website}\nChallenge: ${lead.challenge}`,
+      ...inquiryBody('New growth audit request', {
+        Name: lead.name,
+        Company: lead.company,
+        Email: lead.email,
+        Phone: lead.phone,
+        Website: lead.website,
+        Industry: lead.industry,
+        Budget: lead.budget,
+        Services: input.services?.join(', '),
+        Challenge: lead.challenge,
+        Message: lead.message,
+      }),
     });
   }
   sendEmail({
@@ -56,8 +68,15 @@ export async function createContact(input: CreateContactInput) {
   if (env.MAIL_TO_INTERNAL) {
     sendEmail({
       to: env.MAIL_TO_INTERNAL,
+      replyTo: submission.email,
       subject: `New contact message — ${submission.name}`,
-      text: `${submission.name} <${submission.email}>\n\n${submission.message}`,
+      ...inquiryBody('New contact message', {
+        Name: submission.name,
+        Email: submission.email,
+        Phone: submission.phone,
+        Subject: submission.subject,
+        Message: submission.message,
+      }),
     });
   }
   return { id: submission.id };

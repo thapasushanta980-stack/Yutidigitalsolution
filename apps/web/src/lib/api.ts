@@ -2,7 +2,8 @@ import type { ApiResponse } from '@yukti/types';
 import * as data from './staticData.js';
 
 // Static build: content is served from ./staticData.ts instead of the API.
-// Keep content reads behind this adapter for a future CMS integration.
+// The same fetchData/postData signatures are kept so pages need no changes
+// and the CMS-backed API can be re-enabled later.
 
 function resolve(url: string, params: Record<string, unknown> = {}): { data: unknown; meta?: unknown } {
   const path = url.replace(/^\/+/, '');
@@ -54,4 +55,62 @@ export async function fetchData<T>(url: string, params?: Record<string, unknown>
   const res = await api.get<ApiResponse<T>>(url, { params });
   if (!res.data.success) throw new Error(res.data.error.message);
   return res.data.data;
+}
+
+// No backend: inquiries are emailed through FormSubmit (formsubmit.co) to the
+// agency inbox. Override the recipient with VITE_INQUIRY_EMAIL at build time.
+const INQUIRY_EMAIL = (import.meta.env.VITE_INQUIRY_EMAIL as string | undefined) ?? 'lukeb3968@gmail.com';
+
+const LABELS: Record<string, string> = {
+  name: 'Name',
+  company: 'Company',
+  email: 'Email',
+  phone: 'Phone',
+  website: 'Website',
+  industry: 'Industry',
+  budget: 'Monthly budget',
+  challenge: 'Primary challenge',
+  services: 'Services interested in',
+  subject: 'Subject',
+  message: 'Message',
+};
+
+export async function postData<T>(url: string, body: unknown): Promise<T> {
+  const input = (body ?? {}) as Record<string, unknown>;
+  const isAudit = url.includes('leads');
+
+  // Human-readable, ordered fields only (the honeypot is never sent).
+  const fields: Record<string, string> = {};
+  for (const [key, label] of Object.entries(LABELS)) {
+    const v = input[key];
+    const text = Array.isArray(v) ? v.join(', ') : v == null ? '' : String(v).trim();
+    if (text) fields[label] = text;
+  }
+
+  const payload = {
+    ...fields,
+    _subject: isAudit
+      ? `New Free Growth Audit request - ${input.name ?? 'website visitor'}`
+      : `New website enquiry - ${input.name ?? 'website visitor'}`,
+    _replyto: input.email ?? '',
+    _template: 'table',
+    _captcha: 'false',
+  };
+
+  let res: Response;
+  try {
+    res = await fetch(`https://formsubmit.co/ajax/${INQUIRY_EMAIL}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(payload),
+    });
+  } catch {
+    throw new Error('We could not send your message. Check your connection and try again.');
+  }
+
+  const result = (await res.json().catch(() => null)) as { success?: string | boolean; message?: string } | null;
+  if (!res.ok || !(result?.success === true || result?.success === 'true')) {
+    throw new Error(result?.message || 'We could not send your message. Please email us directly.');
+  }
+  return result as T;
 }

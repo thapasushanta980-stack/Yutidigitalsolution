@@ -1,4 +1,5 @@
 import { Section, Container, Button } from '@yukti/ui';
+import { Stagger } from '../components/Stagger.js';
 import { Seo } from '../lib/Seo.js';
 import { SectionHeader } from '../components/SectionHeader.js';
 import { QueryState } from '../components/QueryState.js';
@@ -61,7 +62,7 @@ export default function About() {
         <Container>
           <SectionHeader eyebrow="What we stand for" title="Principles that shape the work." />
           <QueryState isLoading={values.isLoading} isError={values.isError} isEmpty={!values.data?.length}>
-            <div className="grid grid-4">
+            <Stagger className="grid grid-4">
               {values.data?.map((v, i) => (
                 <div key={v.id} className="card card--service">
                   <span className="card__index">{String(i + 1).padStart(2, '0')}</span>
@@ -69,7 +70,7 @@ export default function About() {
                   <p className="muted">{v.description}</p>
                 </div>
               ))}
-            </div>
+            </Stagger>
           </QueryState>
         </Container>
       </Section>
@@ -84,7 +85,7 @@ export default function About() {
             isEmpty={!team.data?.length}
             emptyMessage="Team profiles will appear here."
           >
-            <div className="grid grid-2 team-grid">
+            <Stagger className="grid grid-2 team-grid">
               {team.data?.map((m) => (
                 <div key={m.id} className="card card--project">
                   <div className="card__media">
@@ -100,7 +101,7 @@ export default function About() {
                   </div>
                 </div>
               ))}
-            </div>
+            </Stagger>
           </QueryState>
         </Container>
       </Section>

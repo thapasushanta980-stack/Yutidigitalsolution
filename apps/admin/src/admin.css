@@ -23,7 +23,7 @@ h3 {
 code {
   background: var(--color-paper-alt);
   padding: 1px 5px;
-  border-radius: 3px;
+  border-radius: var(--radius-sm);
   font-size: 0.85em;
 }
 
@@ -93,7 +93,7 @@ code {
   color: var(--color-paper);
 }
 .admin-navlink.is-active {
-  background: var(--color-accent);
+  background: rgba(250, 249, 246, 0.14);
   color: var(--color-paper);
 }
 .admin-user {
@@ -220,41 +220,46 @@ code {
 .badge {
   display: inline-block;
   padding: 3px 10px;
-  border-radius: 100px;
+  border-radius: var(--radius-sm);
   font-size: 0.72rem;
   font-weight: 500;
   border: 1px solid var(--color-line);
 }
 .badge--new {
-  background: #eef4ff;
-  border-color: #b9cdf0;
+  background: color-mix(in srgb, var(--color-info) 12%, var(--color-white));
+  border-color: color-mix(in srgb, var(--color-info) 35%, var(--color-white));
+  color: var(--color-info);
 }
 .badge--contacted {
-  background: #fff7e6;
-  border-color: #f0d9a0;
+  background: color-mix(in srgb, var(--color-warning) 12%, var(--color-white));
+  border-color: color-mix(in srgb, var(--color-warning) 35%, var(--color-white));
+  color: var(--color-warning);
 }
 .badge--qualified {
-  background: #eefaf0;
-  border-color: #a9dfb6;
+  background: color-mix(in srgb, var(--color-success) 12%, var(--color-white));
+  border-color: color-mix(in srgb, var(--color-success) 35%, var(--color-white));
+  color: var(--color-success);
 }
 .badge--converted {
-  background: #14140f;
-  color: var(--color-paper);
-  border-color: #14140f;
+  background: var(--color-success);
+  border-color: var(--color-success);
+  color: var(--color-on-accent);
 }
 .badge--lost {
-  background: #f7eeee;
-  border-color: #e0b9b9;
+  background: color-mix(in srgb, var(--color-error) 12%, var(--color-white));
+  border-color: color-mix(in srgb, var(--color-error) 35%, var(--color-white));
+  color: var(--color-error);
 }
 .badge--published {
-  background: #eefaf0;
-  border-color: #a9dfb6;
+  background: color-mix(in srgb, var(--color-success) 12%, var(--color-white));
+  border-color: color-mix(in srgb, var(--color-success) 35%, var(--color-white));
+  color: var(--color-success);
 }
 .badge--draft {
   background: var(--color-paper-alt);
 }
 .badge--archived {
-  background: #f0efe9;
+  background: var(--color-paper-alt);
   color: var(--color-muted);
 }
 
@@ -271,7 +276,7 @@ code {
   color: var(--color-accent);
 }
 .link-btn--danger:hover {
-  color: #b4432f;
+  color: var(--color-error);
 }
 
 .split {

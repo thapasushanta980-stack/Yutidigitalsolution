@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Stagger } from '../components/Stagger.js';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { Section, Container } from '@yukti/ui';
 import type { ApiResponse, PaginationMeta } from '@yukti/types';
@@ -86,9 +87,9 @@ export default function Insights() {
             isEmpty={!data?.items.length}
             emptyMessage="No articles found."
           >
-            <div className="grid grid-3">
+            <Stagger className="grid grid-3">
               {data?.items.map((i) => <InsightCard key={i.id} item={i} />)}
-            </div>
+            </Stagger>
           </QueryState>
 
           {data?.meta && data.meta.totalPages > 1 && (

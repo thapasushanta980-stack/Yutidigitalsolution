@@ -1,58 +1,37 @@
-import { useEffect, useRef, useState } from 'react';
-import { useReducedMotion } from 'framer-motion';
+import { useLayoutEffect, useRef } from 'react';
+import { gsap, whenMotionOK } from '../lib/motion.js';
 
-// Counts the trailing integer of a value up when it scrolls into view,
-// preserving any prefix/suffix (e.g. "+42%", "4", "XX+", "—"). Values with no
-// digits (like "—") render unchanged. Respects prefers-reduced-motion.
-export function AnimatedNumber({ value, duration = 1200 }: { value: string; duration?: number }) {
-  const reduced = useReducedMotion();
+// Counts the first integer in a value up when it scrolls into view, keeping any
+// prefix/suffix (e.g. "17+", "+42%"). Values with no digits render unchanged.
+export function AnimatedNumber({ value, duration = 1.6 }: { value: string; duration?: number }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const match = value.match(/(\d[\d,]*)/);
-  const target = match ? Number(match[1].replace(/,/g, '')) : null;
-  const [display, setDisplay] = useState(() => (target !== null && !reduced ? value.replace(match![1], '0') : value));
 
-  useEffect(() => {
-    if (target === null || reduced) {
-      setDisplay(value);
-      return;
-    }
+  useLayoutEffect(() => {
+    const match = value.match(/(\d[\d,]*)/);
     const el = ref.current;
-    if (!el) return;
-    let raf = 0;
-    let started = false;
-    const run = () => {
-      const start = performance.now();
-      const tick = (now: number) => {
-        const t = Math.min(1, (now - start) / duration);
-        const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
-        const rounded = Math.round(target * eased);
-        const current = match![1].includes(',') ? rounded.toLocaleString() : String(rounded);
-        setDisplay(value.replace(match![1], current));
-        if (t < 1) raf = requestAnimationFrame(tick);
+    if (!match || !el) return;
+    const target = Number(match[1].replace(/,/g, ''));
+    const withCommas = match[1].includes(',');
+    const counter = { n: 0 };
+    return whenMotionOK(() => {
+      const render = () => {
+        const v = Math.round(counter.n);
+        el.textContent = value.replace(match[1], withCommas ? v.toLocaleString() : String(v));
       };
-      raf = requestAnimationFrame(tick);
-    };
-    const obs = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !started) {
-          started = true;
-          run();
-          obs.disconnect();
-        }
-      },
-      { threshold: 0.4 },
-    );
-    obs.observe(el);
-    return () => {
-      obs.disconnect();
-      cancelAnimationFrame(raf);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value, target, reduced, duration]);
+      render();
+      gsap.to(counter, {
+        n: target,
+        duration,
+        ease: 'power2.out',
+        onUpdate: render,
+        scrollTrigger: { trigger: el, start: 'top 90%', once: true },
+      });
+    });
+  }, [value, duration]);
 
   return (
     <span ref={ref} aria-label={value}>
-      {display}
+      {value}
     </span>
   );
 }

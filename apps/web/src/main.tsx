@@ -8,8 +8,7 @@ import '@yukti/config/tokens.css';
 import '@yukti/ui/styles.css';
 import './index.css';
 import './components/components.css';
-import './theme-dark.css';
-import './effects.css';
+import './editorial.css';
 
 const queryClient = new QueryClient({
   defaultOptions: {

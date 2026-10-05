@@ -117,7 +117,7 @@ main {
   color: var(--color-muted);
 }
 .skeleton {
-  background: linear-gradient(90deg, var(--color-paper-alt) 25%, #e6e2d8 50%, var(--color-paper-alt) 75%);
+  background: linear-gradient(90deg, var(--color-paper-alt) 25%, var(--color-line) 50%, var(--color-paper-alt) 75%);
   background-size: 200% 100%;
   animation: yk-shimmer 1.3s infinite;
   border-radius: var(--radius-md);

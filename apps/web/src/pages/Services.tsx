@@ -1,4 +1,5 @@
 import { Section, Container } from '@yukti/ui';
+import { Stagger } from '../components/Stagger.js';
 import { Seo } from '../lib/Seo.js';
 import { SectionHeader } from '../components/SectionHeader.js';
 import { ServiceCard } from '../components/Cards.js';
@@ -27,9 +28,9 @@ export default function Services() {
       <Section tone="alt">
         <Container>
           <QueryState isLoading={isLoading} isError={isError} isEmpty={!data?.length}>
-            <div className="grid grid-3">
+            <Stagger className="grid grid-3">
               {data?.map((s, i) => <ServiceCard key={s.id} service={s} index={i} />)}
-            </div>
+            </Stagger>
           </QueryState>
         </Container>
       </Section>

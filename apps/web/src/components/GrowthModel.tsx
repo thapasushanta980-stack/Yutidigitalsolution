@@ -71,25 +71,25 @@ export function GrowthModel() {
         {!reduced && (
           <g aria-hidden="true">
             <path id="p1" d="M180 200 C 180 130, 320 120, 320 80" className="gm-flow gm-flow--up" fill="none" />
-            <circle r="5" fill="#ffc300" className="gm-dot">
+            <circle r="5" fill="var(--color-accent)" className="gm-dot">
               <animateMotion dur="2.6s" begin="0.0s" repeatCount="indefinite" keyTimes="0;1" keySplines="0.4 0 0.2 1" calcMode="spline">
                 <mpath href="#p1" />
               </animateMotion>
             </circle>
             <path id="p2" d="M460 200 C 460 130, 320 120, 320 80" className="gm-flow gm-flow--up" fill="none" />
-            <circle r="5" fill="#ffc300" className="gm-dot">
+            <circle r="5" fill="var(--color-accent)" className="gm-dot">
               <animateMotion dur="3.0s" begin="0.5s" repeatCount="indefinite" keyTimes="0;1" keySplines="0.4 0 0.2 1" calcMode="spline">
                 <mpath href="#p2" />
               </animateMotion>
             </circle>
             <path id="p3" d="M180 252 C 180 300, 320 300, 320 320" className="gm-flow gm-flow--down" fill="none" />
-            <circle r="5" fill="#7c7cff" className="gm-dot">
+            <circle r="5" fill="var(--color-muted)" className="gm-dot">
               <animateMotion dur="3.4000000000000004s" begin="1.0s" repeatCount="indefinite" keyTimes="0;1" keySplines="0.4 0 0.2 1" calcMode="spline">
                 <mpath href="#p3" />
               </animateMotion>
             </circle>
             <path id="p4" d="M460 252 C 460 300, 320 300, 320 320" className="gm-flow gm-flow--down" fill="none" />
-            <circle r="5" fill="#7c7cff" className="gm-dot">
+            <circle r="5" fill="var(--color-muted)" className="gm-dot">
               <animateMotion dur="3.8000000000000003s" begin="1.5s" repeatCount="indefinite" keyTimes="0;1" keySplines="0.4 0 0.2 1" calcMode="spline">
                 <mpath href="#p4" />
               </animateMotion>

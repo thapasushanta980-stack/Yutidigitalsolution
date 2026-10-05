@@ -18,8 +18,7 @@
   border-bottom: 1px solid transparent;
 }
 .nav--scrolled {
-  background: rgba(246, 244, 239, 0.8);
-  backdrop-filter: saturate(180%) blur(12px);
+  background: var(--color-paper);
   border-bottom-color: var(--color-line);
   box-shadow: var(--shadow-nav);
 }
@@ -124,8 +123,7 @@
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: rgba(20, 20, 15, 0.4);
-  backdrop-filter: blur(4px);
+  background: rgba(28, 27, 25, 0.5);
   display: flex;
   justify-content: center;
   padding: var(--space-12) var(--space-6);
@@ -362,8 +360,8 @@
     45deg,
     var(--color-paper-alt),
     var(--color-paper-alt) 10px,
-    #e6e2d8 10px,
-    #e6e2d8 20px
+    var(--color-line) 10px,
+    var(--color-line) 20px
   );
 }
 .card__body {

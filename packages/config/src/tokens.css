@@ -1,22 +1,31 @@
-/* Yukti design tokens — single source of truth for both web and admin. */
+/* Yukti design tokens — single source of truth for both web and admin.
+   Calm editorial palette: warm paper, ink text, one green accent. The legacy
+   --color-* names are kept so existing components pick up the new palette. */
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap');
 
 :root {
-  /* Typography */
+  /* Typography — two families only */
   --font-heading: 'Fraunces', Georgia, 'Times New Roman', serif;
   --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
-  /* Colour — editorial, ink-on-paper with one restrained accent */
-  --color-ink: #14140f;
-  --color-paper: #f6f4ef;
-  --color-paper-alt: #efece4;
-  --color-muted: #6b6b63;
-  --color-line: #d8d4c8;
-  /* Brand palette (from the YUKTI logo) */
-  --color-accent: #2f2fe4; /* royal blue */
-  --color-accent-hover: #2323b8;
-  --color-gold: #ffc300; /* golden Y accent */
-  --color-white: #ffffff;
+  /* Colour */
+  --color-paper: #faf9f6; /* page background */
+  --color-white: #ffffff; /* surface (cards, inputs) */
+  --color-paper-alt: #f2f0eb; /* alternate surface */
+  --color-line: #e4e0d8; /* borders */
+  --color-ink: #1c1b19; /* primary text */
+  --color-muted: #5c5851; /* secondary text (AA on paper) */
+  --color-faint: #8a857c; /* decorative only — below AA for body text */
+  --color-accent: #1e4d3f; /* buttons, links, focus — under 10% of any screen */
+  --color-accent-hover: #163a30;
+  --color-accent-soft: #e3ede9;
+  --color-on-accent: #faf9f6;
+  --color-gold: #b5651d; /* highlight: tiny tag, number or underline only */
+  --color-success: #2f6b4f;
+  --color-warning: #a86a12;
+  --color-error: #a63a32;
+  --color-info: #2f5d8a;
+  --logo-letter: #2f2fe4; /* official wordmark colour */
 
   /* Spacing scale (px) */
   --space-1: 4px;
@@ -31,13 +40,14 @@
   --space-24: 96px;
   --space-30: 120px;
 
-  /* Radius — restrained */
-  --radius-sm: 2px;
-  --radius-md: 4px;
+  /* Radius — restrained, 6–10px */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
 
-  /* Elevation — subtle */
-  --shadow-sm: 0 1px 2px rgba(20, 20, 15, 0.06);
-  --shadow-nav: 0 1px 0 rgba(20, 20, 15, 0.06), 0 8px 24px rgba(20, 20, 15, 0.04);
+  /* Elevation — flat; shadows only where unavoidable */
+  --shadow-sm: 0 1px 2px rgba(28, 27, 25, 0.06);
+  --shadow-nav: none;
 
   /* Layout */
   --container-max: 1200px;
@@ -47,6 +57,26 @@
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --duration: 0.5s;
   --duration-fast: 0.25s;
+}
+
+/* Dark mode follows the visitor's system setting. The admin opts out with
+   <html data-theme="light">. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-paper: #121211;
+    --color-white: #1a1a18;
+    --color-paper-alt: #222220;
+    --color-line: #2e2d2a;
+    --color-ink: #edebe6;
+    --color-muted: #a8a398;
+    --color-faint: #77736b;
+    --color-accent: #6fae9a;
+    --color-accent-hover: #8ac2b0;
+    --color-accent-soft: #1f2f2a;
+    --color-on-accent: #121211;
+    --color-gold: #d08a4a;
+    --logo-letter: #edebe6;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

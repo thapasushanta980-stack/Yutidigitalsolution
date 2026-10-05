@@ -56,11 +56,11 @@
   font-size: 1rem;
 }
 .yk-btn--primary {
-  background: var(--color-ink);
-  color: var(--color-paper);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
 }
 .yk-btn--primary:hover {
-  background: var(--color-accent);
+  background: var(--color-accent-hover);
 }
 .yk-btn--secondary {
   background: transparent;
@@ -120,7 +120,7 @@ select:focus-visible {
 }
 .yk-field__error {
   font-size: 0.85rem;
-  color: var(--color-accent);
+  color: var(--color-error);
   margin: 0;
 }
 .yk-input,

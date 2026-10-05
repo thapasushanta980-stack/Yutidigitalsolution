@@ -3,7 +3,6 @@ import { Route, Routes } from 'react-router-dom';
 import { Navbar } from './components/Navbar.js';
 import { Footer } from './components/Footer.js';
 import { ScrollToTop } from './components/ScrollToTop.js';
-import { Effects } from './components/Effects.js';
 import { Spinner } from '@yukti/ui';
 
 // Route-level code splitting.
@@ -28,7 +27,6 @@ export default function App() {
       <a className="yk-skip-link" href="#main">
         Skip to content
       </a>
-      <Effects />
       <ScrollToTop />
       <Navbar />
       <main id="main">

@@ -1,4 +1,5 @@
 import { Section, Container } from '@yukti/ui';
+import { Stagger } from '../components/Stagger.js';
 import { Seo } from '../lib/Seo.js';
 import { SectionHeader } from '../components/SectionHeader.js';
 import { CaseStudyCard } from '../components/Cards.js';
@@ -33,9 +34,9 @@ export default function CaseStudies() {
             isEmpty={!data?.length}
             emptyMessage="Case studies will be published here soon."
           >
-            <div className="grid grid-3">
+            <Stagger className="grid grid-3">
               {data?.map((c) => <CaseStudyCard key={c.id} item={c} />)}
-            </div>
+            </Stagger>
           </QueryState>
         </Container>
       </Section>
