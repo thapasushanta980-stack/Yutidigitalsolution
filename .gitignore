@@ -41,3 +41,6 @@ coverage/
 
 # Docker volumes
 docker/mysql-data/
+
+# Original, full-size video footage (compressed copies live in apps/web/public/hero/)
+/video/

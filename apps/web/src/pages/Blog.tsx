@@ -17,7 +17,7 @@ interface Category {
   slug: string;
 }
 
-export default function Insights() {
+export default function Blog() {
   const [q, setQ] = useState('');
   const [category, setCategory] = useState('');
   const [page, setPage] = useState(1);
@@ -42,24 +42,29 @@ export default function Insights() {
   return (
     <>
       <Seo
-        title="Insights"
-        description="Perspectives on SEO, performance marketing, and digital growth."
-        path="/insights"
+        title="Blog"
+        description="Practical guides on SEO, Meta ads and social media marketing from the Yukti Digital Solutions team."
+        path="/blog"
         noindex={!data?.items.length}
       />
       <Section className="page-hero" tone="paper">
         <Container>
-          <SectionHeader as="h1" eyebrow="Insights" title="Ideas that drive growth." />
+          <SectionHeader
+            as="h1"
+            eyebrow="Blog"
+            title="Ideas that drive growth."
+            intro="Practical guides on search, social media and advertising for growing businesses."
+          />
           <input
             type="search"
             className="yk-input"
-            placeholder="Search insights…"
+            placeholder="Search articles…"
             value={q}
             onChange={(e) => {
               setQ(e.target.value);
               setPage(1);
             }}
-            aria-label="Search insights"
+            aria-label="Search articles"
             style={{ maxWidth: 420 }}
           />
         </Container>

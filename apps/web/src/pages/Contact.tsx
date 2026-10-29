@@ -84,13 +84,9 @@ export default function Contact() {
                 )}
                 <li>{settings?.address ?? 'Biratnagar, Nepal'}</li>
               </ul>
-              {mapsUrl ? (
+              {mapsUrl && (
                 <div className="map-embed">
                   <iframe title="Office location" src={mapsUrl} loading="lazy" />
-                </div>
-              ) : (
-                <div className="map-embed" aria-label="Map unavailable">
-                  <div className="logo-grid__cell">Map will appear here once configured.</div>
                 </div>
               )}
             </div>

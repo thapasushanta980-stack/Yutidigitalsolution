@@ -77,7 +77,6 @@ export function ServiceStack({ services }: { services: Service[] }) {
               </span>
             </div>
             <div className="stack__visual" aria-hidden="true">
-              <span className="stack__badge">{String(i + 1).padStart(2, '0')}</span>
               <div className="stack__art">
                 {artKind(s.slug, s.title) ? (
                   <ServiceArt kind={artKind(s.slug, s.title)!} />

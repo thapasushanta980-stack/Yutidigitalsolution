@@ -34,8 +34,27 @@ function resolve(url: string, params: Record<string, unknown> = {}): { data: unk
       return { data: slug === 'values' ? data.values : data.team };
     case 'insights':
       if (slug === 'categories') return { data: data.insightCategories };
-      if (slug) throw new Error('Not found');
-      return { data: data.insights, meta: { page: 1, pageSize: 9, total: 0, totalPages: 1 } };
+      if (slug) {
+        const post = data.insights.find((p) => p.slug === slug);
+        if (!post) throw new Error('Not found');
+        const related = data.insights.filter((p) => p.slug !== slug).slice(0, 3);
+        return { data: { ...post, related } };
+      }
+      {
+        const q = String(params.q ?? '').toLowerCase();
+        const category = String(params.category ?? '');
+        const pageSize = Number(params.pageSize ?? 9);
+        const page = Math.max(1, Number(params.page ?? 1));
+        const matches = data.insights.filter(
+          (p) =>
+            (!category || p.category.slug === category) &&
+            (!q || `${p.title} ${p.excerpt}`.toLowerCase().includes(q)),
+        );
+        return {
+          data: matches.slice((page - 1) * pageSize, page * pageSize),
+          meta: { page, pageSize, total: matches.length, totalPages: Math.max(1, Math.ceil(matches.length / pageSize)) },
+        };
+      }
     case 'search':
       return { data: data.search(String(params.q ?? '')) };
     default:

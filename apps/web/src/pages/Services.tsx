@@ -29,7 +29,7 @@ export default function Services() {
         <Container>
           <QueryState isLoading={isLoading} isError={isError} isEmpty={!data?.length}>
             <Stagger className="grid grid-3">
-              {data?.map((s, i) => <ServiceCard key={s.id} service={s} index={i} />)}
+              {data?.map((s) => <ServiceCard key={s.id} service={s} />)}
             </Stagger>
           </QueryState>
         </Container>

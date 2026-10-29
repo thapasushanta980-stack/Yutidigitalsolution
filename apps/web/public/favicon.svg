@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="98 302 172 178">
-  <rect x="98" y="302" width="172" height="178" rx="28" fill="#2f2fe4" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="75 321 216 216">
+  <!-- Square tile centred on the full Y mark (mark spans x 104–261, y 351–506). -->
+  <rect x="75" y="321" width="216" height="216" rx="36" fill="#2f2fe4" />
   <!-- Left arm of the Y (white) -->
   <g fill="#ffffff">
     <path transform="matrix(1,0,0,-1,0,824)" d="M180.591 317.726H142.065V356.252H180.591Z" />

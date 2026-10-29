@@ -215,29 +215,6 @@
   mix-blend-mode: multiply;
 }
 
-/* ── Editorial section header: plate hairline + index ── */
-.section-header__top {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  margin-bottom: var(--space-6);
-}
-.section-header__rule {
-  display: block;
-  height: 1px;
-  flex: 1;
-  background: var(--color-ink);
-  transform-origin: left center;
-  opacity: 0.5;
-}
-.section-header__index {
-  font-family: var(--font-heading);
-  font-size: 1rem;
-  letter-spacing: 0.12em;
-  color: var(--color-muted);
-  white-space: nowrap;
-}
-
 /* ── Drop cap (editorial prose moment) ── */
 .dropcap::first-letter {
   font-family: var(--font-heading);
@@ -272,48 +249,6 @@
   }
 }
 
-/* ── Growth model ───────────────────────────────────── */
-.growth-model {
-  margin: 0;
-  max-width: 640px;
-}
-.growth-model svg {
-  width: 100%;
-  height: auto;
-}
-.gm-box {
-  fill: var(--color-white);
-  stroke: var(--color-line);
-  stroke-width: 1;
-}
-.gm-box--gold {
-  fill: var(--color-gold);
-  stroke: var(--color-gold);
-}
-.gm-box--ink {
-  fill: var(--color-ink);
-  stroke: var(--color-ink);
-}
-.gm-line {
-  stroke: var(--color-line);
-  stroke-width: 1.5;
-  stroke-dasharray: 4 4;
-}
-.gm-text {
-  font-family: var(--font-body);
-  font-size: 17px;
-  fill: var(--color-ink);
-}
-.gm-text--light {
-  fill: var(--color-paper);
-}
-.gm-text--ink {
-  fill: var(--color-ink);
-}
-.growth-model figcaption {
-  margin-top: var(--space-4);
-}
-
 /* ── Cards ──────────────────────────────────────────── */
 .card {
   display: block;
@@ -329,11 +264,6 @@
 }
 .card--service {
   padding: var(--space-6);
-}
-.card__index {
-  font-family: var(--font-heading);
-  color: var(--color-muted);
-  font-size: 0.9rem;
 }
 .card__more {
   display: inline-flex;
@@ -438,26 +368,6 @@
   max-width: 100%;
   width: auto;
   object-fit: contain;
-}
-
-/* ── Testimonial ────────────────────────────────────── */
-.testimonial blockquote {
-  margin: 0;
-  max-width: 44ch;
-}
-.testimonial blockquote p {
-  font-family: var(--font-heading);
-  font-size: clamp(1.4rem, 3vw, 2rem);
-  line-height: 1.3;
-}
-.testimonial cite {
-  font-style: normal;
-}
-.testimonial__nav {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  margin-top: var(--space-6);
 }
 
 /* ── Footer ─────────────────────────────────────────── */

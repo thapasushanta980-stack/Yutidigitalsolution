@@ -7,6 +7,8 @@ import { Breadcrumb } from '../components/Breadcrumb.js';
 import { QueryState } from '../components/QueryState.js';
 import { InsightCard } from '../components/Cards.js';
 import type { InsightSummary } from '../lib/queries.js';
+import { formatDate } from '../lib/date.js';
+import { ServiceArt } from '../components/ServiceArt.js';
 
 interface InsightDetailData extends InsightSummary {
   content: string;
@@ -17,7 +19,7 @@ interface InsightDetailData extends InsightSummary {
   related: InsightSummary[];
 }
 
-export default function InsightDetail() {
+export default function BlogPost() {
   const { slug = '' } = useParams();
   const { data, isLoading, isError } = useQuery({
     queryKey: ['insight', slug],
@@ -31,7 +33,7 @@ export default function InsightDetail() {
           <Seo
             title={data.seoTitle || data.title}
             description={data.seoDescription || data.excerpt}
-            path={`/insights/${data.slug}`}
+            path={`/blog/${data.slug}`}
             type="article"
             image={data.coverImage ?? undefined}
             jsonLd={{
@@ -39,7 +41,7 @@ export default function InsightDetail() {
               '@type': 'Article',
               headline: data.title,
               description: data.excerpt,
-              author: { '@type': 'Person', name: data.author },
+              author: { '@type': 'Organization', name: data.author },
               datePublished: data.publishedAt,
               dateModified: data.updatedAt,
               publisher: { '@type': 'Organization', name: 'Yukti Digital Solutions' },
@@ -50,32 +52,31 @@ export default function InsightDetail() {
               <Breadcrumb
                 items={[
                   { label: 'Home', href: '/' },
-                  { label: 'Insights', href: '/insights' },
+                  { label: 'Blog', href: '/blog' },
                   { label: data.title },
                 ]}
               />
               {data.category && <p className="fig-label">{data.category.name}</p>}
               <h1>{data.title}</h1>
               <p className="fig-label">
-                {data.author} ·{' '}
-                {data.publishedAt ? new Date(data.publishedAt).toLocaleDateString() : ''} ·{' '}
+                {data.author} · <time dateTime={data.publishedAt ?? undefined}>{formatDate(data.publishedAt)}</time> ·{' '}
                 {data.readingMinutes} min read
               </p>
             </Container>
           </Section>
 
-          {data.coverImage && (
+          {(data.coverImage || data.art) && (
             <Container>
-              <img src={data.coverImage} alt={data.title} style={{ width: '100%', borderRadius: 4 }} />
+              <div className="post-cover">
+                {data.coverImage ? <img src={data.coverImage} alt="" /> : <ServiceArt kind={data.art!} />}
+              </div>
             </Container>
           )}
 
           <Section tone="paper">
             <Container>
               <article className="prose">
-                {data.content.split('\n').filter(Boolean).map((p, i) => (
-                  <p key={i}>{p}</p>
-                ))}
+                <PostBody content={data.content} />
               </article>
             </Container>
           </Section>
@@ -83,7 +84,7 @@ export default function InsightDetail() {
           {data.related?.length > 0 && (
             <Section tone="alt">
               <Container>
-                <h2>Related reading</h2>
+                <h2>More from the blog</h2>
                 <div className="grid grid-3">
                   {data.related.map((r) => <InsightCard key={r.id} item={r} />)}
                 </div>
@@ -93,5 +94,25 @@ export default function InsightDetail() {
         </>
       )}
     </QueryState>
+  );
+}
+
+// Blank lines separate blocks; "## " starts a subheading and "- " a list item.
+function PostBody({ content }: { content: string }) {
+  return (
+    <>
+      {content.split(/\n\s*\n/).map((block, i) => {
+        const lines = block.trim().split('\n');
+        if (lines[0].startsWith('## ')) return <h2 key={i}>{lines[0].slice(3)}</h2>;
+        if (lines.every((l) => l.startsWith('- '))) {
+          return (
+            <ul key={i}>
+              {lines.map((l) => <li key={l}>{l.slice(2)}</li>)}
+            </ul>
+          );
+        }
+        return <p key={i}>{block.trim()}</p>;
+      })}
+    </>
   );
 }

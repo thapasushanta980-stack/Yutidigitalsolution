@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import type { Service, SiteSettings } from '@yukti/types';
 import { fetchData } from './api.js';
+import type { ArtKind } from '../components/ServiceArt.js';
 
 // ── Reusable typed query hooks (server state via TanStack Query) ──
 
@@ -23,6 +24,7 @@ export interface Testimonial {
   company: string | null;
   quote: string;
   rating: number | null;
+  photo: string | null;
 }
 export interface ProjectSummary {
   id: string;
@@ -48,6 +50,8 @@ export interface InsightSummary {
   excerpt: string;
   author: string;
   coverImage: string | null;
+  /** Illustration used as the cover when there is no coverImage. */
+  art?: ArtKind | null;
   readingMinutes: number;
   publishedAt: string | null;
   category?: { name: string; slug: string } | null;
@@ -83,6 +87,12 @@ export const useClients = () =>
 
 export const useTestimonials = () =>
   useQuery({ queryKey: ['testimonials'], queryFn: () => fetchData<Testimonial[]>('/testimonials') });
+
+export const useInsights = (pageSize = 3) =>
+  useQuery({
+    queryKey: ['insights', { pageSize }],
+    queryFn: () => fetchData<InsightSummary[]>('/insights', { pageSize }),
+  });
 
 export const useProjects = (featured = false) =>
   useQuery({
