@@ -49,7 +49,7 @@ export function SearchOverlay({ open, onClose }: Props) {
     ['Services', '/services', results.services],
     ['Work', '/work', results.work],
     ['Case Studies', '/case-studies', results.caseStudies],
-    ['Insights', '/insights', results.insights],
+    ['Blog', '/blog', results.insights],
   ];
   const hasResults = groups.some(([, , items]) => items.length > 0);
 
@@ -72,7 +72,7 @@ export function SearchOverlay({ open, onClose }: Props) {
                 ref={inputRef}
                 type="search"
                 className="yk-input"
-                placeholder="Search services, work, case studies, insights…"
+                placeholder="Search services and articles…"
                 value={q}
                 onChange={(e) => setQ(e.target.value)}
                 aria-label="Search query"

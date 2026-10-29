@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 import { Navbar } from './components/Navbar.js';
 import { Footer } from './components/Footer.js';
 import { ScrollToTop } from './components/ScrollToTop.js';
@@ -14,8 +14,8 @@ const Work = lazy(() => import('./pages/Work.js'));
 const WorkDetail = lazy(() => import('./pages/WorkDetail.js'));
 const CaseStudies = lazy(() => import('./pages/CaseStudies.js'));
 const CaseStudyDetail = lazy(() => import('./pages/CaseStudyDetail.js'));
-const Insights = lazy(() => import('./pages/Insights.js'));
-const InsightDetail = lazy(() => import('./pages/InsightDetail.js'));
+const Blog = lazy(() => import('./pages/Blog.js'));
+const BlogPost = lazy(() => import('./pages/BlogPost.js'));
 const Contact = lazy(() => import('./pages/Contact.js'));
 const FreeGrowthAudit = lazy(() => import('./pages/FreeGrowthAudit.js'));
 const Legal = lazy(() => import('./pages/Legal.js'));
@@ -46,8 +46,10 @@ export default function App() {
             <Route path="/work/:slug" element={<WorkDetail />} />
             <Route path="/case-studies" element={<CaseStudies />} />
             <Route path="/case-studies/:slug" element={<CaseStudyDetail />} />
-            <Route path="/insights" element={<Insights />} />
-            <Route path="/insights/:slug" element={<InsightDetail />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/insights" element={<Navigate to="/blog" replace />} />
+            <Route path="/insights/:slug" element={<InsightRedirect />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/free-growth-audit" element={<FreeGrowthAudit />} />
             <Route path="/privacy" element={<Legal kind="privacy" />} />
@@ -59,4 +61,10 @@ export default function App() {
       <Footer />
     </>
   );
+}
+
+// The blog used to live at /insights; keep old links working.
+function InsightRedirect() {
+  const { slug } = useParams();
+  return <Navigate to={`/blog/${slug}`} replace />;
 }

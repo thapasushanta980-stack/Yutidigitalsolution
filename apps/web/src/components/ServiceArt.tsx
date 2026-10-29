@@ -2,9 +2,9 @@
 // they use the site palette (light + dark), stay sharp at any size and add no
 // image weight. Colours come from the .art-* classes in editorial.css.
 
-type Kind = 'social' | 'video' | 'ads' | 'seo';
+export type ArtKind = 'social' | 'video' | 'ads' | 'seo';
 
-export function artKind(slug: string, title = ''): Kind | null {
+export function artKind(slug: string, title = ''): ArtKind | null {
   const s = `${slug} ${title}`.toLowerCase();
   if (s.includes('social')) return 'social';
   if (s.includes('video') || s.includes('tvc')) return 'video';
@@ -139,7 +139,7 @@ function Seo() {
   );
 }
 
-export function ServiceArt({ kind }: { kind: Kind }) {
+export function ServiceArt({ kind }: { kind: ArtKind }) {
   return (
     <svg className="art" viewBox="0 0 400 380" role="presentation" aria-hidden="true" focusable="false">
       {kind === 'social' && <Social />}

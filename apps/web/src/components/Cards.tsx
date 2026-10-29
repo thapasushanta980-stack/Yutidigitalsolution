@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 import type { Service } from '@yukti/types';
+import { formatDate } from '../lib/date.js';
+import { ServiceArt } from './ServiceArt.js';
 import type { CaseStudySummary, InsightSummary, ProjectSummary } from '../lib/queries.js';
 
-export function ServiceCard({ service, index }: { service: Service; index: number }) {
+export function ServiceCard({ service }: { service: Service }) {
   return (
     <Link to={`/services/${service.slug}`} className="card card--service">
-      <span className="card__index">{String(index + 1).padStart(2, '0')}</span>
       <h3>{service.title}</h3>
       <p className="muted">{service.shortDescription}</p>
       <span className="card__more">
@@ -59,19 +60,26 @@ export function CaseStudyCard({ item }: { item: CaseStudySummary }) {
 
 export function InsightCard({ item }: { item: InsightSummary }) {
   return (
-    <Link to={`/insights/${item.slug}`} className="card card--insight">
-      {item.coverImage && (
-        <div className="card__media">
-          <img src={item.coverImage} alt={item.title} loading="lazy" />
-        </div>
-      )}
+    <Link to={`/blog/${item.slug}`} className="card card--insight">
+      <div className="card__media card__media--art">
+        {item.coverImage ? (
+          <img src={item.coverImage} alt="" loading="lazy" />
+        ) : item.art ? (
+          <ServiceArt kind={item.art} />
+        ) : (
+          <div className="card__media-placeholder" aria-hidden="true" />
+        )}
+      </div>
       <div className="card__body">
-        {item.category && <p className="fig-label">{item.category.name}</p>}
+        <p className="fig-label">
+          {item.category && <>{item.category.name} · </>}
+          <time dateTime={item.publishedAt ?? undefined}>{formatDate(item.publishedAt)}</time>
+        </p>
         <h3>{item.title}</h3>
         <p className="muted">{item.excerpt}</p>
-        <p className="fig-label">
-          {item.author} · {item.readingMinutes} min read
-        </p>
+        <span className="card__more">
+          Read article <ArrowUpRight size={16} aria-hidden="true" />
+        </span>
       </div>
     </Link>
   );

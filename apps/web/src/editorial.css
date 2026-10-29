@@ -225,59 +225,6 @@ textarea::placeholder {
   gap: var(--space-3);
 }
 
-/* ── Growth model diagram ────────────────────────────── */
-.gm-box {
-  fill: var(--color-white);
-  stroke: var(--color-line);
-  rx: 6;
-}
-.gm-box--gold {
-  fill: var(--color-accent-soft);
-  stroke: var(--color-accent);
-}
-.gm-box--ink {
-  fill: var(--color-accent);
-  stroke: var(--color-accent);
-}
-.gm-box--node {
-  fill: var(--color-white);
-  stroke: var(--color-line);
-}
-.gm-text {
-  fill: var(--color-ink);
-}
-.gm-text--ink {
-  fill: var(--color-ink);
-  font-weight: 500;
-}
-.gm-text--light {
-  fill: var(--color-on-accent);
-  font-weight: 500;
-}
-.gm-line {
-  stroke: var(--color-line);
-}
-.gm-flow {
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-dasharray: 2 14;
-  animation: gm-run 1.6s linear infinite;
-}
-.gm-flow--up {
-  stroke: var(--color-accent);
-}
-.gm-flow--down {
-  stroke: var(--color-muted);
-}
-.gm-dot {
-  filter: none;
-}
-@keyframes gm-run {
-  to {
-    stroke-dashoffset: -32;
-  }
-}
-
 /* ── Stats: ruled columns, big serif numbers ─────────── */
 .stats {
   display: grid;
@@ -315,34 +262,6 @@ textarea::placeholder {
 .stat__note {
   margin: 0;
   font-size: 0.95rem;
-  color: var(--color-muted);
-}
-
-/* ── Pillars: numbered list with hairlines ───────────── */
-.pillars {
-  display: grid;
-  border-top: 1px solid var(--color-line);
-}
-.pillar {
-  display: grid;
-  grid-template-columns: 2.5rem 1fr;
-  gap: 0 var(--space-4);
-  padding: var(--space-6) 0;
-  border-bottom: 1px solid var(--color-line);
-}
-.pillar__no {
-  grid-row: span 2;
-  font-family: var(--font-heading);
-  font-size: 0.95rem;
-  color: var(--color-gold);
-}
-.pillar h3 {
-  margin: 0 0 var(--space-2);
-  font-size: 1.15rem;
-}
-.pillar p {
-  margin: 0;
-  font-size: 0.97rem;
   color: var(--color-muted);
 }
 
@@ -650,122 +569,9 @@ textarea::placeholder {
   transform: scale(1.04);
 }
 
-/* ── Capabilities: four-beat row under the hero ──────── */
-.capabilities {
-  padding-block: var(--space-16);
-  border-bottom: 1px solid var(--color-line);
-}
-.capabilities__grid {
-  display: grid;
-  gap: 0;
-}
-.capability {
-  padding: var(--space-6) 0;
-  border-top: 1px solid var(--color-line);
-}
-.capability__no {
-  display: block;
-  margin-bottom: var(--space-6);
-  font-family: var(--font-heading);
-  font-size: 0.95rem;
-  color: var(--color-gold);
-}
-.capability h3 {
-  margin: 0 0 var(--space-2);
-  font-size: 1.35rem;
-}
-.capability p {
-  margin: 0;
-  max-width: 30ch;
-  font-size: 0.97rem;
-  color: var(--color-muted);
-}
-@media (min-width: 640px) {
-  .capabilities__grid {
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: var(--space-8);
-  }
-}
-@media (min-width: 1024px) {
-  .capabilities__grid {
-    grid-template-columns: repeat(4, 1fr);
-    column-gap: 0;
-  }
-  .capability {
-    padding: var(--space-6) var(--space-6) var(--space-6) 0;
-  }
-  .capability + .capability {
-    padding-left: var(--space-6);
-    border-left: 1px solid var(--color-line);
-  }
-}
-
-/* ── Services ticker: one line, GSAP-driven ──────────── */
-.svc-marquee {
-  overflow: hidden;
-  border-bottom: 1px solid var(--color-line);
-  background: var(--color-paper-alt);
-  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-}
-.svc-marquee__track {
-  display: flex;
-  width: max-content;
-}
-.svc-marquee__group {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  margin: 0;
-  padding: var(--space-6) 0;
-  list-style: none;
-  font-family: var(--font-heading);
-  font-size: clamp(1.15rem, 2vw, 1.5rem);
-  letter-spacing: -0.01em;
-  color: var(--color-ink);
-  white-space: nowrap;
-}
-.svc-marquee__group li {
-  display: inline-flex;
-  align-items: center;
-}
-.svc-marquee__group li::after {
-  content: '';
-  width: 5px;
-  height: 5px;
-  margin-inline: var(--space-8);
-  border-radius: 50%;
-  background: var(--color-faint);
-}
-@media (prefers-reduced-motion: reduce) {
-  .svc-marquee {
-    mask-image: none;
-    -webkit-mask-image: none;
-  }
-  .svc-marquee__track {
-    width: auto;
-    padding-inline: var(--space-6);
-  }
-  .svc-marquee__group {
-    flex-wrap: wrap;
-    row-gap: var(--space-2);
-  }
-  .svc-marquee__group[aria-hidden] {
-    display: none;
-  }
-}
-
 /* ── Service illustrations ───────────────────────────── */
 .stack__visual {
   padding: var(--space-8);
-}
-.stack__badge {
-  position: absolute;
-  top: var(--space-6);
-  right: var(--space-6);
-  font-family: var(--font-heading);
-  font-size: 1rem;
-  color: var(--color-accent);
 }
 .stack__art {
   display: grid;
@@ -1040,4 +846,536 @@ button:focus-visible {
   height: 0.07em;
   bottom: 0.04em;
   opacity: 1;
+}
+
+/* ── Testimonials ────────────────────────────────────── */
+.testimonial-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+  padding: var(--space-6);
+}
+.testimonial-card blockquote {
+  flex: 1;
+  margin: 0;
+}
+.testimonial-card blockquote p {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  line-height: 1.45;
+}
+.testimonial-card__rating {
+  display: flex;
+  gap: 2px;
+  margin: 0;
+  color: var(--color-line);
+}
+.testimonial-card__rating .is-filled {
+  color: var(--brand-yellow);
+  fill: currentColor;
+}
+.testimonial-card__person {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-line);
+}
+.testimonial-card__person > span:last-child {
+  display: grid;
+  font-size: 0.92rem;
+}
+.testimonial-card__person img,
+.testimonial-card__avatar {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.testimonial-card__avatar {
+  display: grid;
+  place-items: center;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+.testimonial-card__tag {
+  align-self: flex-start;
+  padding: 2px 8px;
+  border: 1px dashed var(--color-gold);
+  border-radius: var(--radius-sm);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+/* ── Blog ────────────────────────────────────────────── */
+.section-split {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4) var(--space-8);
+  margin-bottom: var(--space-12);
+}
+.section-split .section-header {
+  margin-bottom: 0;
+  flex: 1 1 320px;
+}
+.card--insight {
+  display: flex;
+  flex-direction: column;
+}
+.card--insight .card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.card--insight .card__body h3 {
+  margin: var(--space-2) 0 var(--space-3);
+}
+.card--insight .card__more {
+  margin-top: auto;
+  padding-top: var(--space-2);
+}
+/* The illustration is inset in the frame and scaled to fit (SVG "meet"). */
+.card__media--art,
+.post-cover {
+  position: relative;
+  background: var(--color-accent-soft);
+}
+.card__media--art {
+  aspect-ratio: 16 / 10;
+}
+.post-cover {
+  aspect-ratio: 21 / 9;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.card__media--art .art,
+.post-cover .art {
+  position: absolute;
+  inset: var(--space-4);
+  width: calc(100% - 2 * var(--space-4));
+  height: calc(100% - 2 * var(--space-4));
+}
+.post-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.prose h2 {
+  margin: var(--space-12) 0 var(--space-4);
+  font-size: clamp(1.4rem, 2.6vw, 1.75rem);
+}
+.prose ul {
+  margin: 0 0 1em;
+  padding-left: 1.25em;
+}
+.prose li + li {
+  margin-top: var(--space-2);
+}
+
+/* ── Glass ────────────────────────────────────────────
+   Frosted, translucent surfaces over a soft field of brand colour. The colour
+   field is fixed, so every glass panel has something to blur as you scroll. */
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-bg-strong: rgba(255, 255, 255, 0.78);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-edge: rgba(28, 27, 25, 0.08);
+  --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  --glass-shadow: 0 10px 36px rgba(32, 32, 110, 0.08);
+  --glass-blur: blur(18px) saturate(160%);
+  --glow-blue: rgba(47, 47, 228, 0.16);
+  --glow-gold: rgba(255, 195, 0, 0.2);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --glass-bg: rgba(34, 34, 32, 0.5);
+    --glass-bg-strong: rgba(26, 26, 24, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.09);
+    --glass-edge: rgba(255, 255, 255, 0.06);
+    --glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    --glass-shadow: 0 10px 36px rgba(0, 0, 0, 0.35);
+    --glow-blue: rgba(124, 124, 255, 0.16);
+    --glow-gold: rgba(255, 195, 0, 0.09);
+  }
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(42vmax 42vmax at 6% 8%, var(--glow-blue), transparent 70%),
+    radial-gradient(36vmax 36vmax at 96% 28%, var(--glow-gold), transparent 70%),
+    radial-gradient(46vmax 46vmax at 72% 100%, var(--glow-blue), transparent 70%);
+}
+
+/* Sections let the colour field through instead of painting over it. */
+.yk-section--paper,
+.yk-section--ink {
+  background: transparent;
+}
+.yk-section--alt {
+  background: color-mix(in srgb, var(--color-paper-alt) 45%, transparent);
+}
+
+/* Shared glass surface */
+.nav--scrolled,
+.card,
+.stack__card,
+.search__panel,
+.footer,
+.yk-section--ink .stats {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border-color: var(--glass-border);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+}
+.nav--scrolled {
+  background: var(--glass-bg-strong);
+  border-bottom: 1px solid var(--glass-edge);
+  box-shadow: var(--glass-shadow);
+}
+.card:hover,
+.stack__card:hover {
+  border-color: var(--glass-border);
+  box-shadow: var(--glass-highlight), 0 16px 44px rgba(32, 32, 110, 0.13);
+}
+.stack__visual {
+  background: color-mix(in srgb, var(--color-accent-soft) 55%, transparent);
+}
+.search__panel,
+.footer {
+  background: var(--glass-bg-strong);
+}
+.footer {
+  border-top: 1px solid var(--glass-edge);
+}
+.mobile-menu {
+  background: var(--glass-bg-strong);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(160%);
+}
+.search {
+  background: rgba(28, 27, 25, 0.3);
+}
+.yk-btn--secondary {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+
+/* Stats sit in one glass panel */
+.yk-section--ink .stats {
+  padding-inline: var(--space-8);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+}
+@media (max-width: 799px) {
+  .yk-section--ink .stats {
+    padding-inline: var(--space-6);
+  }
+  .yk-section--ink .stat + .stat,
+  .yk-section--ink .stats > :not(:first-child) .stat {
+    border-top: 1px solid var(--glass-edge);
+  }
+}
+
+/* Logo tiles stay light for the artwork; translucent but unblurred, because
+   dozens of moving blurred tiles would be costly to render. */
+.logo-tile {
+  background: rgba(255, 255, 255, 0.82);
+  border-color: var(--glass-border);
+}
+
+/* Solid fallback: no blur support, or the visitor asked for less transparency. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .nav--scrolled,
+  .card,
+  .stack__card,
+  .search__panel,
+  .footer,
+  .mobile-menu,
+  .yk-section--ink .stats {
+    background: var(--color-white);
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  body::before {
+    display: none;
+  }
+  .nav--scrolled,
+  .card,
+  .stack__card,
+  .search__panel,
+  .footer,
+  .mobile-menu,
+  .yk-section--ink .stats,
+  .yk-btn--secondary {
+    background: var(--color-white);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* ── Hero background video ────────────────────────────
+   Full-bleed clip under a dark shade; copy and the top-of-page navbar switch
+   to light colours while the video is behind them. */
+.hero--video {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: 100svh;
+  overflow: hidden;
+  border-bottom: 0;
+  color: #fff;
+  --brand-blue: #9d9dff;
+  --color-ink: #fff;
+}
+.hero--video > .yk-container {
+  position: relative;
+  z-index: 1;
+}
+.hero-video,
+.hero-video__shade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+.hero-video {
+  object-fit: cover;
+  background: #121211;
+}
+.hero-video__shade {
+  background:
+    linear-gradient(90deg, rgba(12, 12, 24, 0.82) 0%, rgba(12, 12, 24, 0.58) 60%, rgba(12, 12, 24, 0.38) 100%),
+    linear-gradient(0deg, rgba(12, 12, 24, 0.55), transparent 40%);
+}
+.hero--video .hero__layout {
+  grid-template-columns: minmax(0, 1fr);
+}
+.hero--video .hero__title {
+  max-width: 14ch;
+}
+.hero--video .lead {
+  color: rgba(255, 255, 255, 0.9);
+}
+.hero--video .hero__copy {
+  text-shadow: 0 1px 16px rgba(0, 0, 0, 0.35);
+}
+.hero--video .hero__actions .yk-btn--secondary {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.45);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+.hero--video .hero__actions .yk-btn--secondary:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: #fff;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .hero--video .hero__actions .yk-btn--primary {
+    color: #121211;
+  }
+}
+.hero-video__controls {
+  position: absolute;
+  right: var(--space-6);
+  bottom: var(--space-6);
+  z-index: 2;
+  display: flex;
+  gap: var(--space-2);
+}
+.hero-video__toggle {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+.hero-video__toggle:hover {
+  background: rgba(255, 255, 255, 0.26);
+}
+.hero-video__toggle:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+/* Navbar over the video, before it turns to glass on scroll */
+body:has(.hero--video) .nav:not(.nav--scrolled) {
+  --logo-letter: #fff;
+  --color-ink: #fff;
+}
+body:has(.hero--video) .nav:not(.nav--scrolled) .nav__icon:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* ── Responsive polish ────────────────────────────────
+   Phone and tablet tuning. Desktop layout is unchanged above 1023px. */
+
+/* Comfortable tap targets everywhere */
+.nav__logo {
+  padding-block: 9px;
+}
+.filters button {
+  min-height: 40px;
+  padding: 8px 16px;
+}
+.checkbox-grid label {
+  min-height: 40px;
+  cursor: pointer;
+}
+.checkbox-grid input[type='checkbox'] {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--brand-blue);
+}
+
+/* Breadcrumb wraps as one line of text, not as columns */
+.breadcrumb {
+  display: block;
+  line-height: 1.6;
+}
+.breadcrumb li {
+  display: inline;
+}
+
+/* Tablet: brand row on top so the link columns have room */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .footer__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .footer__brand {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Phones */
+@media (max-width: 767px) {
+  .yk-section {
+    padding-block: var(--space-16);
+  }
+  .page-hero {
+    padding-top: calc(var(--nav-height) + var(--space-8));
+    padding-bottom: var(--space-8);
+  }
+  .section-header,
+  .section-split {
+    margin-bottom: var(--space-8);
+  }
+  .section-split .section-header {
+    margin-bottom: 0;
+  }
+  .split {
+    gap: var(--space-6);
+  }
+
+  /* Service deck: compact cards without the tall empty gaps */
+  .stack {
+    gap: var(--space-4);
+  }
+  .stack__card {
+    min-height: 0;
+  }
+  .stack__copy {
+    gap: var(--space-4);
+    padding: var(--space-6);
+  }
+  .stack__copy h3 {
+    margin-bottom: var(--space-2);
+    font-size: 1.65rem;
+  }
+  .stack__copy p {
+    font-size: 1rem;
+  }
+
+  /* Team: two portraits side by side */
+  .team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+  .team-grid .card__body {
+    padding: var(--space-4);
+  }
+  .team-grid h3 {
+    margin: 0 0 2px;
+    font-size: 1.05rem;
+  }
+  .team-grid .muted {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  /* Blog filters: one swipeable row */
+  .filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-inline: calc(var(--space-6) * -1);
+    padding-inline: var(--space-6);
+    scrollbar-width: none;
+  }
+  .filters::-webkit-scrollbar {
+    display: none;
+  }
+  .filters button {
+    flex-shrink: 0;
+  }
+
+  /* Footer: brand on top, link groups two across */
+  .footer {
+    padding-block: var(--space-12) var(--space-6);
+  }
+  .footer__cta {
+    padding-bottom: var(--space-8);
+  }
+  .footer__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-8) var(--space-6);
+    padding-block: var(--space-8);
+  }
+  .footer__brand {
+    grid-column: 1 / -1;
+  }
+
+  .stats .stat {
+    padding-block: var(--space-6);
+  }
+}
+
+/* Small phones: stacked, full-width calls to action */
+@media (max-width: 480px) {
+  .hero__actions {
+    flex-direction: column;
+  }
+  .hero__actions .yk-btn,
+  .footer__cta .yk-btn {
+    width: 100%;
+  }
+  .hero-video__controls {
+    right: var(--space-4);
+    bottom: var(--space-4);
+  }
 }

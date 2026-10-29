@@ -63,9 +63,8 @@ export default function About() {
           <SectionHeader eyebrow="What we stand for" title="Principles that shape the work." />
           <QueryState isLoading={values.isLoading} isError={values.isError} isEmpty={!values.data?.length}>
             <Stagger className="grid grid-4">
-              {values.data?.map((v, i) => (
+              {values.data?.map((v) => (
                 <div key={v.id} className="card card--service">
-                  <span className="card__index">{String(i + 1).padStart(2, '0')}</span>
                   <h3>{v.title}</h3>
                   <p className="muted">{v.description}</p>
                 </div>

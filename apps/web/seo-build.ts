@@ -1,10 +1,11 @@
 import type { Plugin } from 'vite';
-import { services } from './src/lib/staticData';
+import { insights, services } from './src/lib/staticData';
 
 // Only useful, published landing-site pages belong in the search sitemap.
 export const indexablePaths = [
-  '/', '/about', '/services', '/contact', '/free-growth-audit',
+  '/', '/about', '/services', '/blog', '/contact', '/free-growth-audit',
   ...services.map((service) => `/services/${service.slug}`),
+  ...insights.map((post) => `/blog/${post.slug}`),
 ];
 
 export function seoBuild(siteOrigin: string): Plugin {
