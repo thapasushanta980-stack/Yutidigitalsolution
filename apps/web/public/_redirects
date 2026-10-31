@@ -1,0 +1,21 @@
+# Cloudflare Pages: serve the SPA for published routes while retaining the custom 404 page.
+/about /index.html 200
+/services /index.html 200
+/services/social-media-marketing /index.html 200
+/services/video-production-tvc-ads /index.html 200
+/services/meta-ads-services /index.html 200
+/services/seo /index.html 200
+/work /index.html 200
+/case-studies /index.html 200
+/blog /index.html 200
+/blog/get-found-on-google-maps /index.html 200
+/blog/boost-post-vs-meta-ads-campaign /index.html 200
+/blog/plan-a-month-of-social-media-content /index.html 200
+/contact /index.html 200
+/free-growth-audit /index.html 200
+/privacy /index.html 200
+/terms /index.html 200
+
+# Preserve legacy blog links.
+/insights /blog 301
+/insights/* /blog/:splat 301
