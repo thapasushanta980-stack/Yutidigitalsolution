@@ -6,6 +6,7 @@ import { CheckCircle2 } from 'lucide-react';
 import { Section, Container, Button, FormField } from '@yukti/ui';
 import { Seo } from '../lib/Seo.js';
 import { SectionHeader } from '../components/SectionHeader.js';
+import { CalBooking } from '../components/CalBooking.js';
 import { openEnquiryEmail } from '../lib/enquiry.js';
 import { siteSettings } from '../lib/staticData.js';
 import { useServices } from '../lib/queries.js';
@@ -163,6 +164,11 @@ export default function FreeGrowthAudit() {
           )}
         </Container>
       </Section>
+
+      <CalBooking
+        title="Rather walk through it live?"
+        intro="Book a free 30-minute call and we'll review your growth opportunities together."
+      />
     </>
   );
 }

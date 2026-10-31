@@ -2,6 +2,7 @@ import { Section, Container } from '@yukti/ui';
 import { Stagger } from '../components/Stagger.js';
 import { Seo } from '../lib/Seo.js';
 import { SectionHeader } from '../components/SectionHeader.js';
+import { CalBooking } from '../components/CalBooking.js';
 import { ServiceCard } from '../components/Cards.js';
 import { QueryState } from '../components/QueryState.js';
 import { useServices } from '../lib/queries.js';
@@ -34,6 +35,10 @@ export default function Services() {
           </QueryState>
         </Container>
       </Section>
+      <CalBooking
+        title="Not sure which service fits?"
+        intro="Book a free 30-minute call and we'll recommend the right mix for your goals."
+      />
     </>
   );
 }
