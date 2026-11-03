@@ -1,50 +1,18 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { CheckCircle2 } from 'lucide-react';
-import { Section, Container, Button, FormField } from '@yukti/ui';
+import { Section, Container } from '@yukti/ui';
 import { Seo } from '../lib/Seo.js';
 import { SectionHeader } from '../components/SectionHeader.js';
-import { openEnquiryEmail } from '../lib/enquiry.js';
+import { CalBooking } from '../components/CalBooking.js';
 import { useSiteSettings } from '../lib/queries.js';
-
-const schema = z.object({
-  name: z.string().min(2, 'Please enter your name'),
-  email: z.string().email('Enter a valid email address'),
-  phone: z.string().optional().or(z.literal('')),
-  subject: z.string().optional(),
-  message: z.string().min(4, 'Please enter a message'),
-  company_website: z.string().max(0).optional(),
-});
-type FormValues = z.infer<typeof schema>;
 
 export default function Contact() {
   const { data: settings } = useSiteSettings();
-  const [submitted, setSubmitted] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    setError,
-  } = useForm<FormValues>({ resolver: zodResolver(schema) });
-
-  const onSubmit = async (values: FormValues) => {
-    try {
-      openEnquiryEmail('Website enquiry', values);
-      setSubmitted(true);
-    } catch (err) {
-      setError('root', { message: err instanceof Error ? err.message : 'Something went wrong.' });
-    }
-  };
-
   const mapsUrl = settings?.google_maps_url;
 
   return (
     <>
       <Seo
         title="Contact"
-        description="Get in touch with Yukti Digital Solutions in Biratnagar, Nepal."
+        description="Book a call with Yukti Digital Solutions or contact our team in Biratnagar, Nepal."
         path="/contact"
         jsonLd={{
           '@context': 'https://schema.org',
@@ -55,22 +23,34 @@ export default function Contact() {
           telephone: settings?.phone,
         }}
       />
+
       <Section className="page-hero" tone="paper">
         <Container>
           <SectionHeader
             as="h1"
             eyebrow="Contact"
-            title="Let's talk growth."
-            intro={`Yukti Digital Solutions, ${settings?.address ?? 'Biratnagar, Nepal'}.`}
+            title="Let’s talk growth."
+            intro="Book a time online, or email Yukti Digital Solutions in Biratnagar, Nepal."
           />
         </Container>
       </Section>
 
-      <Section tone="alt">
+      <CalBooking
+        eyebrow="The easiest way to connect"
+        title="Book a free 30-minute call"
+        intro="Choose a time in our live Cal.com calendar. Your booking confirmation and meeting details will come directly from Cal.com."
+        tone="alt"
+      />
+
+      <Section tone="paper">
         <Container>
-          <div className="split">
+          <div className={mapsUrl ? 'split' : undefined}>
             <div>
-              <h3>Reach us</h3>
+              <SectionHeader
+                eyebrow="Prefer email?"
+                title="Reach our team directly."
+                intro="For general questions or help with a booking, email us and we’ll get back to you."
+              />
               <ul className="prose muted" style={{ listStyle: 'none', padding: 0 }}>
                 {settings?.email && (
                   <li>
@@ -84,54 +64,12 @@ export default function Contact() {
                 )}
                 <li>{settings?.address ?? 'Biratnagar, Nepal'}</li>
               </ul>
-              {mapsUrl && (
-                <div className="map-embed">
-                  <iframe title="Office location" src={mapsUrl} loading="lazy" />
-                </div>
-              )}
             </div>
-
-            <div>
-              {submitted ? (
-                <div className="form-success" role="status">
-                  <CheckCircle2 size={36} aria-hidden="true" color="var(--color-accent)" />
-                  <h3>Finish in your email app.</h3>
-                  <p className="muted">Send the prepared email to complete your enquiry. If no app opened, email {settings?.email} directly.</p>
-                  <Button type="button" onClick={() => setSubmitted(false)}>Edit enquiry</Button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                  <input
-                    type="text"
-                    tabIndex={-1}
-                    aria-hidden="true"
-                    className="yk-sr-only"
-                    {...register('company_website')}
-                  />
-                  <FormField label="Name" htmlFor="c-name" required error={errors.name?.message}>
-                    <input id="c-name" className="yk-input" {...register('name')} />
-                  </FormField>
-                  <FormField label="Email" htmlFor="c-email" required error={errors.email?.message}>
-                    <input id="c-email" type="email" className="yk-input" {...register('email')} />
-                  </FormField>
-                  <FormField label="Subject" htmlFor="c-subject" error={errors.subject?.message}>
-                    <input id="c-subject" className="yk-input" {...register('subject')} />
-                  </FormField>
-                  <FormField label="Message" htmlFor="c-message" required error={errors.message?.message}>
-                    <textarea id="c-message" className="yk-textarea" {...register('message')} />
-                  </FormField>
-                  {errors.root && (
-                    <p className="yk-field__error" role="alert">
-                      {errors.root.message}
-                    </p>
-                  )}
-                  <p className="muted">This opens an email draft. Review and send it from your email app.</p>
-                  <Button type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? 'Preparing…' : 'Continue to email'}
-                  </Button>
-                </form>
-              )}
-            </div>
+            {mapsUrl && (
+              <div className="map-embed">
+                <iframe title="Office location" src={mapsUrl} loading="lazy" />
+              </div>
+            )}
           </div>
         </Container>
       </Section>

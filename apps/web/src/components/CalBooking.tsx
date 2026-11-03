@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Section, Container } from '@yukti/ui';
+import { Section, Container, Button } from '@yukti/ui';
 import { SectionHeader } from './SectionHeader.js';
 import { siteSettings } from '../lib/staticData.js';
 
@@ -8,6 +8,7 @@ import { siteSettings } from '../lib/staticData.js';
 const CAL_LINK = (import.meta.env.VITE_CAL_LINK || 'yuktids.bookings-towxqf/30min')
   .replace(/^https?:\/\/cal\.com\//, '')
   .replace(/^\/|\/$/g, '');
+const CAL_URL = `https://cal.com/${CAL_LINK}`;
 
 interface Props {
   eyebrow?: string;
@@ -18,9 +19,9 @@ interface Props {
 
 // Inline Cal.com scheduler. A plain iframe keeps it dependency-free and lazy.
 export function CalBooking({
-  eyebrow = 'Book a call',
-  title = 'Prefer to talk it through?',
-  intro = 'Pick a time that suits you for a free 30-minute strategy call.',
+  eyebrow = 'Book online',
+  title = 'Choose a time that works for you.',
+  intro = 'Book through our live Cal.com calendar and get your confirmation and meeting details there.',
   tone = 'paper',
 }: Props) {
   const [loaded, setLoaded] = useState(false);
@@ -30,16 +31,24 @@ export function CalBooking({
       <Container>
         <SectionHeader eyebrow={eyebrow} title={title} intro={intro} />
         {CAL_LINK ? (
-          <div className="cal-embed" data-loaded={loaded || undefined}>
-            {!loaded && <p className="cal-embed__loading muted">Loading calendar...</p>}
-            <iframe
-              title="Book a call with Yukti Digital Solutions"
-              src={`https://cal.com/${CAL_LINK}?embed=true&layout=month_view`}
-              loading="lazy"
-              allow="payment"
-              onLoad={() => setLoaded(true)}
-            />
-          </div>
+          <>
+            <div className="cal-embed__actions">
+              <Button as="a" href={CAL_URL} target="_blank" rel="noopener noreferrer">
+                Book on Cal.com
+              </Button>
+              <p className="muted">Your booking is managed securely in Cal.com.</p>
+            </div>
+            <div className="cal-embed" data-loaded={loaded || undefined}>
+              {!loaded && <p className="cal-embed__loading muted">Loading calendar...</p>}
+              <iframe
+                title="Book a call with Yukti Digital Solutions"
+                src={`${CAL_URL}?embed=true&layout=month_view`}
+                loading="lazy"
+                allow="payment"
+                onLoad={() => setLoaded(true)}
+              />
+            </div>
+          </>
         ) : (
           <p className="muted">
             Email <a href={`mailto:${siteSettings.email}`}>{siteSettings.email}</a> to book a call.
@@ -48,7 +57,7 @@ export function CalBooking({
         {CAL_LINK && (
           <p className="muted cal-embed__fallback">
             Calendar not loading?{' '}
-            <a href={`https://cal.com/${CAL_LINK}`} target="_blank" rel="noopener noreferrer">
+            <a href={CAL_URL} target="_blank" rel="noopener noreferrer">
               Open the booking page
             </a>
             .

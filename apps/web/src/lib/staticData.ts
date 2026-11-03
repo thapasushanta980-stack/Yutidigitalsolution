@@ -6,7 +6,7 @@ import type { Service, SiteSettings, SearchResults } from '@yukti/types';
 export const siteSettings: SiteSettings = {
   company_name: 'Yukti Digital Solutions',
   tagline: 'We DESIGN | ADVERTISE | VISUALISE.',
-  email: 'contact@yuktidigital.com',
+  email: 'yuktidsbookings@gmail.com',
   phone: '',
   address: 'Biratnagar, Nepal',
   coverage: '',

@@ -1,174 +1,44 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { CheckCircle2 } from 'lucide-react';
-import { Section, Container, Button, FormField } from '@yukti/ui';
+import { Section, Container } from '@yukti/ui';
 import { Seo } from '../lib/Seo.js';
 import { SectionHeader } from '../components/SectionHeader.js';
 import { CalBooking } from '../components/CalBooking.js';
-import { openEnquiryEmail } from '../lib/enquiry.js';
-import { siteSettings } from '../lib/staticData.js';
-import { useServices } from '../lib/queries.js';
-
-// Validate the details used to prepare the visitor's email draft.
-const schema = z.object({
-  name: z.string().min(2, 'Please enter your full name'),
-  company: z.string().optional(),
-  email: z.string().email('Enter a valid email address'),
-  phone: z
-    .string()
-    .regex(/^[0-9+()\-\s]*$/, 'Enter a valid phone number')
-    .optional()
-    .or(z.literal('')),
-  website: z.string().url('Include https:// in your website URL'),
-  industry: z.string().optional(),
-  budget: z.string().optional(),
-  challenge: z.string().min(4, 'Tell us your primary challenge'),
-  services: z.array(z.string()).optional(),
-  message: z.string().optional(),
-  company_website: z.string().max(0).optional(), // honeypot
-});
-type FormValues = z.infer<typeof schema>;
-
-const BUDGETS = ['< $1k / mo', '$1k–5k / mo', '$5k–10k / mo', '$10k+ / mo', 'Not sure yet'];
 
 export default function FreeGrowthAudit() {
-  const { data: services } = useServices();
-  const [submitted, setSubmitted] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    setError,
-  } = useForm<FormValues>({ resolver: zodResolver(schema), defaultValues: { services: [] } });
-
-  const onSubmit = async (values: FormValues) => {
-    try {
-      openEnquiryEmail('Free Growth Audit request', values);
-      setSubmitted(true);
-    } catch (err) {
-      setError('root', {
-        message: err instanceof Error ? err.message : 'Submission failed. Please try again.',
-      });
-    }
-  };
-
   return (
     <>
       <Seo
         title="Free Growth Audit"
-        description="Request a free growth audit. We'll review your website and digital presence and share where the biggest opportunities are."
+        description="Book a free 30-minute growth call with Yukti Digital Solutions and discuss practical opportunities for your business."
         path="/free-growth-audit"
       />
+
       <Section className="page-hero" tone="paper">
         <Container>
           <SectionHeader
             as="h1"
             eyebrow="Free Growth Audit"
-            title="See where your growth is hiding."
-            intro="Tell us about your brand and we'll review your website, search visibility and paid opportunities, with no obligation."
+            title="Find your next growth opportunity."
+            intro="Book a focused 30-minute call to talk through your website, marketing, and the next steps that make sense for your business."
           />
         </Container>
       </Section>
 
-      <Section tone="alt">
+      <CalBooking
+        eyebrow="Choose a time that works for you"
+        title="Reserve your free growth call"
+        intro="Book directly through Cal.com. You’ll receive your confirmation and meeting details there."
+        tone="alt"
+      />
+
+      <Section tone="paper">
         <Container>
-          {submitted ? (
-            <div className="form-success" role="status">
-              <CheckCircle2 size={40} aria-hidden="true" color="var(--color-accent)" />
-              <h2>Finish in your email app.</h2>
-              <p className="muted">
-                Send the prepared email to request your audit. If no app opened, email {siteSettings.email} directly.
-              </p>
-              <Button type="button" onClick={() => setSubmitted(false)}>
-                Edit request
-              </Button>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit(onSubmit)} noValidate style={{ maxWidth: 720 }}>
-              {/* Honeypot: visually hidden, must stay empty */}
-              <input
-                type="text"
-                tabIndex={-1}
-                autoComplete="off"
-                aria-hidden="true"
-                className="yk-sr-only"
-                {...register('company_website')}
-              />
-
-              <div className="form-grid form-grid--2">
-                <FormField label="Full name" htmlFor="name" required error={errors.name?.message}>
-                  <input id="name" className="yk-input" {...register('name')} />
-                </FormField>
-                <FormField label="Company" htmlFor="company" error={errors.company?.message}>
-                  <input id="company" className="yk-input" {...register('company')} />
-                </FormField>
-                <FormField label="Email" htmlFor="email" required error={errors.email?.message}>
-                  <input id="email" type="email" className="yk-input" {...register('email')} />
-                </FormField>
-                <FormField label="Phone" htmlFor="phone" error={errors.phone?.message}>
-                  <input id="phone" className="yk-input" {...register('phone')} />
-                </FormField>
-                <FormField label="Website" htmlFor="website" required error={errors.website?.message}>
-                  <input id="website" placeholder="https://" className="yk-input" {...register('website')} />
-                </FormField>
-                <FormField label="Industry" htmlFor="industry" error={errors.industry?.message}>
-                  <input id="industry" className="yk-input" {...register('industry')} />
-                </FormField>
-              </div>
-
-              <FormField label="Monthly marketing budget" htmlFor="budget" error={errors.budget?.message}>
-                <select id="budget" className="yk-select" {...register('budget')}>
-                  <option value="">Select a range</option>
-                  {BUDGETS.map((b) => (
-                    <option key={b} value={b}>
-                      {b}
-                    </option>
-                  ))}
-                </select>
-              </FormField>
-
-              <FormField label="Primary challenge" htmlFor="challenge" required error={errors.challenge?.message}>
-                <textarea id="challenge" className="yk-textarea" {...register('challenge')} />
-              </FormField>
-
-              {services && services.length > 0 && (
-                <FormField label="Services you're interested in" htmlFor="services">
-                  <div className="checkbox-grid">
-                    {services.map((s) => (
-                      <label key={s.id}>
-                        <input type="checkbox" value={s.title} {...register('services')} />
-                        {s.title}
-                      </label>
-                    ))}
-                  </div>
-                </FormField>
-              )}
-
-              <FormField label="Anything else?" htmlFor="message" error={errors.message?.message}>
-                <textarea id="message" className="yk-textarea" {...register('message')} />
-              </FormField>
-
-              {errors.root && (
-                <p className="yk-field__error" role="alert">
-                  {errors.root.message}
-                </p>
-              )}
-
-              <p className="muted">This opens an email draft. Review and send it from your email app.</p>
-              <Button size="lg" type="submit" disabled={isSubmitting}>
-                {isSubmitting ? 'Preparing…' : 'Continue to email'}
-              </Button>
-            </form>
-          )}
+          <SectionHeader
+            eyebrow="Make the most of your call"
+            title="Bring your biggest growth question."
+            intro="We’ll use the conversation to understand your goals, look at where you are now, and identify practical opportunities to explore next."
+          />
         </Container>
       </Section>
-
-      <CalBooking
-        title="Rather walk through it live?"
-        intro="Book a free 30-minute call and we'll review your growth opportunities together."
-      />
     </>
   );
 }

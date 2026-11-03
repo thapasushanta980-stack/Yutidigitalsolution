@@ -556,6 +556,16 @@
 }
 
 /* Cal.com inline booking */
+.cal-embed__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+.cal-embed__actions p {
+  margin: 0;
+  font-size: 0.9rem;
+}
 .cal-embed {
   position: relative;
   margin-top: var(--space-8);
@@ -582,6 +592,10 @@
   font-size: 0.9rem;
 }
 @media (max-width: 640px) {
+  .cal-embed__actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
   .cal-embed iframe {
     height: 900px;
   }

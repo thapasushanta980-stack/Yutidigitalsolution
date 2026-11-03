@@ -147,7 +147,7 @@ async function main() {
   const settings: Record<string, string> = {
     company_name: 'Yukti Digital Solutions',
     tagline: 'We DESIGN | ADVERTISE | VISUALISE.',
-    email: 'contact@yuktidigital.com',
+    email: 'yuktidsbookings@gmail.com',
     phone: '+977-0000000000',
     address: 'Biratnagar, Nepal',
     coverage: 'South Asia · The Gulf · Australia',
