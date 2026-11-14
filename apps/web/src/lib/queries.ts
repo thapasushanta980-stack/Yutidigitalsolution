@@ -25,6 +25,8 @@ export interface Testimonial {
   quote: string;
   rating: number | null;
   photo: string | null;
+  /** False until the client has confirmed the wording; drafts never ship. */
+  approved?: boolean;
 }
 export interface ProjectSummary {
   id: string;

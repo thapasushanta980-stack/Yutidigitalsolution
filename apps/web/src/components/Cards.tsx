@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 import type { Service } from '@yukti/types';
-import { formatDate } from '../lib/date.js';
 import { ServiceArt } from './ServiceArt.js';
 import type { CaseStudySummary, InsightSummary, ProjectSummary } from '../lib/queries.js';
 
@@ -71,10 +70,7 @@ export function InsightCard({ item }: { item: InsightSummary }) {
         )}
       </div>
       <div className="card__body">
-        <p className="fig-label">
-          {item.category && <>{item.category.name} · </>}
-          <time dateTime={item.publishedAt ?? undefined}>{formatDate(item.publishedAt)}</time>
-        </p>
+        {item.category && <p className="fig-label">{item.category.name}</p>}
         <h3>{item.title}</h3>
         <p className="muted">{item.excerpt}</p>
         <span className="card__more">

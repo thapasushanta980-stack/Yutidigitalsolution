@@ -59,24 +59,23 @@
   --duration-fast: 0.25s;
 }
 
-/* Dark mode follows the visitor's system setting. The admin opts out with
-   <html data-theme="light">. */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    --color-paper: #121211;
-    --color-white: #1a1a18;
-    --color-paper-alt: #222220;
-    --color-line: #2e2d2a;
-    --color-ink: #edebe6;
-    --color-muted: #a8a398;
-    --color-faint: #77736b;
-    --color-accent: #6fae9a;
-    --color-accent-hover: #8ac2b0;
-    --color-accent-soft: #1f2f2a;
-    --color-on-accent: #121211;
-    --color-gold: #d08a4a;
-    --logo-letter: #edebe6;
-  }
+/* The site is always dark: a cool near-black "cinema" palette. The admin opts
+   out with <html data-theme="light">. */
+:root:not([data-theme='light']) {
+  color-scheme: dark;
+  --color-paper: #0c0c10;
+  --color-white: #15151b;
+  --color-paper-alt: #1b1b22;
+  --color-line: #2a2a33;
+  --color-ink: #f4f2ee;
+  --color-muted: #a6a4ae;
+  --color-faint: #76747e;
+  --color-accent: #6fae9a;
+  --color-accent-hover: #8ac2b0;
+  --color-accent-soft: #1f2f2a;
+  --color-on-accent: #0c0c10;
+  --color-gold: #d08a4a;
+  --logo-letter: #f4f2ee;
 }
 
 @media (prefers-reduced-motion: reduce) {

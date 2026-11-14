@@ -4,19 +4,6 @@ import { useTestimonials, type Testimonial } from '../lib/queries.js';
 import { SectionHeader } from './SectionHeader.js';
 import { Stagger } from './Stagger.js';
 
-// Stand-ins so the layout can be reviewed locally. They are never shown in a
-// production build: until real reviews are added to staticData.testimonials
-// the whole section is hidden.
-const PLACEHOLDERS: Testimonial[] = [1, 2, 3].map((n) => ({
-  id: `placeholder-${n}`,
-  clientName: 'Client name',
-  clientRole: 'Role',
-  company: 'Company',
-  quote: 'Placeholder review. Replace with a genuine review from a client, used with their permission.',
-  rating: null,
-  photo: null,
-}));
-
 const initials = (name: string) =>
   name
     .split(/\s+/)
@@ -25,10 +12,10 @@ const initials = (name: string) =>
     .slice(0, 2)
     .toUpperCase();
 
-function TestimonialCard({ t, placeholder }: { t: Testimonial; placeholder: boolean }) {
+function TestimonialCard({ t }: { t: Testimonial }) {
   return (
     <figure className="card testimonial-card">
-      {placeholder && <span className="testimonial-card__tag">Placeholder</span>}
+      {t.approved === false && <span className="testimonial-card__tag">Draft · awaiting client approval</span>}
       {t.rating != null && (
         <p className="testimonial-card__rating" aria-label={`Rated ${t.rating} out of 5`}>
           {[1, 2, 3, 4, 5].map((n) => (
@@ -58,20 +45,21 @@ function TestimonialCard({ t, placeholder }: { t: Testimonial; placeholder: bool
   );
 }
 
+// Drafts (approved: false) are visible in local preview only, so they can be
+// reviewed in place; a production build shows approved reviews alone and hides
+// the section when there are none.
 export function Testimonials() {
   const { data } = useTestimonials();
-  const real = data ?? [];
-  const placeholder = real.length === 0 && import.meta.env.DEV;
-  const items = placeholder ? PLACEHOLDERS : real;
+  const items = (data ?? []).filter((t) => t.approved !== false || import.meta.env.DEV);
   if (!items.length) return null;
 
   return (
     <Section tone="alt">
       <Container>
         <SectionHeader eyebrow="Testimonials" title="What our clients say." />
-        <Stagger className="grid grid-3">
+        <Stagger className="grid grid-2 rail">
           {items.map((t) => (
-            <TestimonialCard key={t.id} t={t} placeholder={placeholder} />
+            <TestimonialCard key={t.id} t={t} />
           ))}
         </Stagger>
       </Container>

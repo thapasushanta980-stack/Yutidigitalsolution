@@ -15,10 +15,11 @@ describe('blog', () => {
     await expect(fetchData('/insights/missing-post')).rejects.toThrow();
   });
 
-  it('renders a card with title, date, excerpt and a link to the post', () => {
+  it('renders a card with category, excerpt and a link to the post, without a date', () => {
     render(<MemoryRouter><InsightCard item={insights[0]} /></MemoryRouter>);
     expect(screen.getByRole('link')).toHaveAttribute('href', `/blog/${insights[0].slug}`);
-    expect(screen.getByText('29 October 2026')).toBeInTheDocument();
+    expect(screen.getByText(insights[0].category.name)).toBeInTheDocument();
+    expect(screen.queryByText(/2026/)).not.toBeInTheDocument();
     expect(screen.getByText(insights[0].excerpt)).toBeInTheDocument();
   });
 });

@@ -2,10 +2,10 @@ import { Clapperboard, Smartphone, Tv } from 'lucide-react';
 import { useLayoutEffect, useState } from 'react';
 import { Section, Container, Button } from '@yukti/ui';
 import { ChannelPlayer } from '../components/ChannelPlayer.js';
-import { Marquee } from '../components/Marquee.js';
 import { heroVideos, team } from '../lib/staticData.js';
 import { HeroVideo } from '../components/HeroVideo.js';
 import { Seo, organizationJsonLd } from '../lib/Seo.js';
+import { Marquee } from '../components/Marquee.js';
 import { Reveal } from '../components/Reveal.js';
 import { SectionHeader } from '../components/SectionHeader.js';
 import { ServiceStack } from '../components/ServiceStack.js';
@@ -119,49 +119,43 @@ export default function Home() {
             isEmpty={!clients.data?.length}
             emptyMessage="Client logos will appear here as they are added."
           >
-            <div className="logo-marquee">
-              {[0, 1].map((row) => (
-                <Marquee key={row} speed={row ? 55 : 48} reverse={row === 1}>
-                  {(clients.data ?? [])
-                    .filter((_, i) => i % 2 === row)
-                    .map((c) => (
-                      <div key={c.id} className="logo-tile">
-                        {c.logoUrl ? <img src={c.logoUrl} alt={c.name} loading="lazy" /> : c.name}
-                      </div>
-                    ))}
-                </Marquee>
-              ))}
+            <div className="logo-panel">
+              <div className="logo-marquee">
+                {[0, 1].map((row) => (
+                  <Marquee key={row} speed={row ? 55 : 48} reverse={row === 1}>
+                    {(clients.data ?? [])
+                      .filter((_, i) => i % 2 === row)
+                      .map((c) => (
+                        <div key={c.id} className="logo-tile">
+                          {c.logoUrl ? <img src={c.logoUrl} alt={c.name} loading="lazy" /> : c.name}
+                        </div>
+                      ))}
+                  </Marquee>
+                ))}
+              </div>
             </div>
           </QueryState>
         </Container>
       </Section>
 
       {/* Showreel */}
-      <Section tone="paper">
+      <Section tone="paper" className="cinema">
         <Container>
-          <div className="showcase">
-            <div className="showcase__text">
-              <SectionHeader
-                eyebrow="Watch"
-                title="Our work, on screen."
-                intro="Motion graphics, brand films and ads, straight from the Yukti studio. Press play and scroll through our latest videos."
-              />
-              <ul className="showcase__list">
-                <li><Clapperboard size={18} aria-hidden="true" /> Motion graphics and brand films</li>
-                <li><Tv size={18} aria-hidden="true" /> TVC ads built for screens big and small</li>
-                <li><Smartphone size={18} aria-hidden="true" /> Reels and social videos that get watched</li>
-              </ul>
-              {settings?.social_youtube && (
-                <Button as="a" href={settings.social_youtube} target="_blank" rel="noopener noreferrer">
-                  Visit our YouTube channel
-                </Button>
-              )}
-            </div>
-
-            <Reveal>
-              <ChannelPlayer />
-            </Reveal>
+          <div className="cinema__head">
+            <SectionHeader
+              eyebrow="Watch"
+              title="Our work, on screen."
+              intro="Motion graphics, brand films and ads, straight from the Yukti studio. Press play on our latest videos."
+            />
+            <ul className="cinema__chips">
+              <li><Clapperboard size={16} aria-hidden="true" /> Motion graphics and brand films</li>
+              <li><Tv size={16} aria-hidden="true" /> TVC ads for screens big and small</li>
+              <li><Smartphone size={16} aria-hidden="true" /> Reels and social videos</li>
+            </ul>
           </div>
+          <Reveal>
+            <ChannelPlayer channelUrl={settings?.social_youtube} />
+          </Reveal>
         </Container>
       </Section>
 
@@ -177,7 +171,7 @@ export default function Home() {
                 View all articles
               </Button>
             </div>
-            <Stagger className="grid grid-3">
+            <Stagger className="grid grid-3 rail">
               {posts.data.map((p) => (
                 <InsightCard key={p.id} item={p} />
               ))}

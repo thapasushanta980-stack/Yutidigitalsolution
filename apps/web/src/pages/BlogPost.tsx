@@ -7,7 +7,6 @@ import { Breadcrumb } from '../components/Breadcrumb.js';
 import { QueryState } from '../components/QueryState.js';
 import { InsightCard } from '../components/Cards.js';
 import type { InsightSummary } from '../lib/queries.js';
-import { formatDate } from '../lib/date.js';
 import { ServiceArt } from '../components/ServiceArt.js';
 
 interface InsightDetailData extends InsightSummary {
@@ -42,8 +41,6 @@ export default function BlogPost() {
               headline: data.title,
               description: data.excerpt,
               author: { '@type': 'Organization', name: data.author },
-              datePublished: data.publishedAt,
-              dateModified: data.updatedAt,
               publisher: { '@type': 'Organization', name: 'Yukti Digital Solutions' },
             }}
           />
@@ -59,8 +56,7 @@ export default function BlogPost() {
               {data.category && <p className="fig-label">{data.category.name}</p>}
               <h1>{data.title}</h1>
               <p className="fig-label">
-                {data.author} · <time dateTime={data.publishedAt ?? undefined}>{formatDate(data.publishedAt)}</time> ·{' '}
-                {data.readingMinutes} min read
+                {data.author} · {data.readingMinutes} min read
               </p>
             </Container>
           </Section>
@@ -85,7 +81,7 @@ export default function BlogPost() {
             <Section tone="alt">
               <Container>
                 <h2>More from the blog</h2>
-                <div className="grid grid-3">
+                <div className="grid grid-3 rail">
                   {data.related.map((r) => <InsightCard key={r.id} item={r} />)}
                 </div>
               </Container>

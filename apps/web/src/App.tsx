@@ -3,6 +3,7 @@ import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 import { Navbar } from './components/Navbar.js';
 import { Footer } from './components/Footer.js';
 import { ScrollToTop } from './components/ScrollToTop.js';
+import { MobileCta } from './components/MobileCta.js';
 import { Spinner } from '@yukti/ui';
 
 // Route-level code splitting.
@@ -59,6 +60,7 @@ export default function App() {
         </Suspense>
       </main>
       <Footer />
+      <MobileCta />
     </>
   );
 }
