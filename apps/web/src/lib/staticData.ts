@@ -49,7 +49,7 @@ const svc = (
 //     -crf 28 -maxrate 1600k -bufsize 3200k -c:a aac -b:a 96k -ac 2 -movflags +faststart out.mp4
 // An empty list shows the illustrated hero instead.
 export const heroVideos: { src: string; poster: string }[] = [
-  { src: '/hero/car-ad.mp4', poster: '/hero/car-ad.jpg' },
+  { src: '/hero/showreel.mp4', poster: '/hero/showreel.jpg' },
   { src: '/hero/hotel-ratna.mp4', poster: '/hero/hotel-ratna.jpg' },
 ];
 
@@ -96,23 +96,24 @@ export const metrics = [
 ];
 
 const clientList: [string, string][] = [
-  ['Greenleaf Builders', 'greenleaf-builders.jpeg'],
-  ['Ayu Superspeciality Clinic', 'ayu-superspeciality-clinic.jpeg'],
-  ['Birat School of Hospitality Management', 'bshm.jpeg'],
-  ['Sazilo Automation', 'sazilo-automation.jpeg'],
-  ['Sigma Kitchen & Home Appliances', 'sigma-kitchen.jpeg'],
-  ['A&A Builders and Construction', 'aa-builders.jpeg'],
-  ['Group Three Multipurpose Pvt. Ltd.', 'group-three-multipurpose.jpeg'],
-  ['Inspire Connect College', 'inspire-connect-college.jpeg'],
-  ['Kuti Home Decor', 'kuti-home-decor.png'],
-  ['Saptakoshi Hospital', 'saptakoshi-hospital.jpeg'],
-  ['Sahara Animal Care', 'sahara-animal-care.jpeg'],
-  ['Delight Paints', 'delight-paints.jpeg'],
-  ['Sumeru Food Production House', 'sumeru-food.jpeg'],
+  ['Ayu Superspeciality Clinic', 'ayu-superspeciality-clinic.png'],
   ['The IELTS Institute', 'ielts-institute.png'],
-  ['Chef Fork Brand', 'chef-fork-brand.jpeg'],
-  ['Saraswati Brand', 'saraswati-brand.jpeg'],
-  ['MS Brand', 'ms-brand.jpeg'],
+  ['Vidhya Bikash English School', 'vidhya-bikash-english-school.png'],
+  ['Saptakoshi Hospital', 'saptakoshi-hospital.png'],
+  ['Top Trail Nepal', 'top-trail-nepal.png'],
+  ['A&A Builders and Construction', 'aa-builders.png'],
+  ['Chef Fork Brand', 'chef-fork-brand.png'],
+  ['Birat School of Hospitality Management', 'bshm.png'],
+  ['Chroma Paints', 'chroma-paints.png'],
+  ['Delight Paints', 'delight-paints.png'],
+  ['Dishant Service Centre', 'dishant-service-centre.png'],
+  ['Greenleaf Builders', 'greenleaf-builders.png'],
+  ['Kuti Home Decor', 'kuti-home-decor.png'],
+  ['Sahara Animal Care', 'sahara-animal-care.png'],
+  ['RM Engineering Consultancy', 'rm-engineering-consultancy.png'],
+  ['Sigma Kitchen & Home Appliances', 'sigma-kitchen.png'],
+  ['MS Brand', 'ms-brand.png'],
+  ['Sumeru Food Production House', 'sumeru-food.png'],
 ];
 
 export const clients = clientList.map(([name, file], i) => ({
@@ -138,9 +139,43 @@ export const values = [
 export const projects: unknown[] = [];
 export const caseStudies: unknown[] = [];
 
-// Client reviews. Add only genuine reviews, with the client's permission:
-// { id, clientName, clientRole, company, quote, rating (1-5 or null), photo (path or null) }
-export const testimonials: unknown[] = [];
+// Client reviews: { id, clientName, clientRole, company, quote, rating (1-5 or
+// null), photo (path or null), approved }. Set `approved: false` on a review
+// that is still waiting for the client's sign-off: it then shows only in local
+// preview, tagged "Draft".
+const review = (id: string, clientName: string, quote: string) => ({
+  id,
+  clientName,
+  clientRole: null,
+  company: null,
+  quote,
+  rating: null,
+  photo: null,
+  approved: true,
+});
+
+export const testimonials = [
+  review(
+    't-ayu',
+    'Ayu Superspeciality Clinic',
+    'Yukti made our social media look as professional as our care. Patients find us easily online now, and the team is always creative, reliable and on time.',
+  ),
+  review(
+    't-kuti',
+    'Kuti Home Decor',
+    'Our products finally look as good online as they do in our showroom. Yukti understood our style from day one, and our posts and reels now bring real enquiries.',
+  ),
+  review(
+    't-ratna',
+    'Hotel Ratna',
+    'The commercial video and content Yukti created capture the warmth of our hotel perfectly. It is now the first thing we share with our guests.',
+  ),
+  review(
+    't-abc',
+    'ABC Global Study',
+    'Yukti handles our social media with real care: fresh ideas, clear communication and steady growth in student enquiries, even across time zones.',
+  ),
+];
 
 // ── Blog ──
 // Posts are newest first. In `content`, a blank line starts a new paragraph and
