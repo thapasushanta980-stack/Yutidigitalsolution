@@ -1,7 +1,7 @@
 /* Yukti design tokens — single source of truth for both web and admin.
    Calm editorial palette: warm paper, ink text, one green accent. The legacy
-   --color-* names are kept so existing components pick up the new palette. */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap');
+   --color-* names are kept so existing components pick up the new palette.
+   The two font families are loaded by a <link> in each app's index.html. */
 
 :root {
   /* Typography — two families only */

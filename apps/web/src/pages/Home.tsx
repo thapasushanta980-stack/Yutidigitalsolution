@@ -16,6 +16,7 @@ import { gsap, whenMotionOK } from '../lib/motion.js';
 import { QueryState } from '../components/QueryState.js';
 import { Stats } from '../components/Stats.js';
 import { Testimonials } from '../components/Testimonials.js';
+import { Faq, faqJsonLd } from '../components/Faq.js';
 import { InsightCard } from '../components/Cards.js';
 import {
   useServices,
@@ -54,7 +55,7 @@ export default function Home() {
         title="Yukti Digital Solutions | Digital Growth Agency in Biratnagar"
         description="Yukti Digital Solutions is a digital marketing agency in Biratnagar, Nepal, offering SEO, social media management, Meta ads and video production."
         path="/"
-        jsonLd={organizationJsonLd()}
+        jsonLd={[...organizationJsonLd(), faqJsonLd()]}
       />
 
       {/* Hero */}
@@ -64,7 +65,7 @@ export default function Home() {
           <div className="hero__inner">
           <div className="hero__layout">
           <div className="hero__copy">
-          <HeroTitle words={HEADLINE} highlight={['Growth.']} />
+          <HeroTitle kicker="Digital Marketing Agency in Biratnagar, Nepal" words={HEADLINE} highlight={['Growth.']} />
           <Reveal delay={0.1}>
             <p className="lead">
               Digital marketing from Biratnagar, Nepal: SEO, social media management, Meta ads and video production to help customers find and choose your business.
@@ -160,6 +161,8 @@ export default function Home() {
       </Section>
 
       <Testimonials />
+
+      <Faq />
 
       {/* Blog */}
       {!!posts.data?.length && (

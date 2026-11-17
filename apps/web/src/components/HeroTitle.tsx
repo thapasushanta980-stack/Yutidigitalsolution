@@ -1,18 +1,20 @@
 import { Fragment, useLayoutEffect, useRef } from 'react';
-import { gsap, whenMotionOK } from '../lib/motion.js';
+import { entranceOK, gsap, whenMotionOK } from '../lib/motion.js';
 
 interface Props {
   /** Plain headline words. */
   words: string[];
   /** Words (exact match) drawn in the highlight style with an underline stroke. */
   highlight?: string[];
+  /** Small line above the headline, inside the h1, naming what the business is. */
+  kicker?: string;
 }
 
 // Headline that rises word by word out of a mask, then draws a hand-drawn
 // underline under the highlighted word. Hovering or tapping that word sends a
 // ripple through its letters and redraws the underline. The full sentence is
 // exposed once via aria-label.
-export function HeroTitle({ words, highlight = [] }: Props) {
+export function HeroTitle({ words, highlight = [], kicker }: Props) {
   const root = useRef<HTMLHeadingElement>(null);
 
   useLayoutEffect(
@@ -22,11 +24,16 @@ export function HeroTitle({ words, highlight = [] }: Props) {
         const h1 = root.current!;
         const path = q('.hl-line path');
 
-        const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
-        tl.from(q('.hw > span'), { yPercent: 115, rotate: 3, duration: 1.1, stagger: 0.09 })
-          .from(path, { strokeDashoffset: 1, duration: 0.9, ease: 'power2.inOut' }, '-=0.3')
-          // Once settled, let letters move above the mask during the hover ripple.
-          .add(() => h1.classList.add('is-ready'));
+        if (entranceOK(h1)) {
+          const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+          tl.from(q('.hero__kicker'), { opacity: 0, y: 12, duration: 0.6 })
+            .from(q('.hw > span'), { yPercent: 115, rotate: 3, duration: 1.1, stagger: 0.09 }, '-=0.3')
+            .from(path, { strokeDashoffset: 1, duration: 0.9, ease: 'power2.inOut' }, '-=0.3')
+            // Once settled, let letters move above the mask during the hover ripple.
+            .add(() => h1.classList.add('is-ready'));
+        } else {
+          h1.classList.add('is-ready');
+        }
 
         const word = q('.hl-word')[0];
         const chars = q('.hl-ch');
@@ -46,7 +53,12 @@ export function HeroTitle({ words, highlight = [] }: Props) {
   );
 
   return (
-    <h1 ref={root} className="hero__title" aria-label={words.join(' ')}>
+    <h1 ref={root} className="hero__title" aria-label={[kicker, words.join(' ')].filter(Boolean).join(': ')}>
+      {kicker && (
+        <span className="hero__kicker" aria-hidden="true">
+          {kicker}
+        </span>
+      )}
       {words.map((w, i) => (
         <Fragment key={i}>
           <span className="hw" aria-hidden="true">

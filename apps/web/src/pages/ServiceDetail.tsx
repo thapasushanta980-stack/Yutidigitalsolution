@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import type { Service } from '@yukti/types';
 import { Section, Container, Button } from '@yukti/ui';
 import { fetchData } from '../lib/api.js';
+import { serviceHeadings } from '../lib/staticData.js';
 import { Seo } from '../lib/Seo.js';
 import { Breadcrumb } from '../components/Breadcrumb.js';
 import { QueryState } from '../components/QueryState.js';
@@ -21,7 +22,7 @@ export default function ServiceDetail() {
           {data && (
             <>
               <Seo
-                title={data.seoTitle || data.title}
+                title={data.seoTitle || serviceHeadings[data.slug] || data.title}
                 description={data.shortDescription}
                 path={`/services/${data.slug}`}
                 jsonLd={{
@@ -39,7 +40,7 @@ export default function ServiceDetail() {
                   { label: data.title },
                 ]}
               />
-              <h1>{data.title}</h1>
+              <h1>{serviceHeadings[data.slug] ?? data.title}</h1>
               <p className="lead">{data.shortDescription}</p>
               <div className="prose" style={{ marginTop: 'var(--space-8)' }}>
                 {data.description.split('\n').map((p, i) => (

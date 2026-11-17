@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, type ReactNode } from 'react';
-import { gsap, whenMotionOK } from '../lib/motion.js';
+import { entranceOK, gsap, whenMotionOK } from '../lib/motion.js';
 
 interface Props {
   eyebrow?: string;
@@ -16,6 +16,7 @@ export function SectionHeader({ eyebrow, title, intro, as = 'h2' }: Props) {
   useLayoutEffect(
     () =>
       whenMotionOK(() => {
+        if (!entranceOK(root.current)) return;
         const q = gsap.utils.selector(root);
         const tl = gsap.timeline({ scrollTrigger: { trigger: root.current, start: 'top 85%', once: true } });
         tl.from(q('.eyebrow'), { opacity: 0, y: 12, duration: 0.6 })

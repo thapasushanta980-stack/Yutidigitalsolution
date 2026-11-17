@@ -9,12 +9,27 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" />
+    <script>
+      // Laptops: first-screen headings stay hidden until their entrance
+      // animation takes over (see .motion-boot in editorial.css), so ready-made
+      // pages do not show them, hide them and animate them in again. Phones
+      // show them straight away and skip that animation (entranceOK in motion.ts).
+      if (matchMedia('(min-width: 768px) and (prefers-reduced-motion: no-preference)').matches) {
+        document.documentElement.classList.add('motion-boot');
+        setTimeout(function () { document.documentElement.classList.remove('motion-boot'); }, 4000);
+      }
+    </script>
+    <!--seo-->
     <title data-rh="true">Yukti Digital Solutions | Digital Growth Agency in Biratnagar</title>
     <meta
       data-rh="true"
       name="description"
       content="Yukti Digital Solutions is a digital marketing agency in Biratnagar, Nepal, offering SEO, social media management, Meta ads and video production."
     />
+    <!--/seo-->
   </head>
   <body>
     <div id="root"></div>

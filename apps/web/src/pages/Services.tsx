@@ -21,7 +21,7 @@ export default function Services() {
           <SectionHeader
             as="h1"
             eyebrow="Services"
-            title="Everything You Need to Grow."
+            title="Digital Marketing Services That Grow Your Business."
             intro="Strategy, creative, technology and performance marketing, integrated to compound results."
           />
         </Container>

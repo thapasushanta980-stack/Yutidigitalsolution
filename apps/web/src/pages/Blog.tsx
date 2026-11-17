@@ -52,7 +52,7 @@ export default function Blog() {
           <SectionHeader
             as="h1"
             eyebrow="Blog"
-            title="Ideas that drive growth."
+            title="Digital marketing ideas that drive growth."
             intro="Practical guides on search, social media and advertising for growing businesses."
           />
           <input
