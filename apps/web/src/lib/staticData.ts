@@ -50,7 +50,6 @@ const svc = (
 // An empty list shows the illustrated hero instead.
 export const heroVideos: { src: string; poster: string }[] = [
   { src: '/hero/showreel.mp4', poster: '/hero/showreel.jpg' },
-  { src: '/hero/hotel-ratna.mp4', poster: '/hero/hotel-ratna.jpg' },
 ];
 
 export const services: Service[] = [
