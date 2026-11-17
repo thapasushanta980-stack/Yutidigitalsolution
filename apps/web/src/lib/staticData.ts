@@ -87,6 +87,14 @@ export const services: Service[] = [
   ),
 ];
 
+// Service page H1s, naming the service and where we offer it.
+export const serviceHeadings: Record<string, string> = {
+  'social-media-marketing': 'Social Media Marketing in Biratnagar, Nepal',
+  'video-production-tvc-ads': 'Video Production and TVC Ads in Biratnagar, Nepal',
+  'meta-ads-services': 'Meta Ads Services in Biratnagar, Nepal',
+  seo: 'SEO Services in Biratnagar, Nepal',
+};
+
 export const metrics = [
   { id: 'm1', code: 'F-01', label: 'Founded', value: '2021' },
   { id: 'm2', code: 'F-02', label: 'Core Services', value: '4' },
@@ -132,6 +140,39 @@ export const values = [
   { id: 'v2', title: 'Advertise', description: 'Paid and organic campaigns built around measurable business results.' },
   { id: 'v3', title: 'Visualise', description: 'Video, motion and storytelling that bring your brand to life.' },
   { id: 'v4', title: 'Experience', description: 'Promoters with years of experience in technology and enterprises.' },
+];
+
+// Home page "Answers" section, also published as FAQPage structured data.
+// Plain, direct answers so search engines and AI assistants can quote them.
+export const faqs = [
+  {
+    q: 'What does Yukti Digital Solutions do?',
+    a: 'Yukti Digital Solutions is a digital marketing agency in Biratnagar, Nepal. We offer social media marketing, video production and TVC ads, Meta (Facebook and Instagram) ads and SEO, helping businesses get found online and turn attention into enquiries.',
+  },
+  {
+    q: 'Where is Yukti Digital Solutions based?',
+    a: 'Our studio is in Biratnagar, Nepal. We work with businesses across Nepal and abroad, and meetings can happen in person or online.',
+  },
+  {
+    q: 'Which businesses do you work with?',
+    a: 'We have worked with clinics and hospitals, schools and education consultancies, hotels, builders, paint and home brands, food producers and service businesses. If your customers are online, we can help you reach them.',
+  },
+  {
+    q: 'What is the Free Growth Audit?',
+    a: 'A free 30-minute call where we look at your website, social media and advertising, talk through your goals and point out practical next steps. You can book a time online through our Cal.com calendar.',
+  },
+  {
+    q: 'How long does SEO take to show results?',
+    a: 'SEO builds over time. Technical fixes and a complete Google Business Profile can help within weeks, while rankings for competitive searches usually take a few months of steady work. The benefit compounds: good pages keep bringing visitors long after they are published.',
+  },
+  {
+    q: 'Should I boost Facebook posts or run Meta ads campaigns?',
+    a: 'Boosting a post is a quick way to get more people to see it. A Meta ads campaign set up in Ads Manager gives you more control over the goal, audience, placements and tracking, so it is usually the better choice when you want enquiries, sales or website visits.',
+  },
+  {
+    q: 'How can I contact Yukti Digital Solutions?',
+    a: 'Book a free call on our Contact page, email yuktidsbookings@gmail.com or call +977 9822789551.',
+  },
 ];
 
 // No published projects or case studies yet.

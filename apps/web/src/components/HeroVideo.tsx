@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Pause, Play, Volume2, VolumeX } from 'lucide-react';
 
 interface Props {
@@ -19,9 +19,12 @@ export function HeroVideo({ clips, onError }: Props) {
   const clip = clips[index];
   const next = () => setIndex((i) => (i + 1) % clips.length);
   const [muted, setMuted] = useState(true);
-  const [paused, setPaused] = useState(
-    () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-  );
+  const [paused, setPaused] = useState(false);
+
+  // Read after hydration so the ready-made page markup matches.
+  useLayoutEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) setPaused(true);
+  }, []);
 
   useEffect(() => {
     const video = ref.current;
@@ -53,7 +56,9 @@ export function HeroVideo({ clips, onError }: Props) {
         muted
         loop={clips.length === 1}
         playsInline
-        preload="auto"
+        // Nothing downloads until the script calls play(), so the video does
+        // not compete with the page's own files on first load.
+        preload="none"
         aria-hidden="true"
         tabIndex={-1}
         onPlaying={() => (failures.current = 0)}

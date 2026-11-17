@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { setReadyMadeLoad } from './motion.js';
 import { SITE_ORIGIN, siteUrl } from './siteUrl.js';
 
 interface SeoProps {
@@ -18,6 +20,12 @@ const ORIGIN = SITE_ORIGIN;
 export function Seo({ title, description, path = '', image, type = 'website', jsonLd, noindex }: SeoProps) {
   const fullTitle = title ? (title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`) : undefined;
   const canonical = path && !noindex ? siteUrl(path) : undefined;
+  // Every page renders Seo, and this runs after the page's entrance animations
+  // are set up, so the first-screen headings can be shown (see index.html).
+  useEffect(() => {
+    setReadyMadeLoad(false);
+    document.documentElement.classList.remove('motion-boot');
+  }, []);
   return (
     <Helmet>
       {fullTitle && <title>{fullTitle}</title>}
