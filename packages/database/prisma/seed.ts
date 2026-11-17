@@ -149,7 +149,7 @@ async function main() {
     company_name: 'Yukti Digital Solutions',
     tagline: 'We DESIGN | ADVERTISE | VISUALISE.',
     email: 'yuktidsbookings@gmail.com',
-    phone: '+977-0000000000',
+    phone: '+977 9822789551',
     address: 'Biratnagar, Nepal',
     coverage: 'South Asia · The Gulf · Australia',
     social_instagram: '',

@@ -15,6 +15,9 @@ interface Props {
   title?: string;
   intro?: string;
   tone?: 'paper' | 'alt';
+  /** h1 when the booking section opens the page. */
+  headingAs?: 'h1' | 'h2';
+  className?: string;
 }
 
 // Inline Cal.com scheduler. A plain iframe keeps it dependency-free and lazy.
@@ -23,13 +26,15 @@ export function CalBooking({
   title = 'Choose a time that works for you.',
   intro = 'Book through our live Cal.com calendar and get your confirmation and meeting details there.',
   tone = 'paper',
+  headingAs,
+  className,
 }: Props) {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <Section tone={tone} id="book">
+    <Section tone={tone} id="book" className={className}>
       <Container>
-        <SectionHeader eyebrow={eyebrow} title={title} intro={intro} />
+        <SectionHeader as={headingAs} eyebrow={eyebrow} title={title} intro={intro} />
         {CAL_LINK ? (
           <>
             <div className="cal-embed__actions">

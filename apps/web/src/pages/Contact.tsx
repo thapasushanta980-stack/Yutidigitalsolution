@@ -24,22 +24,13 @@ export default function Contact() {
         }}
       />
 
-      <Section className="page-hero" tone="paper">
-        <Container>
-          <SectionHeader
-            as="h1"
-            eyebrow="Contact"
-            title="Let’s talk growth."
-            intro="Book a time online, or email Yukti Digital Solutions in Biratnagar, Nepal."
-          />
-        </Container>
-      </Section>
-
       <CalBooking
         eyebrow="The easiest way to connect"
         title="Book a free 30-minute call"
         intro="Choose a time in our live Cal.com calendar. Your booking confirmation and meeting details will come directly from Cal.com."
         tone="alt"
+        headingAs="h1"
+        className="page-top"
       />
 
       <Section tone="paper">
@@ -59,7 +50,7 @@ export default function Contact() {
                 )}
                 {settings?.phone && (
                   <li>
-                    Phone: <a href={`tel:${settings.phone}`}>{settings.phone}</a>
+                    Contact No: <a href={`tel:${settings.phone.replace(/\s/g, '')}`}>{settings.phone}</a>
                   </li>
                 )}
                 <li>{settings?.address ?? 'Biratnagar, Nepal'}</li>

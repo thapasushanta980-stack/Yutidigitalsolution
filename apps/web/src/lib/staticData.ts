@@ -7,7 +7,7 @@ export const siteSettings: SiteSettings = {
   company_name: 'Yukti Digital Solutions',
   tagline: 'We DESIGN | ADVERTISE | VISUALISE.',
   email: 'yuktidsbookings@gmail.com',
-  phone: '',
+  phone: '+977 9822789551',
   address: 'Biratnagar, Nepal',
   coverage: '',
   social_youtube: 'https://www.youtube.com/@Yuktids',

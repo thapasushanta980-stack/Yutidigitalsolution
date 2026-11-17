@@ -1893,3 +1893,13 @@ body:has(.hero--video) .nav:not(.nav--scrolled) .nav__icon:hover {
     text-align: center;
   }
 }
+
+/* A normal section that opens the page: clear the fixed top bar. */
+.yk-section.page-top {
+  padding-top: calc(var(--nav-height) + var(--space-12));
+}
+@media (max-width: 767px) {
+  .yk-section.page-top {
+    padding-top: calc(var(--nav-height) + var(--space-6));
+  }
+}
