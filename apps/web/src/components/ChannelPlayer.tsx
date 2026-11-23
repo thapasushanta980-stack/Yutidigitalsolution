@@ -34,7 +34,7 @@ const KNOWN: Video[] = [
 
 const thumb = (id: string, size: 'maxresdefault' | 'hqdefault') =>
   id === 'XMwzVXAi-mo'
-    ? '/images/video/hotel-ratna-thumbnail.jpg'
+    ? '/1-hotel-ratna-thumbnail.jpg'
     : `https://i.ytimg.com/vi/${id}/${size}.jpg`;
 
 const thumbnailAlt = (video: Video) => video.thumbnailAlt ?? `Video thumbnail: ${video.title}`;
