@@ -28,7 +28,7 @@ for (const path of prerenderPaths) {
     .replace(/<!--seo-->[\s\S]*?<!--\/seo-->/, head)
     .replace(
       '<div id="root"></div>',
-      `<div id="root" data-path="${path}">${html}</div>` +
+      `<div id="root" data-path="${path}"><!--email_off-->${html}<!--/email_off--></div>` +
         // Served for an unknown URL (the server's fallback page): drop this
         // page's markup so it never shows under the wrong address.
         `<script>!function(r){if(r.dataset.path!==(location.pathname.replace(/\\/+$/,'')||'/'))r.innerHTML=''}(document.getElementById('root'))</script>` +
