@@ -15,22 +15,29 @@ interface Video {
   /** Short display name and type; otherwise read from the "Name | Type | ..." title. */
   name?: string;
   kind?: string;
+  thumbnailAlt?: string;
 }
 
 // Shown until the live feed loads (or if it cannot be loaded). Durations and
 // display names are not in the feed, so they are kept here and matched by id.
 const KNOWN: Video[] = [
-  { id: 'XMwzVXAi-mo', title: 'Hotel Ratna | Commercial Video | Yukti Digital Solution', duration: '2:07' },
+  { id: 'XMwzVXAi-mo', title: 'Hotel Ratna | Commercial Video | Yukti Digital Solution', duration: '2:07', thumbnailAlt: 'Breakfast spread with fruit, eggs and sandwiches in the Hotel Ratna commercial by Yukti Digital Solutions' },
   {
     id: 'pDBRBvjOwDo',
     title: 'Motion Graphics Video for Greenleaf Builders, Biratnagar | Yukti Digital Solutions',
     duration: '1:09',
     name: 'Greenleaf Builders',
     kind: 'Motion Graphics',
+    thumbnailAlt: 'Illustration of two people discussing a cost estimate for Greenleaf Builders',
   },
 ];
 
-const thumb = (id: string, size: 'maxresdefault' | 'hqdefault') => `https://i.ytimg.com/vi/${id}/${size}.jpg`;
+const thumb = (id: string, size: 'maxresdefault' | 'hqdefault') =>
+  id === 'XMwzVXAi-mo'
+    ? '/images/video/hotel-ratna-thumbnail.jpg'
+    : `https://i.ytimg.com/vi/${id}/${size}.jpg`;
+
+const thumbnailAlt = (video: Video) => video.thumbnailAlt ?? `Video thumbnail: ${video.title}`;
 
 // YouTube serves a 120px grey placeholder (not an error) when a video has no
 // HD thumbnail, so swap to the always-present one when that happens.
@@ -103,7 +110,7 @@ export function ChannelPlayer({ channelUrl }: { channelUrl?: string }) {
             />
           ) : (
             <button type="button" className="cinema__poster" onClick={() => setPlaying(true)} aria-label={`Play: ${active.title}`}>
-              <img key={active.id} src={thumb(active.id, 'maxresdefault')} onLoad={fallbackToHq(active.id)} alt="" width={1280} height={720} loading="lazy" />
+              <img key={active.id} src={thumb(active.id, 'maxresdefault')} onLoad={fallbackToHq(active.id)} alt={thumbnailAlt(active)} width={1280} height={720} loading="lazy" />
               <span className="cinema__play" aria-hidden="true">
                 <Play size={30} />
               </span>
@@ -139,7 +146,7 @@ export function ChannelPlayer({ channelUrl }: { channelUrl?: string }) {
                   aria-current={isActive ? 'true' : undefined}
                 >
                   <span className="cinema__item-thumb">
-                    <img src={thumb(v.id, 'hqdefault')} alt="" width={160} height={90} loading="lazy" />
+                    <img src={thumb(v.id, 'hqdefault')} alt={thumbnailAlt(v)} width={160} height={90} loading="lazy" />
                     {v.duration && <span className="cinema__duration">{v.duration}</span>}
                   </span>
                   <span className="cinema__item-text">
