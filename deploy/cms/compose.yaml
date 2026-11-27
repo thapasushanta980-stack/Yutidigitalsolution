@@ -16,6 +16,13 @@ services:
       - UPLOAD_DIR=/app/runtime/uploads
       - COOKIE_NAME=yukti_vps_cms
       - RATE_LIMIT_MAX=2000
+      # Publishing stays off unless CMS_PUBLISH_ENABLED=true is set in Coolify (see docs/cms/publish-rollout.md).
+      - CMS_PUBLISH_ENABLED=${CMS_PUBLISH_ENABLED:-false}
+      - CMS_PUBLISH_ROOT=/app
+      - CMS_PUBLISH_WORKDIR=/app/runtime/publish
+      - CMS_PUBLISH_REMOTE=git@github.com:thapasushanta980-stack/Yutidigitalsolution.git
+      - CMS_PUBLISH_BRANCH=cms/publish
+      - CMS_PUBLISH_SSH_KEY=/run/cms-publish/key
     volumes:
       - cms-runtime:/app/runtime
     depends_on:
