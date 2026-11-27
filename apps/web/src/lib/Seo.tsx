@@ -8,6 +8,7 @@ interface SeoProps {
   description?: string;
   path?: string;
   image?: string;
+  canonicalUrl?: string;
   type?: 'website' | 'article';
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   noindex?: boolean;
@@ -17,9 +18,9 @@ const SITE_NAME = 'Yukti Digital Solutions';
 const ORIGIN = SITE_ORIGIN;
 
 // Centralised head management: title, meta, canonical, OpenGraph, Twitter, JSON-LD.
-export function Seo({ title, description, path = '', image, type = 'website', jsonLd, noindex }: SeoProps) {
+export function Seo({ title, description, path = '', image, type = 'website', jsonLd, noindex, canonicalUrl }: SeoProps) {
   const fullTitle = title ? (title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`) : undefined;
-  const canonical = path && !noindex ? siteUrl(path) : undefined;
+  const canonical = !noindex ? safeCanonical(canonicalUrl) || (path ? siteUrl(path) : undefined) : undefined;
   // Every page renders Seo, and this runs after the page's entrance animations
   // are set up, so the first-screen headings can be shown (see index.html).
   useEffect(() => {
@@ -67,4 +68,10 @@ export function organizationJsonLd() {
       url: ORIGIN,
     },
   ];
+}
+
+// Ignore malformed or executable canonical schemes from content input.
+export function safeCanonical(value?: string): string | undefined {
+  if (!value) return undefined;
+  try { const url = new URL(value); return ['https:', 'http:'].includes(url.protocol) ? url.href : undefined; } catch { return undefined; }
 }

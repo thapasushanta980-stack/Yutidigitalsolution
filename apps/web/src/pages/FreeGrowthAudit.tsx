@@ -1,3 +1,5 @@
+import {pageCopies} from '../lib/pageContent.js';
+const pageCopy=pageCopies['free-growth-audit'];
 import { Section, Container } from '@yukti/ui';
 import { Seo } from '../lib/Seo.js';
 import { SectionHeader } from '../components/SectionHeader.js';
@@ -7,8 +9,8 @@ export default function FreeGrowthAudit() {
   return (
     <>
       <Seo
-        title="Free Growth Audit"
-        description="Book a free 30-minute growth call with Yukti Digital Solutions and discuss practical opportunities for your business."
+        title={pageCopy.field1}
+        description={pageCopy.field2}
         path="/free-growth-audit"
       />
 
@@ -16,26 +18,26 @@ export default function FreeGrowthAudit() {
         <Container>
           <SectionHeader
             as="h1"
-            eyebrow="Free Growth Audit"
-            title="Find your next growth opportunity."
-            intro="Book a focused 30-minute call to talk through your website, marketing, and the next steps that make sense for your business."
+            eyebrow={pageCopy.field3}
+            title={pageCopy.field4}
+            intro={pageCopy.field5}
           />
         </Container>
       </Section>
 
       <CalBooking
-        eyebrow="Choose a time that works for you"
-        title="Reserve your free growth call"
-        intro="Book directly through Cal.com. You’ll receive your confirmation and meeting details there."
+        eyebrow={pageCopy.field6}
+        title={pageCopy.field7}
+        intro={pageCopy.field8}
         tone="alt"
       />
 
       <Section tone="paper">
         <Container>
           <SectionHeader
-            eyebrow="Make the most of your call"
-            title="Bring your biggest growth question."
-            intro="We’ll use the conversation to understand your goals, look at where you are now, and identify practical opportunities to explore next."
+            eyebrow={pageCopy.field9}
+            title={pageCopy.field10}
+            intro={pageCopy.field11}
           />
         </Container>
       </Section>

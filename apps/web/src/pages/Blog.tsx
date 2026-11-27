@@ -1,3 +1,5 @@
+import {pageCopies} from '../lib/pageContent.js';
+const pageCopy=pageCopies['blog'];
 import { useState } from 'react';
 import { Stagger } from '../components/Stagger.js';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
@@ -42,8 +44,8 @@ export default function Blog() {
   return (
     <>
       <Seo
-        title="Blog"
-        description="Practical guides on SEO, Meta ads and social media marketing from the Yukti Digital Solutions team."
+        title={pageCopy.field1}
+        description={pageCopy.field2}
         path="/blog"
         noindex={!data?.items.length}
       />
@@ -51,14 +53,14 @@ export default function Blog() {
         <Container>
           <SectionHeader
             as="h1"
-            eyebrow="Blog"
-            title="Digital marketing ideas that drive growth."
-            intro="Practical guides on search, social media and advertising for growing businesses."
+            eyebrow={pageCopy.field3}
+            title={pageCopy.field4}
+            intro={pageCopy.field5}
           />
           <input
             type="search"
             className="yk-input"
-            placeholder="Search articles…"
+            placeholder={pageCopy.field6}
             value={q}
             onChange={(e) => {
               setQ(e.target.value);
@@ -73,8 +75,7 @@ export default function Blog() {
         <Container>
           <div className="filters" role="group" aria-label="Filter by category">
             <button className={!category ? 'is-active' : ''} onClick={() => { setCategory(''); setPage(1); }}>
-              All
-            </button>
+              {pageCopy.field7}</button>
             {categories?.map((c) => (
               <button
                 key={c.id}
@@ -90,7 +91,7 @@ export default function Blog() {
             isLoading={isLoading}
             isError={isError}
             isEmpty={!data?.items.length}
-            emptyMessage="No articles found."
+            emptyMessage={pageCopy.field8}
           >
             <Stagger className="grid grid-3">
               {data?.items.map((i) => <InsightCard key={i.id} item={i} />)}
@@ -104,18 +105,16 @@ export default function Blog() {
                 disabled={page <= 1}
                 onClick={() => setPage((p) => p - 1)}
               >
-                Previous
-              </button>
+                {pageCopy.field9}</button>
               <span className="fig-label">
-                Page {data.meta.page} of {data.meta.totalPages}
+                {pageCopy.field10}{data.meta.page} {pageCopy.field11}{data.meta.totalPages}
               </span>
               <button
                 className="yk-btn yk-btn--secondary yk-btn--sm"
                 disabled={page >= data.meta.totalPages}
                 onClick={() => setPage((p) => p + 1)}
               >
-                Next
-              </button>
+                {pageCopy.field12}</button>
             </div>
           )}
         </Container>

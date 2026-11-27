@@ -8,7 +8,7 @@ import { recordAudit } from '../../utils/audit.js';
 
 // Returns settings as a flat key/value map for easy consumption.
 async function settingsMap() {
-  const rows = await prisma.siteSetting.findMany();
+  const rows = await prisma.siteSetting.findMany({where:{NOT:{key:{startsWith:'cms.'}}}});
   return Object.fromEntries(rows.map((r) => [r.key, r.value]));
 }
 
@@ -22,7 +22,7 @@ publicSettingsRouter.get(
   ),
 );
 
-const updateSchema = z.object({ settings: z.record(z.string(), z.string()) });
+const updateSchema = z.object({ settings: z.record(z.string().refine(key=>!key.startsWith('cms.'), 'Reserved content namespace'), z.string()) });
 
 export const adminSettingsRouter = Router();
 adminSettingsRouter.use(verifyToken, requireRole('SUPER_ADMIN', 'ADMIN'));

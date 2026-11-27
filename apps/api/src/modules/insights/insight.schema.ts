@@ -5,7 +5,7 @@ export const createInsightSchema = z.object({
   slug: z.string().optional(),
   excerpt: z.string().min(2).max(400),
   content: z.string().min(2),
-  coverImage: z.string().url().optional().nullable(),
+  coverImage: z.union([z.string().url(), z.string().regex(/^\/uploads\/[A-Za-z0-9._-]+\.(png|jpe?g|webp)$/i)]).optional().nullable(),
   author: z.string().min(2).max(120),
   categoryId: z.string().optional().nullable(),
   tags: z.array(z.string().max(60)).max(20).optional(),
@@ -15,7 +15,7 @@ export const createInsightSchema = z.object({
   status: z.enum(['DRAFT', 'PUBLISHED', 'ARCHIVED']).optional(),
   publishedAt: z.coerce.date().optional().nullable(),
 });
-export const updateInsightSchema = createInsightSchema.partial();
+export const updateInsightSchema = createInsightSchema.partial().extend({expectedUpdatedAt:z.string().datetime().optional()});
 
 export const insightQuerySchema = z.object({
   q: z.string().max(120).optional(),

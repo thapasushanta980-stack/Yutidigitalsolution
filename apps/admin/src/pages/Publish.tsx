@@ -1,0 +1,23 @@
+import {useState} from 'react';
+import {useQuery} from '@tanstack/react-query';
+import {get,post} from '../lib/api.js';
+type Result={outcome:string;message:string;commit?:string};
+export function Publish(){
+ const[msg,setMsg]=useState('');const[busy,setBusy]=useState(false);
+ const q=useQuery({queryKey:['publish-status'],queryFn:()=>get<{enabled:boolean;last:null|{action:string;outcome:string;commit?:string|null;at:string}}>('/admin/publish'),retry:false});
+ async function act(kind:'publish'|'undo'){
+  const ask=kind==='publish'?'Send the approved content to the website repository now?':'Undo the last CMS send in the website repository?';
+  if(!window.confirm(ask))return;
+  setBusy(true);setMsg('');
+  try{const r=await post<Result>('/admin/publish/'+kind,{confirm:true});await q.refetch();setMsg(r.message+(r.commit?' Commit '+r.commit.slice(0,7)+'.':'')+' Live deployment: not verified.')}
+  catch(e){await q.refetch();const m=(e as {response?:{data?:{error?:{message?:string}}}}).response?.data?.error?.message;setMsg((m||'Nothing was sent. The request failed.')+' Live deployment: not verified.')}finally{setBusy(false)}
+ }
+ const off=q.isError||!q.data?.enabled;
+ return <div><h1>Send to website</h1>
+  <p>Sends the approved (published) content to the website repository. Drafts are never sent. The live site changes only after its rebuild, which this page cannot confirm.</p>
+  {off&&<p role="alert">Sending is not enabled in this environment.</p>}
+  <button className="review-primary" disabled={busy||off} onClick={()=>act('publish')}>Send approved content</button>
+  <button disabled={busy||off} onClick={()=>act('undo')}>Undo last send</button>
+  {msg&&<p role="status">{msg}</p>}
+  <p>{q.data?.last?`Last recorded attempt: ${q.data.last.action} (${q.data.last.outcome.replace('_',' ')}) at ${new Date(q.data.last.at).toLocaleString()}${q.data.last.commit?', commit '+q.data.last.commit.slice(0,7):''}. Live deployment: not verified.`:'No send recorded yet.'}</p></div>
+}

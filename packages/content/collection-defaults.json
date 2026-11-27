@@ -1,0 +1,224 @@
+{
+  "clients": [
+    {
+      "id": "c0",
+      "name": "Ayu Superspeciality Clinic",
+      "websiteUrl": null,
+      "logoUrl": "/clients/ayu-superspeciality-clinic.png"
+    },
+    {
+      "id": "c1",
+      "name": "The IELTS Institute",
+      "websiteUrl": null,
+      "logoUrl": "/clients/ielts-institute.png"
+    },
+    {
+      "id": "c2",
+      "name": "Vidhya Bikash English School",
+      "websiteUrl": null,
+      "logoUrl": "/clients/vidhya-bikash-english-school.png"
+    },
+    {
+      "id": "c3",
+      "name": "Saptakoshi Hospital",
+      "websiteUrl": null,
+      "logoUrl": "/clients/saptakoshi-hospital.png"
+    },
+    {
+      "id": "c4",
+      "name": "Top Trail Nepal",
+      "websiteUrl": null,
+      "logoUrl": "/clients/top-trail-nepal.png"
+    },
+    {
+      "id": "c5",
+      "name": "A&A Builders and Construction",
+      "websiteUrl": null,
+      "logoUrl": "/clients/aa-builders.png"
+    },
+    {
+      "id": "c6",
+      "name": "Chef Fork Brand",
+      "websiteUrl": null,
+      "logoUrl": "/clients/chef-fork-brand.png"
+    },
+    {
+      "id": "c7",
+      "name": "Birat School of Hospitality Management",
+      "websiteUrl": null,
+      "logoUrl": "/clients/bshm.png"
+    },
+    {
+      "id": "c8",
+      "name": "Chroma Paints",
+      "websiteUrl": null,
+      "logoUrl": "/clients/chroma-paints.png"
+    },
+    {
+      "id": "c9",
+      "name": "Delight Paints",
+      "websiteUrl": null,
+      "logoUrl": "/clients/delight-paints.png"
+    },
+    {
+      "id": "c10",
+      "name": "Dishant Service Centre",
+      "websiteUrl": null,
+      "logoUrl": "/clients/dishant-service-centre.png"
+    },
+    {
+      "id": "c11",
+      "name": "Greenleaf Builders",
+      "websiteUrl": null,
+      "logoUrl": "/clients/greenleaf-builders.png"
+    },
+    {
+      "id": "c12",
+      "name": "Kuti Home Decor",
+      "websiteUrl": null,
+      "logoUrl": "/clients/kuti-home-decor.png"
+    },
+    {
+      "id": "c13",
+      "name": "Sahara Animal Care",
+      "websiteUrl": null,
+      "logoUrl": "/clients/sahara-animal-care.png"
+    },
+    {
+      "id": "c14",
+      "name": "RM Engineering Consultancy",
+      "websiteUrl": null,
+      "logoUrl": "/clients/rm-engineering-consultancy.png"
+    },
+    {
+      "id": "c15",
+      "name": "Sigma Kitchen & Home Appliances",
+      "websiteUrl": null,
+      "logoUrl": "/clients/sigma-kitchen.png"
+    },
+    {
+      "id": "c16",
+      "name": "MS Brand",
+      "websiteUrl": null,
+      "logoUrl": "/clients/ms-brand.png"
+    },
+    {
+      "id": "c17",
+      "name": "Sumeru Food Production House",
+      "websiteUrl": null,
+      "logoUrl": "/clients/sumeru-food.png"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "What does Yukti Digital Solutions do?",
+      "a": "Yukti Digital Solutions is a digital marketing agency in Biratnagar, Nepal. We offer social media marketing, video production and TVC ads, Meta (Facebook and Instagram) ads and SEO, helping businesses get found online and turn attention into enquiries."
+    },
+    {
+      "q": "Where is Yukti Digital Solutions based?",
+      "a": "Our studio is in Biratnagar, Nepal. We work with businesses across Nepal and abroad, and meetings can happen in person or online."
+    },
+    {
+      "q": "Which businesses do you work with?",
+      "a": "We have worked with clinics and hospitals, schools and education consultancies, hotels, builders, paint and home brands, food producers and service businesses. If your customers are online, we can help you reach them."
+    },
+    {
+      "q": "What is the Free Growth Audit?",
+      "a": "A free 30-minute call where we look at your website, social media and advertising, talk through your goals and point out practical next steps. You can book a time online through our Cal.com calendar."
+    },
+    {
+      "q": "How long does SEO take to show results?",
+      "a": "SEO builds over time. Technical fixes and a complete Google Business Profile can help within weeks, while rankings for competitive searches usually take a few months of steady work. The benefit compounds: good pages keep bringing visitors long after they are published."
+    },
+    {
+      "q": "Should I boost Facebook posts or run Meta ads campaigns?",
+      "a": "Boosting a post is a quick way to get more people to see it. A Meta ads campaign set up in Ads Manager gives you more control over the goal, audience, placements and tracking, so it is usually the better choice when you want enquiries, sales or website visits."
+    },
+    {
+      "q": "How can I contact Yukti Digital Solutions?",
+      "a": "Book a free call on our Contact page, email yuktidsbookings@gmail.com or call +977 9822789551."
+    }
+  ],
+  "values": [
+    {
+      "id": "v1",
+      "title": "Design",
+      "description": "Clear, high-end visual identities and websites that make brands memorable."
+    },
+    {
+      "id": "v2",
+      "title": "Advertise",
+      "description": "Paid and organic campaigns built around measurable business results."
+    },
+    {
+      "id": "v3",
+      "title": "Visualise",
+      "description": "Video, motion and storytelling that bring your brand to life."
+    },
+    {
+      "id": "v4",
+      "title": "Experience",
+      "description": "Promoters with years of experience in technology and enterprises."
+    }
+  ],
+  "team": [
+    {
+      "id": "t1",
+      "name": "Sanjay Raut",
+      "role": "Founder",
+      "bio": null,
+      "photo": "/team/sanjay-raut.jpg",
+      "linkedin": null
+    },
+    {
+      "id": "t2",
+      "name": "Saugat Tamang",
+      "role": "Co-Founder",
+      "bio": null,
+      "photo": "/team/saugat-tamang.jpg",
+      "linkedin": null
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "t-ayu",
+      "clientName": "Ayu Superspeciality Clinic",
+      "clientRole": null,
+      "company": null,
+      "quote": "Yukti made our social media look as professional as our care. Patients find us easily online now, and the team is always creative, reliable and on time.",
+      "rating": null,
+      "photo": null,
+      "approved": true
+    },
+    {
+      "id": "t-kuti",
+      "clientName": "Kuti Home Decor",
+      "clientRole": null,
+      "company": null,
+      "quote": "Our products finally look as good online as they do in our showroom. Yukti understood our style from day one, and our posts and reels now bring real enquiries.",
+      "rating": null,
+      "photo": null,
+      "approved": true
+    },
+    {
+      "id": "t-ratna",
+      "clientName": "Hotel Ratna",
+      "clientRole": null,
+      "company": null,
+      "quote": "The commercial video and content Yukti created capture the warmth of our hotel perfectly. It is now the first thing we share with our guests.",
+      "rating": null,
+      "photo": null,
+      "approved": true
+    },
+    {
+      "id": "t-abc",
+      "clientName": "ABC Global Study",
+      "clientRole": null,
+      "company": null,
+      "quote": "Yukti handles our social media with real care: fresh ideas, clear communication and steady growth in student enquiries, even across time zones.",
+      "rating": null,
+      "photo": null,
+      "approved": true
+    }
+  ]
+}

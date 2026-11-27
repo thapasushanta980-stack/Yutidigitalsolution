@@ -1,0 +1,12 @@
+import {useState} from 'react';
+import {useQuery} from '@tanstack/react-query';
+import {get,post} from '../lib/api.js';
+type State={job:null|{state:'building'|'ready'|'failed';mode:string;releaseId?:string;error?:string};current:string|null;releases:string[]};
+export function ReviewBuilds(){
+ const[error,setError]=useState('');const[busy,setBusy]=useState(false);
+ const q=useQuery({queryKey:['review-builds'],queryFn:()=>get<State>('/admin/review'),retry:false,refetchInterval:query=>query.state.data?.job?.state==='building'?2500:false});
+ async function build(mode:'draft'|'published'){setBusy(true);setError('');try{await post('/admin/review/build',{mode});await q.refetch()}catch(e){setError((e as Error).message)}finally{setBusy(false)}}
+ async function select(id:string){setBusy(true);try{await post('/admin/review/select',{id});await q.refetch()}catch(e){setError((e as Error).message)}finally{setBusy(false)}}
+ const building=busy||q.data?.job?.state==='building';
+ return <div><div className="review-banner">ISOLATED RELEASE REVIEW · never deploys yuktids.com</div><h1>Preview builds</h1><p>Build the existing design with saved draft content or the approved snapshot. Preview is read-only: scripts, bookings and forms are disabled. Nothing is published to the live website.</p>{(error||q.isError)&&<p role="alert">{error||'Review builder is not enabled or available in this environment.'}</p>}<button className="review-primary" disabled={building||q.isError} onClick={()=>build('draft')}>Build draft preview</button><button className="review-primary" disabled={building||q.isError} onClick={()=>build('published')}>Build published preview</button>{q.data?.job&&<p role="status">{q.data.job.state==='building'?'Building review. The previous review remains available.':q.data.job.state==='failed'?q.data.job.error:'Review build ready. Live website unchanged.'}</p>}<section className="admin-card"><h2>Review history</h2>{!q.data?.releases.length?<p>No review build yet.</p>:q.data.releases.map(id=><div key={id}><p>{id}{q.data?.current===id?' · Current review':''}</p><a href={'/api/v1/admin/review/preview/'+id+'/index.html'} target="_blank" rel="noreferrer">Open read-only preview</a> <button disabled={building||q.data?.current===id} onClick={()=>select(id)}>Use this review version</button></div>)}</section><p>Selecting an older version only changes the isolated current-review pointer. It does not erase revisions, change drafts or roll back a live site.</p></div>
+}

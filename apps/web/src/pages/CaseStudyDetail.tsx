@@ -1,3 +1,5 @@
+import {pageCopies} from '../lib/pageContent.js';
+const pageCopy=pageCopies['case-study-detail'];
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Section, Container, Button } from '@yukti/ui';
@@ -69,23 +71,23 @@ export default function CaseStudyDetail() {
           <Section tone="alt">
             <Container>
               <div className="prose">
-                <h2>Challenge</h2>
+                <h2>{pageCopy.field1}</h2>
                 <p>{data.challenge}</p>
                 {data.strategy && (
                   <>
-                    <h2>Strategy</h2>
+                    <h2>{pageCopy.field2}</h2>
                     <p>{data.strategy}</p>
                   </>
                 )}
                 {data.implementation && (
                   <>
-                    <h2>Implementation</h2>
+                    <h2>{pageCopy.field3}</h2>
                     <p>{data.implementation}</p>
                   </>
                 )}
                 {data.results && (
                   <>
-                    <h2>Results</h2>
+                    <h2>{pageCopy.field4}</h2>
                     <p>{data.results}</p>
                   </>
                 )}
@@ -98,10 +100,10 @@ export default function CaseStudyDetail() {
               <Container>
                 {data.testimonials.map((t) => (
                   <blockquote key={t.id} className="testimonial">
-                    <p>“{t.quote}”</p>
+                    <p>{pageCopy.field5}{t.quote}{pageCopy.field6}</p>
                     <cite>
                       <strong>{t.clientName}</strong>
-                      {t.company && <span className="muted"> | {t.company}</span>}
+                      {t.company && <span className="muted"> {pageCopy.field7}{t.company}</span>}
                     </cite>
                   </blockquote>
                 ))}
@@ -112,8 +114,7 @@ export default function CaseStudyDetail() {
           <Section tone="ink">
             <Container>
               <Button as="a" href="/free-growth-audit" size="lg">
-                Get results like these
-              </Button>
+                {pageCopy.field8}</Button>
             </Container>
           </Section>
         </>

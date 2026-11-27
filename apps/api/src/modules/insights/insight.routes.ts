@@ -1,3 +1,4 @@
+import {z} from 'zod';
 import { Router } from 'express';
 import * as svc from './insight.service.js';
 import { createInsightSchema, updateInsightSchema, insightQuerySchema } from './insight.schema.js';
@@ -37,6 +38,8 @@ adminInsightRouter.get(
   validate({ params: idParamSchema }),
   asyncHandler(async (req, res) => ok(res, await svc.getById(req.params.id))),
 );
+adminInsightRouter.get('/:id/revisions',validate({params:idParamSchema}),asyncHandler(async(req,res)=>ok(res,await svc.revisions(req.params.id))));
+adminInsightRouter.post('/:id/restore',validate({params:idParamSchema,body:z.object({version:z.number().int().min(1),expectedUpdatedAt:z.string().datetime()}).strict()}),asyncHandler(async(req,res)=>ok(res,await svc.restoreRevision(req.params.id,req.body.version,req.body.expectedUpdatedAt))));
 adminInsightRouter.post(
   '/',
   validate({ body: createInsightSchema }),

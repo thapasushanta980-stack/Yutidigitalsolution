@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Section, Container, Button } from '@yukti/ui';
 import { SectionHeader } from './SectionHeader.js';
-import { siteSettings } from '../lib/staticData.js';
+import { siteSettings } from '../lib/siteContent.js';
 
 // Cal.com booking link, e.g. "yukti/growth-audit" (username/event-slug).
 // Allow a build-time override while keeping the confirmed event available by default.

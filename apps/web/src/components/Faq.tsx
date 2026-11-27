@@ -1,6 +1,6 @@
 import { Plus } from 'lucide-react';
 import { Section, Container } from '@yukti/ui';
-import { faqs } from '../lib/staticData.js';
+import { faqs } from '../lib/siteContent.js';
 import { SectionHeader } from './SectionHeader.js';
 
 /** FAQPage structured data for the same questions, for the page's <Seo jsonLd>. */

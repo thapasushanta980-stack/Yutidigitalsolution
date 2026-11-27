@@ -1,3 +1,5 @@
+import {pageCopies} from '../lib/pageContent.js';
+const pageCopy=pageCopies['about'];
 import { Section, Container, Button } from '@yukti/ui';
 import { Stagger } from '../components/Stagger.js';
 import { Seo } from '../lib/Seo.js';
@@ -13,17 +15,17 @@ export default function About() {
   return (
     <>
       <Seo
-        title="About"
-        description="A digital marketing agency based in Biratnagar, Nepal."
+        title={pageCopy.field1}
+        description={pageCopy.field2}
         path="/about"
       />
       <Section className="page-hero" tone="paper">
         <Container>
           <SectionHeader
             as="h1"
-            eyebrow="About"
-            title="One-Stop Solutions for Digital Marketing."
-            intro="End-to-end solutions to bring your company's digital presence into existence. We DESIGN | ADVERTISE | VISUALISE."
+            eyebrow={pageCopy.field3}
+            title={pageCopy.field4}
+            intro={pageCopy.field5}
           />
         </Container>
       </Section>
@@ -39,19 +41,12 @@ export default function About() {
       <Section tone="paper">
         <Container>
           <div className="split">
-            <SectionHeader eyebrow="Our story" title="Founded in 2021. Built on experience." />
+            <SectionHeader eyebrow={pageCopy.field6} title={pageCopy.field7} />
             <div className="prose muted">
               <p className="dropcap">
-                Yukti Digital Solutions is a Business Intelligence Agency offering one-stop solutions
-                for all digital marketing services. We are experienced in SEO (Search Engine
-                Optimization), Social Media Marketing, Web Design, Content Marketing and Advertising,
-                with core expertise across various languages and platforms.
-              </p>
+                {pageCopy.field8}</p>
               <p>
-                Founded in 2021, Yukti provides a wide spectrum of technology solutions and services
-                to a diverse customer base. The promoters of the company have years of experience in
-                technology and enterprises.
-              </p>
+                {pageCopy.field9}</p>
             </div>
           </div>
         </Container>
@@ -60,7 +55,7 @@ export default function About() {
       {/* Values */}
       <Section tone="alt">
         <Container>
-          <SectionHeader eyebrow="What we stand for" title="Principles that shape the work." />
+          <SectionHeader eyebrow={pageCopy.field10} title={pageCopy.field11} />
           <QueryState isLoading={values.isLoading} isError={values.isError} isEmpty={!values.data?.length}>
             <Stagger className="grid grid-4">
               {values.data?.map((v) => (
@@ -77,12 +72,12 @@ export default function About() {
       {/* Team */}
       <Section tone="paper">
         <Container>
-          <SectionHeader eyebrow="Team" title="The people behind the work." />
+          <SectionHeader eyebrow={pageCopy.field12} title={pageCopy.field13} />
           <QueryState
             isLoading={team.isLoading}
             isError={team.isError}
             isEmpty={!team.data?.length}
-            emptyMessage="Team profiles will appear here."
+            emptyMessage={pageCopy.field14}
           >
             <Stagger className="grid grid-2 team-grid">
               {team.data?.map((m) => (
@@ -107,10 +102,9 @@ export default function About() {
 
       <Section tone="ink">
         <Container>
-          <SectionHeader title="Let's build measurable growth together." />
+          <SectionHeader title={pageCopy.field15} />
           <Button as="a" href="/free-growth-audit" size="lg">
-            Get Your Free Growth Audit
-          </Button>
+            {pageCopy.field16}</Button>
         </Container>
       </Section>
     </>

@@ -1,3 +1,6 @@
+import { adminReviewRouter } from '../modules/content/review.routes.js';
+import { adminPublishRouter } from '../modules/content/publish.routes.js';
+import { adminContentRouter } from '../modules/content/content.routes.js';
 import { Router } from 'express';
 import authRoutes from '../modules/auth/auth.routes.js';
 import { publicServiceRouter, adminServiceRouter } from '../modules/services/service.routes.js';
@@ -31,6 +34,9 @@ router.use('/search', searchRouter);
 router.use('/', publicLeadRouter); // POST /leads, POST /contact
 
 // ── Admin (auth + RBAC enforced inside each router) ─────
+router.use('/admin/review',adminReviewRouter);
+router.use('/admin/publish',adminPublishRouter);
+router.use('/admin/content', adminContentRouter);
 router.use('/admin/services', adminServiceRouter);
 router.use('/admin/projects', adminProjectRouter);
 router.use('/admin/case-studies', adminCaseStudyRouter);

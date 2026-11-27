@@ -1,0 +1,50 @@
+services:
+  cms:
+    build:
+      context: .
+      dockerfile: deploy/cms/Dockerfile
+    environment:
+      - SERVICE_URL_CMS_4403
+      - CMS_ORIGIN=${SERVICE_URL_CMS_4403}
+      - DATABASE_PASSWORD=${SERVICE_PASSWORD_DB}
+      - SESSION_SECRET=${SERVICE_PASSWORD_64_SESSION}
+      - BOOTSTRAP_TOKEN=${SERVICE_PASSWORD_SETUP}
+      - NODE_ENV=production
+      - CMS_REVIEW_ENABLED=true
+      - CMS_REVIEW_ROOT=/app
+      - CMS_REVIEW_OUTPUT=/app/runtime/reviews
+      - UPLOAD_DIR=/app/runtime/uploads
+      - COOKIE_NAME=yukti_vps_cms
+      - RATE_LIMIT_MAX=2000
+    volumes:
+      - cms-runtime:/app/runtime
+    depends_on:
+      database:
+        condition: service_healthy
+    mem_limit: 2g
+    cpus: 1.5
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:4403/admin/login').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 180s
+  database:
+    image: mariadb:11.4
+    environment:
+      - MARIADB_ROOT_PASSWORD=${SERVICE_PASSWORD_ROOTDB}
+      - MARIADB_DATABASE=yukti_cms
+      - MARIADB_USER=yukti
+      - MARIADB_PASSWORD=${SERVICE_PASSWORD_DB}
+    volumes:
+      - cms-database:/var/lib/mysql
+    mem_limit: 512m
+    cpus: 0.5
+    healthcheck:
+      test: [CMD, healthcheck.sh, --connect, --innodb_initialized]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+volumes:
+  cms-runtime:
+  cms-database:

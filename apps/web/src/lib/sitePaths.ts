@@ -1,4 +1,4 @@
-import { insights, services } from './staticData.js';
+import { insights, services } from './siteContent.js';
 
 // Only useful, published landing-site pages belong in the search sitemap.
 export const indexablePaths = [

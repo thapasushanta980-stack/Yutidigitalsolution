@@ -1,0 +1,466 @@
+{
+  "clients": {
+    "key": "collection-clients",
+    "paths": {
+      "value1": [
+        0,
+        "name"
+      ],
+      "value2": [
+        1,
+        "name"
+      ],
+      "value3": [
+        2,
+        "name"
+      ],
+      "value4": [
+        3,
+        "name"
+      ],
+      "value5": [
+        4,
+        "name"
+      ],
+      "value6": [
+        5,
+        "name"
+      ],
+      "value7": [
+        6,
+        "name"
+      ],
+      "value8": [
+        7,
+        "name"
+      ],
+      "value9": [
+        8,
+        "name"
+      ],
+      "value10": [
+        9,
+        "name"
+      ],
+      "value11": [
+        10,
+        "name"
+      ],
+      "value12": [
+        11,
+        "name"
+      ],
+      "value13": [
+        12,
+        "name"
+      ],
+      "value14": [
+        13,
+        "name"
+      ],
+      "value15": [
+        14,
+        "name"
+      ],
+      "value16": [
+        15,
+        "name"
+      ],
+      "value17": [
+        16,
+        "name"
+      ],
+      "value18": [
+        17,
+        "name"
+      ]
+    }
+  },
+  "faqs": {
+    "key": "collection-faqs",
+    "paths": {
+      "value1": [
+        0,
+        "q"
+      ],
+      "value2": [
+        0,
+        "a"
+      ],
+      "value3": [
+        1,
+        "q"
+      ],
+      "value4": [
+        1,
+        "a"
+      ],
+      "value5": [
+        2,
+        "q"
+      ],
+      "value6": [
+        2,
+        "a"
+      ],
+      "value7": [
+        3,
+        "q"
+      ],
+      "value8": [
+        3,
+        "a"
+      ],
+      "value9": [
+        4,
+        "q"
+      ],
+      "value10": [
+        4,
+        "a"
+      ],
+      "value11": [
+        5,
+        "q"
+      ],
+      "value12": [
+        5,
+        "a"
+      ],
+      "value13": [
+        6,
+        "q"
+      ],
+      "value14": [
+        6,
+        "a"
+      ]
+    }
+  },
+  "insightCategories": {
+    "key": "collection-insightCategories",
+    "paths": {
+      "value1": [
+        0,
+        "name"
+      ],
+      "value2": [
+        1,
+        "name"
+      ],
+      "value3": [
+        2,
+        "name"
+      ]
+    }
+  },
+  "insights": {
+    "key": "collection-insights",
+    "paths": {
+      "value1": [
+        0,
+        "title"
+      ],
+      "value2": [
+        0,
+        "excerpt"
+      ],
+      "value3": [
+        0,
+        "author"
+      ],
+      "value4": [
+        0,
+        "category",
+        "name"
+      ],
+      "value5": [
+        0,
+        "content"
+      ],
+      "value6": [
+        1,
+        "title"
+      ],
+      "value7": [
+        1,
+        "excerpt"
+      ],
+      "value8": [
+        1,
+        "author"
+      ],
+      "value9": [
+        1,
+        "category",
+        "name"
+      ],
+      "value10": [
+        1,
+        "content"
+      ],
+      "value11": [
+        2,
+        "title"
+      ],
+      "value12": [
+        2,
+        "excerpt"
+      ],
+      "value13": [
+        2,
+        "author"
+      ],
+      "value14": [
+        2,
+        "category",
+        "name"
+      ],
+      "value15": [
+        2,
+        "content"
+      ]
+    }
+  },
+  "metrics": {
+    "key": "collection-metrics",
+    "paths": {
+      "value1": [
+        0,
+        "code"
+      ],
+      "value2": [
+        0,
+        "label"
+      ],
+      "value3": [
+        0,
+        "value"
+      ],
+      "value4": [
+        1,
+        "code"
+      ],
+      "value5": [
+        1,
+        "label"
+      ],
+      "value6": [
+        1,
+        "value"
+      ],
+      "value7": [
+        2,
+        "code"
+      ],
+      "value8": [
+        2,
+        "label"
+      ],
+      "value9": [
+        2,
+        "value"
+      ],
+      "value10": [
+        3,
+        "code"
+      ],
+      "value11": [
+        3,
+        "label"
+      ],
+      "value12": [
+        3,
+        "value"
+      ]
+    }
+  },
+  "serviceHeadings": {
+    "key": "collection-serviceHeadings",
+    "paths": {
+      "value1": [
+        "social-media-marketing"
+      ],
+      "value2": [
+        "video-production-tvc-ads"
+      ],
+      "value3": [
+        "meta-ads-services"
+      ],
+      "value4": [
+        "seo"
+      ]
+    }
+  },
+  "services": {
+    "key": "collection-services",
+    "paths": {
+      "value1": [
+        0,
+        "title"
+      ],
+      "value2": [
+        0,
+        "shortDescription"
+      ],
+      "value3": [
+        0,
+        "description"
+      ],
+      "value4": [
+        1,
+        "title"
+      ],
+      "value5": [
+        1,
+        "shortDescription"
+      ],
+      "value6": [
+        1,
+        "description"
+      ],
+      "value7": [
+        2,
+        "title"
+      ],
+      "value8": [
+        2,
+        "shortDescription"
+      ],
+      "value9": [
+        2,
+        "description"
+      ],
+      "value10": [
+        3,
+        "title"
+      ],
+      "value11": [
+        3,
+        "shortDescription"
+      ],
+      "value12": [
+        3,
+        "description"
+      ]
+    }
+  },
+  "siteSettings": {
+    "key": "collection-siteSettings",
+    "paths": {
+      "value1": [
+        "company_name"
+      ],
+      "value2": [
+        "tagline"
+      ],
+      "value3": [
+        "coverage"
+      ],
+      "value4": [
+        "seo_title"
+      ],
+      "value5": [
+        "seo_description"
+      ],
+      "value6": [
+        "footer_note"
+      ]
+    }
+  },
+  "team": {
+    "key": "collection-team",
+    "paths": {
+      "value1": [
+        0,
+        "name"
+      ],
+      "value2": [
+        0,
+        "role"
+      ],
+      "value3": [
+        1,
+        "name"
+      ],
+      "value4": [
+        1,
+        "role"
+      ]
+    }
+  },
+  "testimonials": {
+    "key": "collection-testimonials",
+    "paths": {
+      "value1": [
+        0,
+        "clientName"
+      ],
+      "value2": [
+        0,
+        "quote"
+      ],
+      "value3": [
+        1,
+        "clientName"
+      ],
+      "value4": [
+        1,
+        "quote"
+      ],
+      "value5": [
+        2,
+        "clientName"
+      ],
+      "value6": [
+        2,
+        "quote"
+      ],
+      "value7": [
+        3,
+        "clientName"
+      ],
+      "value8": [
+        3,
+        "quote"
+      ]
+    }
+  },
+  "values": {
+    "key": "collection-values",
+    "paths": {
+      "value1": [
+        0,
+        "title"
+      ],
+      "value2": [
+        0,
+        "description"
+      ],
+      "value3": [
+        1,
+        "title"
+      ],
+      "value4": [
+        1,
+        "description"
+      ],
+      "value5": [
+        2,
+        "title"
+      ],
+      "value6": [
+        2,
+        "description"
+      ],
+      "value7": [
+        3,
+        "title"
+      ],
+      "value8": [
+        3,
+        "description"
+      ]
+    }
+  }
+}

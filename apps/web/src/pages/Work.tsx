@@ -1,3 +1,5 @@
+import {pageCopies} from '../lib/pageContent.js';
+const pageCopy=pageCopies['work'];
 import { Section, Container } from '@yukti/ui';
 import { Stagger } from '../components/Stagger.js';
 import { Seo } from '../lib/Seo.js';
@@ -10,10 +12,10 @@ export default function Work() {
   const { data, isLoading, isError } = useProjects();
   return (
     <>
-      <Seo title="Work" description="Selected projects and outcomes for brands we partner with." path="/work" noindex={!data?.length} />
+      <Seo title={pageCopy.field1} description={pageCopy.field2} path="/work" noindex={!data?.length} />
       <Section className="page-hero" tone="paper">
         <Container>
-          <SectionHeader as="h1" eyebrow="Work" title="Built to create impact." />
+          <SectionHeader as="h1" eyebrow={pageCopy.field3} title={pageCopy.field4} />
         </Container>
       </Section>
       <Section tone="alt">
@@ -22,7 +24,7 @@ export default function Work() {
             isLoading={isLoading}
             isError={isError}
             isEmpty={!data?.length}
-            emptyMessage="Projects will be published here soon."
+            emptyMessage={pageCopy.field5}
           >
             <Stagger className="grid grid-3">
               {data?.map((p) => <ProjectCard key={p.id} project={p} />)}

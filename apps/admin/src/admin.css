@@ -339,3 +339,14 @@ code {
   justify-content: space-between;
   margin-top: 4px;
 }
+.review-banner {background:#eaf4f0;color:#315f52;padding:12px 16px;border-radius:6px;font-size:12px;letter-spacing:.04em;margin-bottom:20px}
+.review-editor-grid {display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:24px;align-items:start}.review-posts label {display:block;margin:16px 0 6px;font-weight:600}.review-posts input,.review-posts textarea,.review-posts select {display:block;margin-top:7px;width:100%;box-sizing:border-box}.review-body{min-height:300px;font-size:16px;line-height:1.7}.review-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.review-posts button {cursor:pointer;border:1px solid #d4d4d8;background:white;border-radius:5px;padding:9px 13px;color:#292933}.review-posts button.review-primary{background:#5b4be8;color:white;border-color:#5b4be8}.review-posts button:disabled{opacity:.5;cursor:default}.review-preview{padding:16px;border:1px solid #ddd;min-height:200px}.review-search{border:1px solid #ddd;border-radius:6px;padding:12px;margin-top:15px;overflow-wrap:anywhere}.review-search h3{color:#2242a4;font-size:18px;margin:9px 0}.review-search p{line-height:1.6}.review-post-row{display:flex;justify-content:space-between;gap:20px;align-items:center;border-bottom:1px solid #eee;padding:14px 0}.review-notice{padding:12px;border-left:3px solid #4d8b74;background:#f1f8f5}.review-posts h2{font-size:18px}.review-posts aside .admin-card{margin-bottom:20px}@media(max-width:1000px){.review-editor-grid{grid-template-columns:1fr}}@media(max-width:640px){.review-post-row{align-items:start;flex-direction:column}}
+.review-menu-toggle{display:none}@media(max-width:640px){.admin-sidebar{position:relative;min-height:0;padding:16px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px}.admin-sidebar .admin-logo{margin:0}.review-menu-toggle{display:block;color:white;background:transparent;border:1px solid #777;border-radius:5px;padding:10px 13px;min-height:44px}.admin-sidebar nav,.admin-sidebar .admin-user{display:none}.admin-sidebar.review-menu-open nav{display:grid;grid-column:1 / -1}.admin-sidebar.review-menu-open .admin-user{display:flex;grid-column:1 / -1}.admin-sidebar .admin-navlink{min-height:44px}.admin-main{padding-top:20px}}
+
+/* Image picker: keep every child inside its box at any width */
+.image-picker{display:grid;gap:8px;margin:6px 0 14px;padding:10px;border:1px dashed #bbb;border-radius:6px;box-sizing:border-box;width:100%;max-width:100%;min-width:0}
+.image-picker *{box-sizing:border-box;min-width:0;max-width:100%}
+.image-picker label{display:grid;gap:4px;width:100%}
+.image-picker input,.image-picker select{width:100%}
+.image-picker__preview{max-width:120px;max-height:80px;object-fit:contain}
+.review-posts .image-picker{margin-top:4px}

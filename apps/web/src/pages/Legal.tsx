@@ -1,20 +1,21 @@
+import {pageCopies} from '../lib/pageContent.js';
 import { Section, Container } from '@yukti/ui';
 import { Seo } from '../lib/Seo.js';
 
 const CONTENT = {
   privacy: {
-    title: 'Privacy Policy',
+    title: pageCopies.privacy.title,
     body: [
-      'This placeholder privacy policy describes how Yukti Digital Solutions handles information submitted through this website. Replace this copy with your reviewed legal text before launch.',
-      'We collect the information you provide via our forms (such as name, email, and website) solely to respond to your enquiry. We do not sell your data.',
-      'For any privacy questions, contact us using the details on our contact page.',
+      pageCopies.privacy.paragraph1,
+      pageCopies.privacy.paragraph2,
+      pageCopies.privacy.paragraph3,
     ],
   },
   terms: {
-    title: 'Terms & Conditions',
+    title: pageCopies.terms.title,
     body: [
-      'These placeholder terms govern your use of the Yukti Digital Solutions website. Replace this copy with your reviewed legal text before launch.',
-      'Content on this site is provided for general information. Engagements are governed by separate signed agreements.',
+      pageCopies.terms.paragraph1,
+      pageCopies.terms.paragraph2,
     ],
   },
 } as const;

@@ -1,8 +1,10 @@
+import {pageCopies} from '../lib/pageContent.js';
+const pageCopy=pageCopies['home'];
 import { Clapperboard, Smartphone, Tv } from 'lucide-react';
 import { useLayoutEffect, useState } from 'react';
 import { Section, Container, Button } from '@yukti/ui';
 import { ChannelPlayer } from '../components/ChannelPlayer.js';
-import { heroVideos, team } from '../lib/staticData.js';
+import { heroVideos, team } from '../lib/siteContent.js';
 import { HeroVideo } from '../components/HeroVideo.js';
 import { Seo, organizationJsonLd } from '../lib/Seo.js';
 import { Marquee } from '../components/Marquee.js';
@@ -25,7 +27,7 @@ import {
   useSiteSettings,
 } from '../lib/queries.js';
 
-const HEADLINE = 'Turn Your Digital Presence Into Measurable Growth.'.split(' ');
+const HEADLINE = pageCopy.heroHeadline.split(' ');
 
 export default function Home() {
   const { data: settings } = useSiteSettings();
@@ -52,8 +54,8 @@ export default function Home() {
   return (
     <>
       <Seo
-        title="Yukti Digital Solutions | Digital Growth Agency in Biratnagar"
-        description="Yukti Digital Solutions is a digital marketing agency in Biratnagar, Nepal, offering SEO, social media management, Meta ads and video production."
+        title={pageCopy.field1}
+        description={pageCopy.field2}
         path="/"
         jsonLd={[...organizationJsonLd(), faqJsonLd()]}
       />
@@ -65,20 +67,17 @@ export default function Home() {
           <div className="hero__inner">
           <div className="hero__layout">
           <div className="hero__copy">
-          <HeroTitle kicker="Digital Marketing Agency in Biratnagar, Nepal" words={HEADLINE} highlight={['Growth.']} />
+          <HeroTitle kicker={pageCopy.heroKicker} words={HEADLINE} highlight={['Growth.']} />
           <Reveal delay={0.1}>
             <p className="lead">
-              Digital marketing from Biratnagar, Nepal: SEO, social media management, Meta ads and video production to help customers find and choose your business.
-            </p>
+              {pageCopy.field3}</p>
           </Reveal>
           <Reveal delay={0.15}>
             <div className="hero__actions">
               <Button as="a" href="/free-growth-audit" size="lg">
-                Get Your Free Growth Audit
-              </Button>
+                {pageCopy.field4}</Button>
               <Button as="a" href="/services" variant="secondary" size="lg">
-                Explore Our Services
-              </Button>
+                {pageCopy.field5}</Button>
             </div>
           </Reveal>
           </div>
@@ -99,7 +98,7 @@ export default function Home() {
       {/* Services: stacking deck */}
       <Section tone="paper">
         <Container>
-          <SectionHeader eyebrow="Services" title="Everything You Need to Grow." />
+          <SectionHeader eyebrow={pageCopy.field6} title={pageCopy.field7} />
           <QueryState
             isLoading={services.isLoading}
             isError={services.isError}
@@ -113,12 +112,12 @@ export default function Home() {
       {/* Trusted brands */}
       <Section tone="paper">
         <Container>
-          <SectionHeader eyebrow="Clients" title="Trusted by ambitious brands." />
+          <SectionHeader eyebrow={pageCopy.field8} title={pageCopy.field9} />
           <QueryState
             isLoading={clients.isLoading}
             isError={clients.isError}
             isEmpty={!clients.data?.length}
-            emptyMessage="Client logos will appear here as they are added."
+            emptyMessage={pageCopy.field10}
           >
             <div className="logo-panel">
               <div className="logo-marquee">
@@ -144,14 +143,14 @@ export default function Home() {
         <Container>
           <div className="cinema__head">
             <SectionHeader
-              eyebrow="Watch"
-              title="Our work, on screen."
-              intro="Motion graphics, brand films and ads, straight from the Yukti studio. Press play on our latest videos."
+              eyebrow={pageCopy.field11}
+              title={pageCopy.field12}
+              intro={pageCopy.field13}
             />
             <ul className="cinema__chips">
-              <li><Clapperboard size={16} aria-hidden="true" /> Motion graphics and brand films</li>
-              <li><Tv size={16} aria-hidden="true" /> TVC ads for screens big and small</li>
-              <li><Smartphone size={16} aria-hidden="true" /> Reels and social videos</li>
+              <li><Clapperboard size={16} aria-hidden="true" /> {pageCopy.field14}</li>
+              <li><Tv size={16} aria-hidden="true" /> {pageCopy.field15}</li>
+              <li><Smartphone size={16} aria-hidden="true" /> {pageCopy.field16}</li>
             </ul>
           </div>
           <Reveal>
@@ -169,10 +168,9 @@ export default function Home() {
         <Section tone="paper">
           <Container>
             <div className="section-split">
-              <SectionHeader eyebrow="Blog" title="Latest from the blog." />
+              <SectionHeader eyebrow={pageCopy.field17} title={pageCopy.field18} />
               <Button as="a" href="/blog" variant="secondary">
-                View all articles
-              </Button>
+                {pageCopy.field19}</Button>
             </div>
             <Stagger className="grid grid-3 rail">
               {posts.data.map((p) => (
@@ -186,7 +184,7 @@ export default function Home() {
       {/* Founders */}
       <Section tone="paper">
         <Container>
-          <SectionHeader eyebrow="Leadership" title="The people behind Yukti." />
+          <SectionHeader eyebrow={pageCopy.field20} title={pageCopy.field21} />
           <Stagger className="grid grid-2 team-grid">
             {team.map((m) => (
               <div key={m.id} className="card card--project">

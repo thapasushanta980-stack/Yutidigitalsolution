@@ -1,0 +1,619 @@
+{
+  "contact": {
+    "label": "Contact",
+    "fields": {
+      "copy1": "Contact",
+      "copy2": "Book a call with Yukti Digital Solutions or contact our team in Biratnagar, Nepal.",
+      "copy3": "The easiest way to connect",
+      "copy4": "Book a free 30-minute call",
+      "copy5": "Choose a time in our live Cal.com calendar. Your booking confirmation and meeting details will come directly from Cal.com.",
+      "copy6": "Prefer email?",
+      "copy7": "Reach our team directly.",
+      "copy8": "For general questions or help with a booking, email us and we\u2019ll get back to you."
+    },
+    "labels": {
+      "copy1": "SEO title",
+      "copy2": "SEO description",
+      "copy3": "Booking section label",
+      "copy4": "Booking heading",
+      "copy5": "Booking introduction",
+      "copy6": "Contact section label",
+      "copy7": "Contact heading",
+      "copy8": "Contact introduction"
+    }
+  },
+  "home": {
+    "label": "Home",
+    "fields": {
+      "field1": "Yukti Digital Solutions | Digital Growth Agency in Biratnagar",
+      "field2": "Yukti Digital Solutions is a digital marketing agency in Biratnagar, Nepal, offering SEO, social media management, Meta ads and video production.",
+      "field3": "Digital marketing from Biratnagar, Nepal: SEO, social media management, Meta ads and video production to help customers find and choose your business.",
+      "field4": "Get Your Free Growth Audit",
+      "field5": "Explore Our Services",
+      "field6": "Services",
+      "field7": "Everything You Need to Grow.",
+      "field8": "Clients",
+      "field9": "Trusted by ambitious brands.",
+      "field10": "Client logos will appear here as they are added.",
+      "field11": "Watch",
+      "field12": "Our work, on screen.",
+      "field13": "Motion graphics, brand films and ads, straight from the Yukti studio. Press play on our latest videos.",
+      "field14": " Motion graphics and brand films",
+      "field15": " TVC ads for screens big and small",
+      "field16": " Reels and social videos",
+      "field17": "Blog",
+      "field18": "Latest from the blog.",
+      "field19": "View all articles",
+      "field20": "Leadership",
+      "field21": "The people behind Yukti.",
+      "heroHeadline": "Turn Your Digital Presence Into Measurable Growth.",
+      "heroKicker": "Digital Marketing Agency in Biratnagar, Nepal"
+    },
+    "labels": {
+      "field1": "title \u00b7 Yukti Digital Solutions | Digital Growth Agency in Biratnagar",
+      "field2": "description \u00b7 Yukti Digital Solutions is a digital marketing agency in Biratnagar, Nepal,",
+      "field3": "Text \u00b7 Digital marketing from Biratnagar, Nepal: SEO, social media management, Met",
+      "field4": "Text \u00b7 Get Your Free Growth Audit",
+      "field5": "Text \u00b7 Explore Our Services",
+      "field6": "eyebrow \u00b7 Services",
+      "field7": "title \u00b7 Everything You Need to Grow.",
+      "field8": "eyebrow \u00b7 Clients",
+      "field9": "title \u00b7 Trusted by ambitious brands.",
+      "field10": "emptyMessage \u00b7 Client logos will appear here as they are added.",
+      "field11": "eyebrow \u00b7 Watch",
+      "field12": "title \u00b7 Our work, on screen.",
+      "field13": "intro \u00b7 Motion graphics, brand films and ads, straight from the Yukti studio. Press",
+      "field14": "Text \u00b7  Motion graphics and brand films",
+      "field15": "Text \u00b7  TVC ads for screens big and small",
+      "field16": "Text \u00b7  Reels and social videos",
+      "field17": "eyebrow \u00b7 Blog",
+      "field18": "title \u00b7 Latest from the blog.",
+      "field19": "Text \u00b7 View all articles",
+      "field20": "eyebrow \u00b7 Leadership",
+      "field21": "title \u00b7 The people behind Yukti.",
+      "heroHeadline": "heroHeadline",
+      "heroKicker": "heroKicker"
+    }
+  },
+  "about": {
+    "label": "About",
+    "fields": {
+      "field1": "About",
+      "field2": "A digital marketing agency based in Biratnagar, Nepal.",
+      "field3": "About",
+      "field4": "One-Stop Solutions for Digital Marketing.",
+      "field5": "End-to-end solutions to bring your company's digital presence into existence. We DESIGN | ADVERTISE | VISUALISE.",
+      "field6": "Our story",
+      "field7": "Founded in 2021. Built on experience.",
+      "field8": "Yukti Digital Solutions is a Business Intelligence Agency offering one-stop solutions for all digital marketing services. We are experienced in SEO (Search Engine Optimization), Social Media Marketing, Web Design, Content Marketing and Advertising, with core expertise across various languages and platforms.",
+      "field9": "Founded in 2021, Yukti provides a wide spectrum of technology solutions and services to a diverse customer base. The promoters of the company have years of experience in technology and enterprises.",
+      "field10": "What we stand for",
+      "field11": "Principles that shape the work.",
+      "field12": "Team",
+      "field13": "The people behind the work.",
+      "field14": "Team profiles will appear here.",
+      "field15": "Let's build measurable growth together.",
+      "field16": "Get Your Free Growth Audit"
+    },
+    "labels": {
+      "field1": "title \u00b7 About",
+      "field2": "description \u00b7 A digital marketing agency based in Biratnagar, Nepal.",
+      "field3": "eyebrow \u00b7 About",
+      "field4": "title \u00b7 One-Stop Solutions for Digital Marketing.",
+      "field5": "intro \u00b7 End-to-end solutions to bring your company's digital presence into existenc",
+      "field6": "eyebrow \u00b7 Our story",
+      "field7": "title \u00b7 Founded in 2021. Built on experience.",
+      "field8": "Text \u00b7 Yukti Digital Solutions is a Business Intelligence Agency offering one-stop",
+      "field9": "Text \u00b7 Founded in 2021, Yukti provides a wide spectrum of technology solutions and",
+      "field10": "eyebrow \u00b7 What we stand for",
+      "field11": "title \u00b7 Principles that shape the work.",
+      "field12": "eyebrow \u00b7 Team",
+      "field13": "title \u00b7 The people behind the work.",
+      "field14": "emptyMessage \u00b7 Team profiles will appear here.",
+      "field15": "title \u00b7 Let's build measurable growth together.",
+      "field16": "Text \u00b7 Get Your Free Growth Audit"
+    }
+  },
+  "services": {
+    "label": "Services",
+    "fields": {
+      "field1": "Services",
+      "field2": "Explore Yukti's SEO, social media marketing, Meta ads, video production and TVC services from our team in Biratnagar, Nepal.",
+      "field3": "Services",
+      "field4": "Digital Marketing Services That Grow Your Business.",
+      "field5": "Strategy, creative, technology and performance marketing, integrated to compound results.",
+      "field6": "Not sure which service fits?",
+      "field7": "Book a free 30-minute call and we'll recommend the right mix for your goals."
+    },
+    "labels": {
+      "field1": "title \u00b7 Services",
+      "field2": "description \u00b7 Explore Yukti's SEO, social media marketing, Meta ads, video production and",
+      "field3": "eyebrow \u00b7 Services",
+      "field4": "title \u00b7 Digital Marketing Services That Grow Your Business.",
+      "field5": "intro \u00b7 Strategy, creative, technology and performance marketing, integrated to com",
+      "field6": "title \u00b7 Not sure which service fits?",
+      "field7": "intro \u00b7 Book a free 30-minute call and we'll recommend the right mix for your goals"
+    }
+  },
+  "service-detail": {
+    "label": "ServiceDetail",
+    "fields": {
+      "field1": "Get Your Free Growth Audit"
+    },
+    "labels": {
+      "field1": "Text \u00b7 Get Your Free Growth Audit"
+    }
+  },
+  "work": {
+    "label": "Work",
+    "fields": {
+      "field1": "Work",
+      "field2": "Selected projects and outcomes for brands we partner with.",
+      "field3": "Work",
+      "field4": "Built to create impact.",
+      "field5": "Projects will be published here soon."
+    },
+    "labels": {
+      "field1": "title \u00b7 Work",
+      "field2": "description \u00b7 Selected projects and outcomes for brands we partner with.",
+      "field3": "eyebrow \u00b7 Work",
+      "field4": "title \u00b7 Built to create impact.",
+      "field5": "emptyMessage \u00b7 Projects will be published here soon."
+    }
+  },
+  "work-detail": {
+    "label": "WorkDetail",
+    "fields": {
+      "field1": "Challenge",
+      "field2": "Approach",
+      "field3": "Results",
+      "field4": "Related work",
+      "field5": "Start your growth audit"
+    },
+    "labels": {
+      "field1": "Text \u00b7 Challenge",
+      "field2": "Text \u00b7 Approach",
+      "field3": "Text \u00b7 Results",
+      "field4": "Text \u00b7 Related work",
+      "field5": "Text \u00b7 Start your growth audit"
+    }
+  },
+  "case-studies": {
+    "label": "CaseStudies",
+    "fields": {
+      "field1": "Case Studies",
+      "field2": "Measurable outcomes for the brands we work with.",
+      "field3": "Case Studies",
+      "field4": "The Proof Is in the Numbers.",
+      "field5": "Every engagement starts with numbers and ends with numbers.",
+      "field6": "Case studies will be published here soon."
+    },
+    "labels": {
+      "field1": "title \u00b7 Case Studies",
+      "field2": "description \u00b7 Measurable outcomes for the brands we work with.",
+      "field3": "eyebrow \u00b7 Case Studies",
+      "field4": "title \u00b7 The Proof Is in the Numbers.",
+      "field5": "intro \u00b7 Every engagement starts with numbers and ends with numbers.",
+      "field6": "emptyMessage \u00b7 Case studies will be published here soon."
+    }
+  },
+  "case-study-detail": {
+    "label": "CaseStudyDetail",
+    "fields": {
+      "field1": "Challenge",
+      "field2": "Strategy",
+      "field3": "Implementation",
+      "field4": "Results",
+      "field5": "\u201c",
+      "field6": "\u201d",
+      "field7": " | ",
+      "field8": "Get results like these"
+    },
+    "labels": {
+      "field1": "Text \u00b7 Challenge",
+      "field2": "Text \u00b7 Strategy",
+      "field3": "Text \u00b7 Implementation",
+      "field4": "Text \u00b7 Results",
+      "field5": "Text \u00b7 \u201c",
+      "field6": "Text \u00b7 \u201d",
+      "field7": "Text \u00b7  | ",
+      "field8": "Text \u00b7 Get results like these"
+    }
+  },
+  "blog": {
+    "label": "Blog",
+    "fields": {
+      "field1": "Blog",
+      "field2": "Practical guides on SEO, Meta ads and social media marketing from the Yukti Digital Solutions team.",
+      "field3": "Blog",
+      "field4": "Digital marketing ideas that drive growth.",
+      "field5": "Practical guides on search, social media and advertising for growing businesses.",
+      "field6": "Search articles\u2026",
+      "field7": "All",
+      "field8": "No articles found.",
+      "field9": "Previous",
+      "field10": "Page ",
+      "field11": " of ",
+      "field12": "Next"
+    },
+    "labels": {
+      "field1": "title \u00b7 Blog",
+      "field2": "description \u00b7 Practical guides on SEO, Meta ads and social media marketing from the Yukti",
+      "field3": "eyebrow \u00b7 Blog",
+      "field4": "title \u00b7 Digital marketing ideas that drive growth.",
+      "field5": "intro \u00b7 Practical guides on search, social media and advertising for growing busine",
+      "field6": "placeholder \u00b7 Search articles\u2026",
+      "field7": "Text \u00b7 All",
+      "field8": "emptyMessage \u00b7 No articles found.",
+      "field9": "Text \u00b7 Previous",
+      "field10": "Text \u00b7 Page ",
+      "field11": "Text \u00b7  of ",
+      "field12": "Text \u00b7 Next"
+    }
+  },
+  "blog-post": {
+    "label": "BlogPost",
+    "fields": {
+      "field1": " \u00b7 ",
+      "field2": " min read",
+      "field3": "More from the blog"
+    },
+    "labels": {
+      "field1": "Text \u00b7  \u00b7 ",
+      "field2": "Text \u00b7  min read",
+      "field3": "Text \u00b7 More from the blog"
+    }
+  },
+  "free-growth-audit": {
+    "label": "FreeGrowthAudit",
+    "fields": {
+      "field1": "Free Growth Audit",
+      "field2": "Book a free 30-minute growth call with Yukti Digital Solutions and discuss practical opportunities for your business.",
+      "field3": "Free Growth Audit",
+      "field4": "Find your next growth opportunity.",
+      "field5": "Book a focused 30-minute call to talk through your website, marketing, and the next steps that make sense for your business.",
+      "field6": "Choose a time that works for you",
+      "field7": "Reserve your free growth call",
+      "field8": "Book directly through Cal.com. You\u2019ll receive your confirmation and meeting details there.",
+      "field9": "Make the most of your call",
+      "field10": "Bring your biggest growth question.",
+      "field11": "We\u2019ll use the conversation to understand your goals, look at where you are now, and identify practical opportunities to explore next."
+    },
+    "labels": {
+      "field1": "title \u00b7 Free Growth Audit",
+      "field2": "description \u00b7 Book a free 30-minute growth call with Yukti Digital Solutions and discuss ",
+      "field3": "eyebrow \u00b7 Free Growth Audit",
+      "field4": "title \u00b7 Find your next growth opportunity.",
+      "field5": "intro \u00b7 Book a focused 30-minute call to talk through your website, marketing, and ",
+      "field6": "eyebrow \u00b7 Choose a time that works for you",
+      "field7": "title \u00b7 Reserve your free growth call",
+      "field8": "intro \u00b7 Book directly through Cal.com. You\u2019ll receive your confirmation and meeting",
+      "field9": "eyebrow \u00b7 Make the most of your call",
+      "field10": "title \u00b7 Bring your biggest growth question.",
+      "field11": "intro \u00b7 We\u2019ll use the conversation to understand your goals, look at where you are "
+    }
+  },
+  "privacy": {
+    "label": "Privacy (unreviewed legal copy)",
+    "fields": {
+      "title": "Privacy Policy",
+      "paragraph1": "This placeholder privacy policy describes how Yukti Digital Solutions handles information submitted through this website. Replace this copy with your reviewed legal text before launch.",
+      "paragraph2": "We collect the information you provide via our forms (such as name, email, and website) solely to respond to your enquiry. We do not sell your data.",
+      "paragraph3": "For any privacy questions, contact us using the details on our contact page."
+    },
+    "labels": {
+      "title": "title",
+      "paragraph1": "paragraph1",
+      "paragraph2": "paragraph2",
+      "paragraph3": "paragraph3"
+    }
+  },
+  "terms": {
+    "label": "Terms (unreviewed legal copy)",
+    "fields": {
+      "title": "Terms & Conditions",
+      "paragraph1": "These placeholder terms govern your use of the Yukti Digital Solutions website. Replace this copy with your reviewed legal text before launch.",
+      "paragraph2": "Content on this site is provided for general information. Engagements are governed by separate signed agreements."
+    },
+    "labels": {
+      "title": "title",
+      "paragraph1": "paragraph1",
+      "paragraph2": "paragraph2"
+    }
+  },
+  "collection-clients": {
+    "label": "Content \u00b7 clients",
+    "fields": {
+      "value1": "Ayu Superspeciality Clinic",
+      "value2": "The IELTS Institute",
+      "value3": "Vidhya Bikash English School",
+      "value4": "Saptakoshi Hospital",
+      "value5": "Top Trail Nepal",
+      "value6": "A&A Builders and Construction",
+      "value7": "Chef Fork Brand",
+      "value8": "Birat School of Hospitality Management",
+      "value9": "Chroma Paints",
+      "value10": "Delight Paints",
+      "value11": "Dishant Service Centre",
+      "value12": "Greenleaf Builders",
+      "value13": "Kuti Home Decor",
+      "value14": "Sahara Animal Care",
+      "value15": "RM Engineering Consultancy",
+      "value16": "Sigma Kitchen & Home Appliances",
+      "value17": "MS Brand",
+      "value18": "Sumeru Food Production House",
+      "items": ""
+    },
+    "labels": {
+      "value1": "0 / name",
+      "value2": "1 / name",
+      "value3": "2 / name",
+      "value4": "3 / name",
+      "value5": "4 / name",
+      "value6": "5 / name",
+      "value7": "6 / name",
+      "value8": "7 / name",
+      "value9": "8 / name",
+      "value10": "9 / name",
+      "value11": "10 / name",
+      "value12": "11 / name",
+      "value13": "12 / name",
+      "value14": "13 / name",
+      "value15": "14 / name",
+      "value16": "15 / name",
+      "value17": "16 / name",
+      "value18": "17 / name",
+      "items": "Ordered collection items"
+    }
+  },
+  "collection-faqs": {
+    "label": "Content \u00b7 faqs",
+    "fields": {
+      "value1": "What does Yukti Digital Solutions do?",
+      "value2": "Yukti Digital Solutions is a digital marketing agency in Biratnagar, Nepal. We offer social media marketing, video production and TVC ads, Meta (Facebook and Instagram) ads and SEO, helping businesses get found online and turn attention into enquiries.",
+      "value3": "Where is Yukti Digital Solutions based?",
+      "value4": "Our studio is in Biratnagar, Nepal. We work with businesses across Nepal and abroad, and meetings can happen in person or online.",
+      "value5": "Which businesses do you work with?",
+      "value6": "We have worked with clinics and hospitals, schools and education consultancies, hotels, builders, paint and home brands, food producers and service businesses. If your customers are online, we can help you reach them.",
+      "value7": "What is the Free Growth Audit?",
+      "value8": "A free 30-minute call where we look at your website, social media and advertising, talk through your goals and point out practical next steps. You can book a time online through our Cal.com calendar.",
+      "value9": "How long does SEO take to show results?",
+      "value10": "SEO builds over time. Technical fixes and a complete Google Business Profile can help within weeks, while rankings for competitive searches usually take a few months of steady work. The benefit compounds: good pages keep bringing visitors long after they are published.",
+      "value11": "Should I boost Facebook posts or run Meta ads campaigns?",
+      "value12": "Boosting a post is a quick way to get more people to see it. A Meta ads campaign set up in Ads Manager gives you more control over the goal, audience, placements and tracking, so it is usually the better choice when you want enquiries, sales or website visits.",
+      "value13": "How can I contact Yukti Digital Solutions?",
+      "value14": "Book a free call on our Contact page, email yuktidsbookings@gmail.com or call +977 9822789551.",
+      "items": ""
+    },
+    "labels": {
+      "value1": "0 / q",
+      "value2": "0 / a",
+      "value3": "1 / q",
+      "value4": "1 / a",
+      "value5": "2 / q",
+      "value6": "2 / a",
+      "value7": "3 / q",
+      "value8": "3 / a",
+      "value9": "4 / q",
+      "value10": "4 / a",
+      "value11": "5 / q",
+      "value12": "5 / a",
+      "value13": "6 / q",
+      "value14": "6 / a",
+      "items": "Ordered collection items"
+    }
+  },
+  "collection-insightCategories": {
+    "label": "Content \u00b7 insightCategories",
+    "fields": {
+      "value1": "SEO",
+      "value2": "Meta Ads",
+      "value3": "Social Media"
+    },
+    "labels": {
+      "value1": "0 / name",
+      "value2": "1 / name",
+      "value3": "2 / name"
+    }
+  },
+  "collection-insights": {
+    "label": "Content \u00b7 insights",
+    "fields": {
+      "value1": "How local businesses get found on Google Maps",
+      "value2": "A complete, active Google Business Profile is one of the simplest ways to show up when nearby customers search for what you sell.",
+      "value3": "Yukti Digital Solutions",
+      "value4": "SEO",
+      "value5": "When someone nearby searches for \"clinic near me\" or \"paint shop in Biratnagar\", Google usually shows a map with three businesses before any website. Those businesses are chosen from Google Business Profiles. If your profile is missing, incomplete or out of date, you are invisible in the place many local customers look first.\n\n## Claim and verify your profile\n\nSearch for your business name on Google Maps. If a listing exists, claim it; if not, create one at business.google.com. Google will ask you to verify that you run the business, usually by phone, email or a short video. Nothing else on this list works until verification is done.\n\n## Fill in every field\n\nChoose the most specific primary category you can, for example \"Hospital\" rather than \"Health\". Add your exact address, a map pin in the right place, opening hours, phone number and website. Write a plain description of what you offer and who you serve. Google favours profiles that are complete and consistent with the rest of the web, so use the same name, address and phone number everywhere.\n\n## Add real photos\n\nUpload clear photos of your storefront, signage, interior, team and products. Customers use them to recognise you when they arrive, and fresh photos signal that the business is active.\n\n## Ask for reviews and reply to them\n\nReviews influence both ranking and choice. Ask happy customers to leave one, and make it easy with a direct review link. Reply to every review, positive or negative, politely and briefly. A calm reply to a complaint often reassures future customers more than a perfect score.\n\n## Keep it current\n\nUpdate holiday hours, post offers or news, and answer questions in the Q&A section. A profile that is looked after tends to perform better than one that was set up once and forgotten.",
+      "value6": "Boosting a post or running a Meta Ads campaign?",
+      "value7": "The Boost button is quick, but Ads Manager gives you control over the goal, the audience and how results are measured. Here is when to use each.",
+      "value8": "Yukti Digital Solutions",
+      "value9": "Meta Ads",
+      "value10": "Facebook and Instagram give you two ways to pay for reach: the \"Boost post\" button on a post you have already published, and a full campaign built in Meta Ads Manager. Both put your content in front of more people, but they are built for different jobs.\n\n## What boosting is good for\n\nBoosting is fast. Pick a post, choose an audience and a budget, and it starts running. It works well when you simply want more people to see a post that is already doing well, such as an event announcement or a popular video. Because it starts from a published post, it is mostly optimised for engagement: likes, comments and shares.\n\n## What a campaign adds\n\nAds Manager starts with an objective. You tell Meta whether you want messages, website visits, leads, calls or sales, and the system shows your ad to the people most likely to take that action. You can also:\n\n- test several images, videos or headlines at once and let the best one win;\n- build audiences from your website visitors, customer lists or people who engaged with your page;\n- control placements, schedules and budgets in more detail;\n- track results with the Meta Pixel or Conversions API, so you can see the cost of each enquiry or sale.\n\n## Which one to choose\n\nIf the goal is visibility for a single post, a boost is fine. If the goal is enquiries, bookings or sales, use a campaign with a matching objective and proper tracking. Engagement is pleasant to watch, but it is not the same as customers, and a campaign built around the action you actually want is usually the better use of budget.\n\n## Before you spend\n\nMake sure the page or form people land on loads quickly on a phone and makes the next step obvious. The best ad cannot fix a confusing landing page.",
+      "value11": "Plan a month of social media content in one afternoon",
+      "value12": "A simple content calendar keeps your pages active without a daily scramble for ideas. This is the process we use to plan a month at a time.",
+      "value13": "Yukti Digital Solutions",
+      "value14": "Social Media",
+      "value15": "Posting regularly matters more than posting a lot. The businesses that struggle on social media are often not short of ideas; they are deciding what to post on the same day they post it. A monthly plan fixes that.\n\n## Start with three to four content pillars\n\nPillars are the recurring themes your page is known for. A clinic might use health tips, meet the doctors, patient stories and service updates. A restaurant might use new dishes, behind the scenes, offers and customer moments. Every post should fit one pillar, which keeps the page focused and makes ideas easier to find.\n\n## Choose a realistic rhythm\n\nThree good posts a week, every week, beat seven posts one week and nothing the next. Pick a frequency your team can keep up, then decide which days each pillar appears on.\n\n## Mark the dates that matter\n\nAdd festivals, public holidays, seasonal moments and your own launches or offers to the calendar first. Then fill the remaining slots from your pillars.\n\n## Batch the work\n\nWrite all captions in one sitting, then shoot or design the visuals in another. Batching is much faster than switching between tasks every day, and it gives you time to review everything before it goes live.\n\n## Schedule, then stay present\n\nUse Meta Business Suite or another scheduler to queue the month's posts. Scheduling frees you to spend a few minutes each day replying to comments and messages, which is where real conversations with customers happen.\n\n## Review at the end of the month\n\nLook at which posts led to messages, calls or visits, not just likes. Do more of what worked next month and drop what did not."
+    },
+    "labels": {
+      "value1": "0 / title",
+      "value2": "0 / excerpt",
+      "value3": "0 / author",
+      "value4": "0 / category / name",
+      "value5": "0 / content",
+      "value6": "1 / title",
+      "value7": "1 / excerpt",
+      "value8": "1 / author",
+      "value9": "1 / category / name",
+      "value10": "1 / content",
+      "value11": "2 / title",
+      "value12": "2 / excerpt",
+      "value13": "2 / author",
+      "value14": "2 / category / name",
+      "value15": "2 / content"
+    }
+  },
+  "collection-metrics": {
+    "label": "Content \u00b7 metrics",
+    "fields": {
+      "value1": "F-01",
+      "value2": "Founded",
+      "value3": "2021",
+      "value4": "F-02",
+      "value5": "Core Services",
+      "value6": "4",
+      "value7": "F-03",
+      "value8": "Brands Served",
+      "value9": "17",
+      "value10": "F-04",
+      "value11": "Markets",
+      "value12": "4"
+    },
+    "labels": {
+      "value1": "0 / code",
+      "value2": "0 / label",
+      "value3": "0 / value",
+      "value4": "1 / code",
+      "value5": "1 / label",
+      "value6": "1 / value",
+      "value7": "2 / code",
+      "value8": "2 / label",
+      "value9": "2 / value",
+      "value10": "3 / code",
+      "value11": "3 / label",
+      "value12": "3 / value"
+    }
+  },
+  "collection-serviceHeadings": {
+    "label": "Content \u00b7 serviceHeadings",
+    "fields": {
+      "value1": "Social Media Marketing in Biratnagar, Nepal",
+      "value2": "Video Production and TVC Ads in Biratnagar, Nepal",
+      "value3": "Meta Ads Services in Biratnagar, Nepal",
+      "value4": "SEO Services in Biratnagar, Nepal"
+    },
+    "labels": {
+      "value1": "social-media-marketing",
+      "value2": "video-production-tvc-ads",
+      "value3": "meta-ads-services",
+      "value4": "seo"
+    }
+  },
+  "collection-services": {
+    "label": "Content \u00b7 services",
+    "fields": {
+      "value1": "Social Media Marketing",
+      "value2": "Audience growth and engagement across the platforms your customers use.",
+      "value3": "We plan, design and publish social content that builds your brand and keeps your audience engaged.\n\nFrom content calendars and creatives to community management and reporting, we run your social presence end to end.",
+      "value4": "Video Production and TVC Ads",
+      "value5": "Story-driven video and TV commercials that convert.",
+      "value6": "From concept and scripting to shooting and editing, we produce brand films, social videos and TV commercials that tell your story clearly.\n\nOur team handles the full production so you get broadcast-ready, platform-ready video.",
+      "value7": "Meta Ads Services",
+      "value8": "Facebook and Instagram advertising built for measurable results.",
+      "value9": "We set up, run and optimise paid campaigns across Facebook and Instagram, reaching the right audience with the right creative.\n\nEvery campaign is tracked so you can see what is working and where your budget goes.",
+      "value10": "SEO",
+      "value11": "Search Engine Optimization that grows visibility and compounds over time.",
+      "value12": "We improve how your website ranks on search engines through technical fixes, on-page optimisation, content and link building.\n\nSEO is an asset that keeps returning traffic and enquiries long after the work is done."
+    },
+    "labels": {
+      "value1": "0 / title",
+      "value2": "0 / shortDescription",
+      "value3": "0 / description",
+      "value4": "1 / title",
+      "value5": "1 / shortDescription",
+      "value6": "1 / description",
+      "value7": "2 / title",
+      "value8": "2 / shortDescription",
+      "value9": "2 / description",
+      "value10": "3 / title",
+      "value11": "3 / shortDescription",
+      "value12": "3 / description"
+    }
+  },
+  "collection-siteSettings": {
+    "label": "Content \u00b7 siteSettings",
+    "fields": {
+      "value1": "Yukti Digital Solutions",
+      "value2": "We DESIGN | ADVERTISE | VISUALISE.",
+      "value3": "",
+      "value4": "Yukti Digital Solutions | Business Intelligence Agency",
+      "value5": "One-stop solutions for all digital marketing services: SEO, social media marketing, Meta ads, video production and TVC ads.",
+      "value6": "\u00a9 2026 Yukti Digital Solutions \u00b7 Business Intelligence Agency"
+    },
+    "labels": {
+      "value1": "company_name",
+      "value2": "tagline",
+      "value3": "coverage",
+      "value4": "seo_title",
+      "value5": "seo_description",
+      "value6": "footer_note"
+    }
+  },
+  "collection-team": {
+    "label": "Content \u00b7 team",
+    "fields": {
+      "value1": "Sanjay Raut",
+      "value2": "Founder",
+      "value3": "Saugat Tamang",
+      "value4": "Co-Founder",
+      "items": ""
+    },
+    "labels": {
+      "value1": "0 / name",
+      "value2": "0 / role",
+      "value3": "1 / name",
+      "value4": "1 / role",
+      "items": "Ordered collection items"
+    }
+  },
+  "collection-testimonials": {
+    "label": "Content \u00b7 testimonials",
+    "fields": {
+      "value1": "Ayu Superspeciality Clinic",
+      "value2": "Yukti made our social media look as professional as our care. Patients find us easily online now, and the team is always creative, reliable and on time.",
+      "value3": "Kuti Home Decor",
+      "value4": "Our products finally look as good online as they do in our showroom. Yukti understood our style from day one, and our posts and reels now bring real enquiries.",
+      "value5": "Hotel Ratna",
+      "value6": "The commercial video and content Yukti created capture the warmth of our hotel perfectly. It is now the first thing we share with our guests.",
+      "value7": "ABC Global Study",
+      "value8": "Yukti handles our social media with real care: fresh ideas, clear communication and steady growth in student enquiries, even across time zones.",
+      "items": ""
+    },
+    "labels": {
+      "value1": "0 / clientName",
+      "value2": "0 / quote",
+      "value3": "1 / clientName",
+      "value4": "1 / quote",
+      "value5": "2 / clientName",
+      "value6": "2 / quote",
+      "value7": "3 / clientName",
+      "value8": "3 / quote",
+      "items": "Ordered collection items"
+    }
+  },
+  "collection-values": {
+    "label": "Content \u00b7 values",
+    "fields": {
+      "value1": "Design",
+      "value2": "Clear, high-end visual identities and websites that make brands memorable.",
+      "value3": "Advertise",
+      "value4": "Paid and organic campaigns built around measurable business results.",
+      "value5": "Visualise",
+      "value6": "Video, motion and storytelling that bring your brand to life.",
+      "value7": "Experience",
+      "value8": "Promoters with years of experience in technology and enterprises.",
+      "items": ""
+    },
+    "labels": {
+      "value1": "0 / title",
+      "value2": "0 / description",
+      "value3": "1 / title",
+      "value4": "1 / description",
+      "value5": "2 / title",
+      "value6": "2 / description",
+      "value7": "3 / title",
+      "value8": "3 / description",
+      "items": "Ordered collection items"
+    }
+  }
+}

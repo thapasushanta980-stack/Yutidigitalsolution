@@ -1,3 +1,5 @@
+import {pageCopies} from '../lib/pageContent.js';
+const pageCopy=pageCopies['blog-post'];
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Section, Container } from '@yukti/ui';
@@ -7,6 +9,7 @@ import { Breadcrumb } from '../components/Breadcrumb.js';
 import { QueryState } from '../components/QueryState.js';
 import { InsightCard } from '../components/Cards.js';
 import type { InsightSummary } from '../lib/queries.js';
+import { siteUrl } from '../lib/siteUrl.js';
 import { ServiceArt } from '../components/ServiceArt.js';
 
 interface InsightDetailData extends InsightSummary {
@@ -33,6 +36,7 @@ export default function BlogPost() {
             title={data.seoTitle || data.title}
             description={data.seoDescription || data.excerpt}
             path={`/blog/${data.slug}`}
+            canonicalUrl={data.canonicalUrl ?? undefined}
             type="article"
             image={data.coverImage ?? undefined}
             jsonLd={{
@@ -40,6 +44,10 @@ export default function BlogPost() {
               '@type': 'Article',
               headline: data.title,
               description: data.excerpt,
+              ...(data.publishedAt ? { datePublished: data.publishedAt } : {}),
+              ...(data.updatedAt ? { dateModified: data.updatedAt } : {}),
+              ...(data.coverImage ? { image: siteUrl(data.coverImage) } : {}),
+              mainEntityOfPage: data.canonicalUrl || siteUrl(`/blog/${data.slug}`),
               author: { '@type': 'Organization', name: data.author },
               publisher: { '@type': 'Organization', name: 'Yukti Digital Solutions' },
             }}
@@ -56,8 +64,7 @@ export default function BlogPost() {
               {data.category && <p className="fig-label">{data.category.name}</p>}
               <h1>{data.title}</h1>
               <p className="fig-label">
-                {data.author} · {data.readingMinutes} min read
-              </p>
+                {data.author} {pageCopy.field1}{data.readingMinutes} {pageCopy.field2}</p>
             </Container>
           </Section>
 
@@ -80,7 +87,7 @@ export default function BlogPost() {
           {data.related?.length > 0 && (
             <Section tone="alt">
               <Container>
-                <h2>More from the blog</h2>
+                <h2>{pageCopy.field3}</h2>
                 <div className="grid grid-3 rail">
                   {data.related.map((r) => <InsightCard key={r.id} item={r} />)}
                 </div>

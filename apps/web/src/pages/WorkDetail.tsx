@@ -1,3 +1,5 @@
+import {pageCopies} from '../lib/pageContent.js';
+const pageCopy=pageCopies['work-detail'];
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Section, Container, Button } from '@yukti/ui';
@@ -58,19 +60,19 @@ export default function WorkDetail() {
                 <p>{data.description}</p>
                 {data.challenge && (
                   <>
-                    <h2>Challenge</h2>
+                    <h2>{pageCopy.field1}</h2>
                     <p>{data.challenge}</p>
                   </>
                 )}
                 {data.solution && (
                   <>
-                    <h2>Approach</h2>
+                    <h2>{pageCopy.field2}</h2>
                     <p>{data.solution}</p>
                   </>
                 )}
                 {data.result && (
                   <>
-                    <h2>Results</h2>
+                    <h2>{pageCopy.field3}</h2>
                     <p>{data.result}</p>
                   </>
                 )}
@@ -81,7 +83,7 @@ export default function WorkDetail() {
           {data.related?.length > 0 && (
             <Section tone="paper">
               <Container>
-                <h2>Related work</h2>
+                <h2>{pageCopy.field4}</h2>
                 <div className="grid grid-3">
                   {data.related.map((p) => <ProjectCard key={p.id} project={p} />)}
                 </div>
@@ -92,8 +94,7 @@ export default function WorkDetail() {
           <Section tone="ink">
             <Container>
               <Button as="a" href="/free-growth-audit" size="lg">
-                Start your growth audit
-              </Button>
+                {pageCopy.field5}</Button>
             </Container>
           </Section>
         </>

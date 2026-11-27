@@ -1,3 +1,5 @@
+import {pageCopies} from '../lib/pageContent.js';
+const pageCopy=pageCopies['case-studies'];
 import { Section, Container } from '@yukti/ui';
 import { Stagger } from '../components/Stagger.js';
 import { Seo } from '../lib/Seo.js';
@@ -11,8 +13,8 @@ export default function CaseStudies() {
   return (
     <>
       <Seo
-        title="Case Studies"
-        description="Measurable outcomes for the brands we work with."
+        title={pageCopy.field1}
+        description={pageCopy.field2}
         path="/case-studies"
         noindex={!data?.length}
       />
@@ -20,9 +22,9 @@ export default function CaseStudies() {
         <Container>
           <SectionHeader
             as="h1"
-            eyebrow="Case Studies"
-            title="The Proof Is in the Numbers."
-            intro="Every engagement starts with numbers and ends with numbers."
+            eyebrow={pageCopy.field3}
+            title={pageCopy.field4}
+            intro={pageCopy.field5}
           />
         </Container>
       </Section>
@@ -32,7 +34,7 @@ export default function CaseStudies() {
             isLoading={isLoading}
             isError={isError}
             isEmpty={!data?.length}
-            emptyMessage="Case studies will be published here soon."
+            emptyMessage={pageCopy.field6}
           >
             <Stagger className="grid grid-3">
               {data?.map((c) => <CaseStudyCard key={c.id} item={c} />)}

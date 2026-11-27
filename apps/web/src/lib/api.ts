@@ -1,5 +1,5 @@
 import type { ApiResponse } from '@yukti/types';
-import * as data from './staticData.js';
+import * as data from './siteContent.js';
 
 // Static build: content is served from ./staticData.ts instead of the API.
 // The same fetchData/postData signatures are kept so pages need no changes
@@ -47,7 +47,7 @@ function resolve(url: string, params: Record<string, unknown> = {}): { data: unk
         const page = Math.max(1, Number(params.page ?? 1));
         const matches = data.insights.filter(
           (p) =>
-            (!category || p.category.slug === category) &&
+            (!category || p.category?.slug === category) &&
             (!q || `${p.title} ${p.excerpt}`.toLowerCase().includes(q)),
         );
         return {

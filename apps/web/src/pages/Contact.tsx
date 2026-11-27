@@ -1,3 +1,4 @@
+import {contactCopy} from '../lib/pageContent.js';
 import { Section, Container } from '@yukti/ui';
 import { Seo } from '../lib/Seo.js';
 import { SectionHeader } from '../components/SectionHeader.js';
@@ -11,8 +12,8 @@ export default function Contact() {
   return (
     <>
       <Seo
-        title="Contact"
-        description="Book a call with Yukti Digital Solutions or contact our team in Biratnagar, Nepal."
+        title={contactCopy.copy1}
+        description={contactCopy.copy2}
         path="/contact"
         jsonLd={{
           '@context': 'https://schema.org',
@@ -25,9 +26,9 @@ export default function Contact() {
       />
 
       <CalBooking
-        eyebrow="The easiest way to connect"
-        title="Book a free 30-minute call"
-        intro="Choose a time in our live Cal.com calendar. Your booking confirmation and meeting details will come directly from Cal.com."
+        eyebrow={contactCopy.copy3}
+        title={contactCopy.copy4}
+        intro={contactCopy.copy5}
         tone="alt"
         headingAs="h1"
         className="page-top"
@@ -38,9 +39,9 @@ export default function Contact() {
           <div className={mapsUrl ? 'split' : undefined}>
             <div>
               <SectionHeader
-                eyebrow="Prefer email?"
-                title="Reach our team directly."
-                intro="For general questions or help with a booking, email us and we’ll get back to you."
+                eyebrow={contactCopy.copy6}
+                title={contactCopy.copy7}
+                intro={contactCopy.copy8}
               />
               <ul className="prose muted" style={{ listStyle: 'none', padding: 0 }}>
                 {settings?.email && (

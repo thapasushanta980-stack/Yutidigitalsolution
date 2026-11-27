@@ -1,0 +1,14 @@
+import {Router} from 'express';
+import {verifyToken,requireRole} from '../../middlewares/auth.js';
+import {validate} from '../../middlewares/validate.js';
+import {asyncHandler,ok} from '../../utils/http.js';
+import {pageParam,saveContent,versionBody,restoreBody} from './content.schema.js';
+import * as service from './content.service.js';
+export const adminContentRouter=Router();
+adminContentRouter.use(verifyToken,requireRole('SUPER_ADMIN','ADMIN','EDITOR'));
+adminContentRouter.get('/draft-snapshot',asyncHandler(async(_req,res)=>ok(res,await service.draftSnapshot())));
+adminContentRouter.get('/published-snapshot',asyncHandler(async(_req,res)=>ok(res,await service.published())));
+adminContentRouter.get('/:key',validate({params:pageParam}),asyncHandler(async(req,res)=>ok(res,await service.read(req.params.key))));
+adminContentRouter.put('/:key',validate({params:pageParam,body:saveContent}),asyncHandler(async(req,res)=>ok(res,await service.save(req.params.key,req.body.expectedVersion,req.body.fields))));
+adminContentRouter.post('/:key/publish',validate({params:pageParam,body:versionBody}),asyncHandler(async(req,res)=>ok(res,await service.publish(req.params.key,req.body.expectedVersion))));
+adminContentRouter.post('/:key/restore',validate({params:pageParam,body:restoreBody}),asyncHandler(async(req,res)=>ok(res,await service.restore(req.params.key,req.body.expectedVersion,req.body.revision))));

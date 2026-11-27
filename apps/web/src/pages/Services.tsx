@@ -1,3 +1,5 @@
+import {pageCopies} from '../lib/pageContent.js';
+const pageCopy=pageCopies['services'];
 import { Section, Container } from '@yukti/ui';
 import { Stagger } from '../components/Stagger.js';
 import { Seo } from '../lib/Seo.js';
@@ -12,17 +14,17 @@ export default function Services() {
   return (
     <>
       <Seo
-        title="Services"
-        description="Explore Yukti's SEO, social media marketing, Meta ads, video production and TVC services from our team in Biratnagar, Nepal."
+        title={pageCopy.field1}
+        description={pageCopy.field2}
         path="/services"
       />
       <Section className="page-hero" tone="paper">
         <Container>
           <SectionHeader
             as="h1"
-            eyebrow="Services"
-            title="Digital Marketing Services That Grow Your Business."
-            intro="Strategy, creative, technology and performance marketing, integrated to compound results."
+            eyebrow={pageCopy.field3}
+            title={pageCopy.field4}
+            intro={pageCopy.field5}
           />
         </Container>
       </Section>
@@ -36,8 +38,8 @@ export default function Services() {
         </Container>
       </Section>
       <CalBooking
-        title="Not sure which service fits?"
-        intro="Book a free 30-minute call and we'll recommend the right mix for your goals."
+        title={pageCopy.field6}
+        intro={pageCopy.field7}
       />
     </>
   );

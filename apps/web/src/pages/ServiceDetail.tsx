@@ -1,9 +1,11 @@
+import {pageCopies} from '../lib/pageContent.js';
+const pageCopy=pageCopies['service-detail'];
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import type { Service } from '@yukti/types';
 import { Section, Container, Button } from '@yukti/ui';
 import { fetchData } from '../lib/api.js';
-import { serviceHeadings } from '../lib/staticData.js';
+import { serviceHeadings } from '../lib/siteContent.js';
 import { Seo } from '../lib/Seo.js';
 import { Breadcrumb } from '../components/Breadcrumb.js';
 import { QueryState } from '../components/QueryState.js';
@@ -49,8 +51,7 @@ export default function ServiceDetail() {
               </div>
               <div style={{ marginTop: 'var(--space-8)' }}>
                 <Button as="a" href="/free-growth-audit">
-                  Get Your Free Growth Audit
-                </Button>
+                  {pageCopy.field1}</Button>
               </div>
             </>
           )}
