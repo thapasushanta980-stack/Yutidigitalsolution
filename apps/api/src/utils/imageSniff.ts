@@ -10,6 +10,7 @@ export function sniffImage(b: Buffer): ImageMime | null {
 export function cleanAltText(value: unknown): string | null {
   if (value == null || value === '') return null;
   if (typeof value !== 'string') throw new Error('Alt text must be text');
+  // eslint-disable-next-line no-control-regex
   const text = value.replace(/[\u0000-\u001f\u007f<>]/g, ' ').replace(/\s+/g, ' ').trim();
   if (text.length > 300) throw new Error('Alt text must be 300 characters or fewer');
   return text || null;

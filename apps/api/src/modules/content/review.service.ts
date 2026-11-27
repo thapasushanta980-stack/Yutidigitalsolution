@@ -19,7 +19,7 @@ export function config(){
  if(!fs.existsSync(path.join(resolvedRoot,'scripts/cms/build-review-release.mjs')))throw ApiError.internal('Review source is not prepared');
  return {root:resolvedRoot,output:resolvedOutput};
 }
-export function status(){const{output}=config();let current:string|null=null;try{current=fs.readlinkSync(path.join(output,'current'))}catch{}const releases=fs.readdirSync(output).filter(id=>validId.test(id)&&fs.statSync(path.join(output,id)).isDirectory()).sort().reverse();return {job,current,releases};}
+export function status(){const{output}=config();let current:string|null=null;try{current=fs.readlinkSync(path.join(output,'current'))}catch{/* ignore */}const releases=fs.readdirSync(output).filter(id=>validId.test(id)&&fs.statSync(path.join(output,id)).isDirectory()).sort().reverse();return {job,current,releases};}
 export async function start(mode:'draft'|'published'){
  const c=config();if(job?.state==='building')throw ApiError.conflict('A review build is already running');
  const current:Job={id:crypto.randomUUID(),state:'building',mode,startedAt:new Date().toISOString()};job=current;
@@ -32,6 +32,7 @@ export async function start(mode:'draft'|'published'){
  child.stdout.on('data',(chunk:Buffer)=>{output+=chunk.toString();if(output.length>100000)output=output.slice(-100000)});
  child.stderr.on('data',()=>{}); // Build diagnostics never expose source/secrets to the browser.
  const timer=setTimeout(()=>child.kill('SIGTERM'),180000);
+ // eslint-disable-next-line no-inner-declarations
  function finish(code:number|null){clearTimeout(timer);fs.rmSync(temp,{recursive:true,force:true});if(current.state!=='building')return;try{const result=JSON.parse(output.trim());if(code!==0||!validId.test(result.id))throw Error();current.releaseId=result.id;current.state='ready';}catch{current.state='failed';current.error='Review build failed. Previous review remains unchanged. Inspect local build diagnostics.';}}
  child.on('error',()=>finish(1));child.on('close',finish);return current;
  }catch(error){current.state='failed';current.error='Review build could not start. Previous review remains unchanged.';throw error;}

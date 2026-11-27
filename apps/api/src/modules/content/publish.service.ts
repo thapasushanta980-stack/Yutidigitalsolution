@@ -29,7 +29,7 @@ function run(c:ReturnType<typeof config>,mode:'publish'|'undo',snapshot:string){
   const child=spawn(process.execPath,[path.join(c.root,'scripts/cms/publish-git.mjs'),mode,c.workdir,c.branch,snapshot],{cwd:c.root,env:{...process.env,CMS_PUBLISH_REMOTE:c.remote,CMS_PUBLISH_ROOT:c.root},stdio:['ignore','pipe','ignore']});
   let out='';child.stdout.on('data',(d:Buffer)=>{out+=d.toString().slice(0,4000)});
   const timer=setTimeout(()=>child.kill('SIGTERM'),180000);
-  const done=(code:number|null)=>{clearTimeout(timer);try{const r=JSON.parse(out.trim().split('\n').pop()||'');if(code===0&&r.outcome)return resolve(r)}catch{}resolve({outcome:'failed'})};
+  const done=(code:number|null)=>{clearTimeout(timer);try{const r=JSON.parse(out.trim().split('\n').pop()||'');if(code===0&&r.outcome)return resolve(r)}catch{/* ignore */}resolve({outcome:'failed'})};
   child.on('error',()=>done(1));child.on('close',done);
  });
 }
@@ -58,6 +58,6 @@ export async function perform(action:'publish'|'undo',userId?:string):Promise<Pu
 // Last recorded attempt, read from the audit table so it survives an API restart. Best-effort: audit writes can fail.
 export async function lastAttempt(){
  const row=await prisma.auditLog.findFirst({where:{entity:'SITE_PUBLISH'},orderBy:{createdAt:'desc'}});
- if(!row)return null;let outcome='unknown';try{outcome=JSON.parse(row.metadata||'{}').outcome||'unknown'}catch{}
+ if(!row)return null;let outcome='unknown';try{outcome=JSON.parse(row.metadata||'{}').outcome||'unknown'}catch{/* ignore */}
  return {action:row.action.toLowerCase(),outcome,commit:row.entityId,at:row.createdAt.toISOString(),deployVerified:false};
 }

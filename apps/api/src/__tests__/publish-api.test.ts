@@ -12,6 +12,7 @@ const root=path.resolve(__dirname,'../../../..');
 const SECRET='SECRETTOKEN123';
 const g=(a:string[],cwd:string)=>execFileSync('git',a,{cwd,encoding:'utf8',env:{...process.env,GIT_AUTHOR_NAME:'t',GIT_AUTHOR_EMAIL:'t@t',GIT_COMMITTER_NAME:'t',GIT_COMMITTER_EMAIL:'t@t'}}).trim();
 run('publish API against a disposable database',()=>{
+// eslint-disable-next-line prefer-const
  let app:import('express').Express,prisma:typeof import('@yukti/database').prisma,tmp='',remote='',cookie:Record<string,string>={};
  const log=()=>g(['log','--format=%s'],remote).split('\n');
  const showPages=()=>JSON.parse(g(['show','main:packages/content/published-pages.json'],remote));
