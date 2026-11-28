@@ -46,16 +46,16 @@ describe('CMS send and undo to a repository',()=>{
   beforeAll(()=>{fs.rmSync(path.join(remote,'hooks/pre-receive'),{force:true})});
   it('keeps a teammate commit that landed before the send, and adds only content files on top',()=>{
    mate('docs/teammate.md','mine','Teammate: add docs');
-   fs.writeFileSync(snap,JSON.stringify({pages:{home:{version:5,fields:{}}},posts:[]}));
+   fs.writeFileSync(snap,JSON.stringify({pages:{home:{version:6,fields:{}}},posts:[]}));
    expect(run('publish').outcome).toBe('sent');
    expect(log().slice(0,2)).toEqual([expect.stringMatching(/^CMS publish: /),'Teammate: add docs']);
    expect(g(['show','--name-only','--format=','HEAD'],remote).split('\n').sort()).toEqual(['packages/content/published-pages.json']);
    expect(g(['show','HEAD:docs/teammate.md'],remote)).toBe('mine');
   });
-  it('refuses undo once someone else pushed after the CMS send, and leaves their work',()=>{
+  it('undo tolerates unrelated work pushed after the CMS send and keeps it',()=>{
    mate('docs/after.md','later','Teammate: later change');
-   const before=g(['rev-parse','main'],remote);
-   expect(run('undo').outcome).toBe('refused');expect(g(['rev-parse','main'],remote)).toBe(before);
+   expect(run('undo').outcome).toBe('sent');
+   expect(g(['show','main:docs/after.md'],remote).trim()).toBe('later');
   });
   it('refuses to revert a commit that only looks like a CMS send but touches other files',()=>{
    mate('apps/web/src/x.ts','x','CMS publish: fake '+new Date().toISOString());
@@ -86,14 +86,76 @@ describe('CMS send and undo to a repository',()=>{
  });
  describe('guard blocks unsafe content before any commit',()=>{
   const P=(o:object)=>({id:'i',slug:'a',title:'t',excerpt:'e',content:'c',author:'x',status:'PUBLISHED',...o});
+  const home0={home:{version:2,fields:{}}};
   const blocked=(data:object)=>{const before=g(['rev-parse','HEAD'],remote);fs.writeFileSync(snap,JSON.stringify(data));const r=run('publish');expect(r.outcome).toBe('blocked');expect(g(['rev-parse','HEAD'],remote)).toBe(before)};
   it('archived post, upload reference, script and unsafe link are all blocked',()=>{
    try{fs.rmSync(path.join(remote,'hooks/pre-receive'),{force:true})}catch{/* ignore */}
    const home={home:{version:2,fields:{}}};
-   blocked({pages:home,posts:[P({status:'ARCHIVED'})]});
    blocked({pages:home,posts:[P({coverImage:'/uploads/x.png'})]});
-   blocked({pages:home,posts:[P({content:'<script>1</script>'})]});
    blocked({pages:home,posts:[P({excerpt:'javascript:alert(1)'})]});
+   blocked({pages:home,posts:[P({canonicalUrl:'http://insecure.test'})]});
+   blocked({pages:home,posts:[P({content:'bad\u0000byte'})]});
+  });
+  it('archived and draft posts are left out of the export instead of blocking the send',()=>{
+   fs.writeFileSync(snap,JSON.stringify({pages:home0,posts:[P({slug:'old',status:'ARCHIVED'}),P({slug:'wip',status:'DRAFT'}),P({slug:'live'})]}));
+   expect(run('publish').outcome).toBe('sent');
+   const posts=JSON.parse(g(['show','HEAD:packages/content/published-posts.json'],remote));
+   expect(posts.map((x:{slug:string})=>x.slug)).toEqual(['live']);
+   expect(run('undo').outcome).toBe('sent');
+  });
+  describe('cover images',()=>{
+   const png=Buffer.concat([Buffer.from([0x89,0x50,0x4e,0x47,0x0d,0x0a,0x1a,0x0a]),Buffer.alloc(64,1)]);
+   const NAME='1795532541963-96a3694b43a754fd.png';
+   const setup=()=>{const up=path.join(tmp,'uploads');fs.mkdirSync(up,{recursive:true});process.env.UPLOAD_DIR=up;return up};
+   const send=(cover:string)=>{fs.writeFileSync(snap,JSON.stringify({pages:{home:{version:2,fields:{}}},posts:[{id:'i',slug:'a',title:'t',excerpt:'e',content:'c',author:'x',status:'PUBLISHED',coverImage:cover}]}));return run('publish')};
+   it('copies a valid image into the repository and rewrites the path',()=>{
+    const up=setup();fs.writeFileSync(path.join(up,NAME),png);
+    const r=send('/uploads/'+NAME);expect(r.outcome).toBe('sent');
+    expect(g(['show','--name-only','--format=','HEAD'],remote)).toContain('apps/web/public/cms-media/'+NAME);
+    expect(g(['show','HEAD:packages/content/published-posts.json'],remote)).toContain('"/cms-media/'+NAME+'"');
+    expect(run('undo').outcome).toBe('sent');
+    expect(()=>g(['cat-file','-e','HEAD:apps/web/public/cms-media/'+NAME],remote)).toThrow();
+   });
+   it('blocks wrong content, oversize, missing, symlink and bad names; nothing is committed',()=>{
+    const up=setup();const head=()=>g(['rev-parse','HEAD'],remote);const before=head();
+    fs.writeFileSync(path.join(up,NAME),Buffer.from('<html>not an image</html> padding padding'));expect(send('/uploads/'+NAME).outcome).toBe('blocked');
+    fs.writeFileSync(path.join(up,NAME),Buffer.concat([png,Buffer.alloc(2_100_000)]));expect(send('/uploads/'+NAME).outcome).toBe('blocked');
+    fs.rmSync(path.join(up,NAME));expect(send('/uploads/'+NAME).outcome).toBe('blocked');
+    fs.writeFileSync(path.join(tmp,'real.png'),png);fs.symlinkSync(path.join(tmp,'real.png'),path.join(up,NAME));expect(send('/uploads/'+NAME).outcome).toBe('blocked');
+    expect(send('/uploads/../../etc/passwd').outcome).toBe('blocked');
+    expect(head()).toBe(before);
+   });
+  });
+  describe('undo with unrelated code on top',()=>{
+   it('undoes an older CMS send when later commits touched other files; conflicts when they touched the same files',()=>{
+    const seed=path.join(tmp,'seed2');g(['clone',remote,seed],tmp);
+    const home={home:{version:77,fields:{}}};
+    fs.writeFileSync(snap,JSON.stringify({pages:home,posts:[]}));expect(run('publish').outcome).toBe('sent');
+    g(['pull','-q','origin','main'],seed);fs.writeFileSync(path.join(seed,'code.txt'),'x');g(['add','-A'],seed);g(['commit','-qm','unrelated code'],seed);g(['push','-q','origin','main'],seed);
+    const code=g(['rev-parse','HEAD'],remote);
+    expect(run('undo').outcome).toBe('sent');
+    expect(g(['ls-tree','--name-only','HEAD'],remote)).toContain('code.txt');
+    expect(g(['show','HEAD:packages/content/published-pages.json'],remote).trim()).not.toContain('"version": 77');
+    expect(g(['merge-base','--is-ancestor',code,'HEAD'],remote)).toBe('');
+    // now touch the content file by hand after a new send, undo must refuse to overwrite it
+    fs.writeFileSync(snap,JSON.stringify({pages:{home:{version:78,fields:{}}},posts:[]}));expect(run('publish').outcome).toBe('sent');
+    g(['pull','-q','origin','main'],seed);fs.writeFileSync(path.join(seed,'packages/content/published-pages.json'),'{"home":{"version":9,"fields":{}}}\n');g(['add','-A'],seed);g(['commit','-qm','manual edit'],seed);g(['push','-q','origin','main'],seed);
+    const before=g(['rev-parse','HEAD'],remote);
+    expect(run('undo').outcome).toBe('conflict');expect(g(['rev-parse','HEAD'],remote)).toBe(before);
+   });
+  });
+  describe('lock and content version',()=>{
+   it('a second process cannot run while the lock folder is fresh, and a send reports a content version that matches the tree',async()=>{
+    const lock=path.join(tmp,'work.lock');fs.mkdirSync(lock);
+    fs.writeFileSync(snap,JSON.stringify({pages:{home:{version:91,fields:{}}},posts:[]}));
+    expect(run('publish').outcome).toBe('conflict');fs.rmSync(lock,{recursive:true});
+    const r=run('publish');expect(r.outcome).toBe('sent');
+    const {contentVersion}=await import(path.join(root,'scripts/cms/content-version.mjs'));
+    expect(r.contentVersion).toMatch(/^[0-9a-f]{32}$/);expect(r.contentVersion).toBe(contentVersion(path.join(tmp,'work')));
+    expect(fs.existsSync(lock)).toBe(false);
+    const before=r.contentVersion;fs.writeFileSync(snap,JSON.stringify({pages:{home:{version:92,fields:{}}},posts:[]}));
+    expect(run('publish').contentVersion).not.toBe(before);
+   });
   });
  });
 });

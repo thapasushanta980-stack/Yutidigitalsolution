@@ -29,3 +29,20 @@ describe('publish wording depends on the destination branch',()=>{
   expect(wording('sent','undo','main')).toMatch(/reverted/);
  });
 });
+
+const compare=async(...a:Parameters<typeof import('../modules/content/publish.service.js').compareLive>)=>(await import('../modules/content/publish.service.js')).compareLive(...a);
+describe('live confirmation compares exact content, never guesses',()=>{
+ const f=(body:unknown,ok=true)=>(async()=>({ok,json:async()=>body})) as unknown as typeof fetch;
+ it('live only when fingerprints are equal',async()=>{
+  expect((await compare('abc','https://x.test',f({contentVersion:'abc'}))).state).toBe('live');
+  expect((await compare('abc','https://x.test',f({contentVersion:'old'}))).state).toBe('not_yet');
+  expect((await compare('abc','https://x.test',f({},false))).state).toBe('not_yet');
+  expect((await compare('abc','https://x.test',f({contentVersion:5}))).state).toBe('not_yet');
+ });
+ it('unknown when nothing to compare, not configured, bad address, or the fetch fails',async()=>{
+  expect((await compare(undefined,'https://x.test',f({}))).state).toBe('unknown');
+  expect((await compare('abc',undefined,f({}))).state).toBe('unknown');
+  expect((await compare('abc','http://x.test',f({contentVersion:'abc'}))).state).toBe('unknown');
+  expect((await compare('abc','https://x.test',(async()=>{throw new Error('net')}) as unknown as typeof fetch)).state).toBe('unknown');
+ });
+});

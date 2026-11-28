@@ -25,5 +25,5 @@ for(const post of posts){
 // Validate all input before replacing a build snapshot. Does not deploy anything.
 const destination='packages/content/published-pages.json';
 fs.writeFileSync(destination+'.pending',JSON.stringify(out,null,2)+'\n');fs.renameSync(destination+'.pending',destination);
-fs.writeFileSync('packages/content/published-posts.json',JSON.stringify(posts.filter(p=>p.status!=='DRAFT'||envelope.reviewDraft===true),null,2)+'\n');
+fs.writeFileSync('packages/content/published-posts.json',JSON.stringify(posts.filter(p=>p.status==='PUBLISHED'||(envelope.reviewDraft===true&&p.status==='DRAFT')),null,2)+'\n');
 console.log(`Prepared build snapshot for ${Object.keys(out).length} pages. No release deployed.`);

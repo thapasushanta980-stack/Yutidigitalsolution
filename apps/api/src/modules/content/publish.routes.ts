@@ -12,3 +12,4 @@ const confirm=validate({body:z.object({confirm:z.literal(true)}).strict()});
 adminPublishRouter.get('/',asyncHandler(async(_req,res)=>ok(res,{enabled:service.enabled(),branch:service.enabled()?service.config().branch:null,reachesLiveSite:service.enabled()?service.reachesLiveSite(service.config().branch):false,last:service.enabled()?await service.lastAttempt():null})));
 adminPublishRouter.post('/publish',confirm,asyncHandler(async(req,res)=>ok(res,await service.perform('publish',req.user?.id))));
 adminPublishRouter.post('/undo',confirm,asyncHandler(async(req,res)=>ok(res,await service.perform('undo',req.user?.id))));
+adminPublishRouter.get('/live-status',asyncHandler(async(_req,res)=>ok(res,service.enabled()&&service.reachesLiveSite(service.config().branch)?await service.liveStatus():{state:'unknown',detail:'Sends go to a review branch, not the live site.'})));

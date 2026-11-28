@@ -6,6 +6,8 @@ import {execFileSync} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
 import {checkStaged,Refusal} from './publish-guard.mjs';
+import {contentVersion} from './content-version.mjs';
+import {publishAssets,AssetError,MEDIA_DIR,MEDIA_PATH} from './publish-assets.mjs';
 const [mode,workdir,branch,snapshot]=process.argv.slice(2);
 const remote=process.env.CMS_PUBLISH_REMOTE;
 const MARK='CMS publish: ';
@@ -20,29 +22,42 @@ function fresh(){
  if(!remote||!/^[A-Za-z0-9._\/-]+$/.test(branch||''))throw Error('bad config');
  fs.rmSync(workdir,{recursive:true,force:true});fs.mkdirSync(workdir,{recursive:true,mode:0o700});
  git(['init','--quiet']);
- git(['fetch','--quiet','--depth','20','origin',branch]);
+ git(['fetch','--quiet','--depth','50','origin',branch]);
  git(['checkout','--quiet','-B',branch,'FETCH_HEAD']);
 }
+// Cross-process lock: the in-process flag in the API cannot see a second process, so take a lock folder next to the work folder.
+const lock=workdir+'.lock';
+try{fs.mkdirSync(path.dirname(lock),{recursive:true});try{fs.mkdirSync(lock)}catch{if(Date.now()-fs.statSync(lock).mtimeMs>600000){fs.rmSync(lock,{recursive:true,force:true});fs.mkdirSync(lock)}else out({outcome:'conflict'})}}catch(e){out({outcome:'failed'})}
+process.on('exit',()=>{try{fs.rmSync(lock,{recursive:true,force:true})}catch{/* ignore */}});
 try{
  fresh();
  if(mode==='publish'){
   const exporter=path.join(process.env.CMS_PUBLISH_ROOT||process.cwd(),'scripts/cms/export-pages.mjs');
   fs.mkdirSync(path.join(workdir,'packages/content'),{recursive:true});
   execFileSync(process.execPath,[exporter,snapshot],{cwd:workdir,env,stdio:['ignore','pipe','pipe']});
-  git(['add',...FILES]);
+  // Copy referenced cover images into the repository and point the posts at them (bounded, content-checked).
+  try{
+   const pf=path.join(workdir,FILES[1]);const r=publishAssets(workdir,process.env.UPLOAD_DIR?path.resolve(process.env.UPLOAD_DIR):'',JSON.parse(fs.readFileSync(pf,'utf8')));
+   fs.writeFileSync(pf,JSON.stringify(r.posts,null,2)+'\n');
+  }catch(e){if(e instanceof AssetError)out({outcome:'blocked',reason:e.reason});throw e}
+  git(['add',...FILES,...(fs.existsSync(path.join(workdir,MEDIA_DIR))?[MEDIA_DIR]:[])]);
   if(!git(['status','--porcelain']))out({outcome:'no_changes'});
   // Fail closed: exact paths, plain files, valid and safe content, or nothing is committed.
   try{checkStaged(workdir)}catch(e){if(e instanceof Refusal)out({outcome:'blocked',reason:e.reason});throw e}
   git(['commit','--quiet','-m',MARK+new Date().toISOString()]);
  }else if(mode==='undo'){
-  const subject=git(['log','-1','--format=%s']);
-  const parents=git(['log','-1','--format=%P']).split(' ').filter(Boolean).length;
-  const files=git(['show','--name-only','--format=','HEAD']).split('\n').filter(Boolean);
-  // Only a single-parent commit made by a CMS send that touched nothing but the two content files.
-  if(!subject.startsWith(MARK)||parents!==1||!files.length||files.some(f=>!FILES.includes(f)))out({outcome:'refused'});
-  git(['revert','--no-edit','HEAD']);
+  // Find the newest CMS send in recent history that has not been reverted yet. Unrelated commits after it are fine
+  // as long as they did not touch the files that send changed; otherwise report a conflict and change nothing.
+  const log=git(['log','-30','--format=%H%x09%P%x09%s']).split('\n').filter(Boolean).map(l=>{const [h,p,...r]=l.split('\t');return {h,parents:p.split(' ').filter(Boolean).length,subject:r.join('\t')}});
+  const reverted=new Set(log.filter(c=>c.subject.startsWith('Revert "'+MARK)).map(c=>c.subject.slice(8,-1)));
+  const target=log.find(c=>c.subject.startsWith(MARK)&&!reverted.has(c.subject));
+  if(!target||target.parents!==1)out({outcome:'refused'});
+  const files=git(['show','--name-only','--format=',target.h]).split('\n').filter(Boolean);
+  if(!files.length||files.some(f=>!FILES.includes(f)&&!MEDIA_PATH.test(f)))out({outcome:'refused'});
+  if(git(['log','--format=%H',target.h+'..HEAD','--',...files]))out({outcome:'conflict'});
+  try{git(['revert','--no-edit',target.h])}catch{try{git(['revert','--abort'])}catch{/* ignore */}out({outcome:'conflict'})}
  }else throw Error('bad mode');
  const commit=git(['rev-parse','HEAD']);
  try{git(['push','--quiet','origin','HEAD:refs/heads/'+branch])}catch{out({outcome:'conflict'})}
- out({outcome:'sent',commit});
+ out({outcome:'sent',commit,contentVersion:contentVersion(workdir)});
 }catch(e){out({outcome:'failed'})}

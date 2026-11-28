@@ -45,3 +45,6 @@ docker/mysql-data/
 
 # Original, full-size video footage (compressed copies live in apps/web/public/hero/)
 /video/
+
+# generated at build time by scripts/cms/content-version.mjs
+apps/web/public/content-version.json

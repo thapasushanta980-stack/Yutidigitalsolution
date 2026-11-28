@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port 5173",
-    "build": "tsc -p tsconfig.json --noEmit && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node prerender.mjs",
+    "build": "node ../../scripts/cms/content-version.mjs ../.. && tsc -p tsconfig.json --noEmit && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node prerender.mjs",
     "preview": "vite preview --port 5173",
     "test": "vitest run",
     "lint": "eslint src --ext .ts,.tsx"

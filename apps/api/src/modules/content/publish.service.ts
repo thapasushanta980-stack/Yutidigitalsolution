@@ -8,7 +8,7 @@ import {publishedSnapshot} from '../insights/insight.service.js';
 import {prisma} from '@yukti/database';
 import {published} from './content.service.js';
 export type Outcome='sent'|'no_changes'|'conflict'|'refused'|'blocked'|'failed';
-export type PublishResult={outcome:Outcome;action:'publish'|'undo';commit?:string;message:string;deployVerified:false;branch:string;reachesLiveSite:boolean};
+export type PublishResult={outcome:Outcome;action:'publish'|'undo';commit?:string;message:string;deployVerified:false;branch:string;reachesLiveSite:boolean;contentVersion?:string};
 // Only the main branch feeds the live site rebuild. Any other branch is a review branch and never changes the live site.
 export const reachesLiveSite=(branch:string)=>branch==='main';
 const MESSAGES:Record<Outcome,string>={
@@ -36,7 +36,7 @@ export function config(){
 }
 export const enabled=()=>process.env.CMS_PUBLISH_ENABLED==='true';
 function run(c:ReturnType<typeof config>,mode:'publish'|'undo',snapshot:string){
- return new Promise<{outcome:Outcome;commit?:string}>(resolve=>{
+ return new Promise<{outcome:Outcome;commit?:string;contentVersion?:string}>(resolve=>{
   const child=spawn(process.execPath,[path.join(c.root,'scripts/cms/publish-git.mjs'),mode,c.workdir,c.branch,snapshot],{cwd:c.root,env:{...process.env,CMS_PUBLISH_REMOTE:c.remote,CMS_PUBLISH_ROOT:c.root},stdio:['ignore','pipe','ignore']});
   let out='';child.stdout.on('data',(d:Buffer)=>{out+=d.toString().slice(0,4000)});
   const timer=setTimeout(()=>child.kill('SIGTERM'),180000);
@@ -56,9 +56,9 @@ export async function perform(action:'publish'|'undo',userId?:string):Promise<Pu
   }
   const r=await run(c,action,snapshot);
   const message=wording(r.outcome,action,c.branch);
-  const result:PublishResult={outcome:r.outcome,action,commit:r.commit,message,deployVerified:false,branch:c.branch,reachesLiveSite:reachesLiveSite(c.branch)};
+  const result:PublishResult={outcome:r.outcome,action,commit:r.commit,message,deployVerified:false,branch:c.branch,reachesLiveSite:reachesLiveSite(c.branch),contentVersion:r.contentVersion};
   // Audit is best-effort (existing recordAudit). Not transactional.
-  await recordAudit({userId,action:action==='publish'?'PUBLISH':'UNDO',entity:'SITE_PUBLISH',entityId:r.commit,metadata:{outcome:r.outcome,deployVerified:false}});
+  await recordAudit({userId,action:action==='publish'?'PUBLISH':'UNDO',entity:'SITE_PUBLISH',entityId:r.commit,metadata:{outcome:r.outcome,deployVerified:false,contentVersion:r.contentVersion,action}});
   if(r.outcome==='conflict')throw ApiError.conflict(message);
   if(r.outcome==='refused'||r.outcome==='blocked')throw ApiError.conflict(message);
   if(r.outcome==='failed')throw ApiError.internal(message);
@@ -69,6 +69,27 @@ export async function perform(action:'publish'|'undo',userId?:string):Promise<Pu
 // Last recorded attempt, read from the audit table so it survives an API restart. Best-effort: audit writes can fail.
 export async function lastAttempt(){
  const row=await prisma.auditLog.findFirst({where:{entity:'SITE_PUBLISH'},orderBy:{createdAt:'desc'}});
- if(!row)return null;let outcome='unknown';try{outcome=JSON.parse(row.metadata||'{}').outcome||'unknown'}catch{/* ignore */}
- return {action:row.action.toLowerCase(),outcome,commit:row.entityId,at:row.createdAt.toISOString(),deployVerified:false};
+ if(!row)return null;let outcome='unknown',contentVersion:string|undefined;try{const m=JSON.parse(row.metadata||'{}');outcome=m.outcome||'unknown';contentVersion=typeof m.contentVersion==='string'?m.contentVersion:undefined}catch{/* ignore */}
+ return {action:row.action.toLowerCase(),outcome,commit:row.entityId,contentVersion,at:row.createdAt.toISOString(),deployVerified:false};
+}
+
+// Is the exact content of the last successful send being served by the public website? Compares the fingerprint the
+// website build publishes at /content-version.json with the one computed at send time. 'unknown' means it could not be checked,
+// never 'live'. Only meaningful when the send reaches the live site (target branch main).
+export type LiveState='live'|'not_yet'|'unknown';
+export async function compareLive(expected:string|undefined,baseUrl:string|undefined,fetchImpl:typeof fetch=fetch):Promise<{state:LiveState;detail:string}>{
+ if(!expected)return {state:'unknown',detail:'No successful send to compare with.'};
+ if(!baseUrl||!/^https:\/\/[A-Za-z0-9.-]+\/?$/.test(baseUrl))return {state:'unknown',detail:'The public website address is not configured.'};
+ try{
+  const res=await fetchImpl(baseUrl.replace(/\/$/,'')+'/content-version.json?'+Date.now(),{headers:{'cache-control':'no-cache'},signal:AbortSignal.timeout(5000),redirect:'error'});
+  if(!res.ok)return {state:'not_yet',detail:'The website does not serve a content version yet.'};
+  const v=(await res.json()) as {contentVersion?:unknown};
+  if(typeof v.contentVersion!=='string')return {state:'not_yet',detail:'The website content version is not readable yet.'};
+  return v.contentVersion===expected?{state:'live',detail:'The website is serving exactly the content that was sent.'}:{state:'not_yet',detail:'The website is still serving different content. The rebuild may be running or may have failed.'};
+ }catch{return {state:'unknown',detail:'The website could not be checked right now.'}}
+}
+export async function liveStatus(){
+ const last=await lastAttempt();
+ const sent=last&&last.outcome==='sent'&&last.contentVersion?last:null;
+ return {last:sent,...await compareLive(sent?.contentVersion,process.env.CMS_PUBLISH_LIVE_URL)};
 }
