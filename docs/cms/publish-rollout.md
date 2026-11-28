@@ -21,7 +21,11 @@ compose template are identical in the tree.
 4. Add: CMS_PUBLISH_ENABLED=true, CMS_PUBLISH_ROOT=/app, CMS_PUBLISH_WORKDIR=/app/runtime/publish,
    CMS_PUBLISH_REMOTE=git@github.com:thapasushanta980-stack/Yutidigitalsolution.git,
    CMS_PUBLISH_BRANCH=cms/publish, CMS_PUBLISH_SSH_KEY=/run/cms-publish/key.
-5. Mount the private deploy key (kept in the vault) as a file at /run/cms-publish/key, mode 0600.
+5. Add CMS_PUBLISH_SSH_PRIVATE_KEY in Coolify as a Multiline, runtime-only (not build-time) variable. At start,
+   deploy/cms/publish-key.mjs writes it to /run/cms-publish/key (0700 dir, 0600 file), removes it from the
+   process environment so child processes never inherit it, and never logs it. If it is unset, nothing changes.
+   If it is invalid or cannot be written, publishing stays disabled and the CMS still starts.
+   Test: node --test deploy/cms/publish-key.test.mjs (dummy keys only).
 6. Add the matching public key as a write deploy key on the repository.
 7. Redeploy cms. Check /admin/login health, then one private test publish to cms/publish.
 

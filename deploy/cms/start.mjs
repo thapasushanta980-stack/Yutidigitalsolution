@@ -1,5 +1,6 @@
 import fs from 'node:fs';import crypto from 'node:crypto';import {spawn} from 'node:child_process';
 fs.mkdirSync('runtime',{recursive:true});
+import {installPublishKey} from './publish-key.mjs';installPublishKey();
 process.env.JWT_SECRET=process.env.SESSION_SECRET;
 process.env.DATABASE_URL=`mysql://yukti:${process.env.DATABASE_PASSWORD}@database:3306/yukti_cms`;
 process.env.HOST='127.0.0.1';process.env.PORT='4404';

@@ -23,6 +23,7 @@ services:
       - CMS_PUBLISH_REMOTE=git@github.com:thapasushanta980-stack/Yutidigitalsolution.git
       - CMS_PUBLISH_BRANCH=cms/publish
       - CMS_PUBLISH_SSH_KEY=/run/cms-publish/key
+      - CMS_PUBLISH_SSH_PRIVATE_KEY=${CMS_PUBLISH_SSH_PRIVATE_KEY:-}
     volumes:
       - cms-runtime:/app/runtime
     depends_on:
