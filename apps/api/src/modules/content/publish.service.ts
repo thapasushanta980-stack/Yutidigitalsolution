@@ -7,7 +7,7 @@ import {recordAudit} from '../../utils/audit.js';
 import {publishedSnapshot} from '../insights/insight.service.js';
 import {prisma} from '@yukti/database';
 import {published} from './content.service.js';
-export type Outcome='sent'|'no_changes'|'conflict'|'refused'|'failed';
+export type Outcome='sent'|'no_changes'|'conflict'|'refused'|'blocked'|'failed';
 export type PublishResult={outcome:Outcome;action:'publish'|'undo';commit?:string;message:string;deployVerified:false;branch:string;reachesLiveSite:boolean};
 // Only the main branch feeds the live site rebuild. Any other branch is a review branch and never changes the live site.
 export const reachesLiveSite=(branch:string)=>branch==='main';
@@ -16,6 +16,7 @@ const MESSAGES:Record<Outcome,string>={
  no_changes:'Nothing to send: the approved content already matches the repository.',
  conflict:'Nothing was sent. The repository changed meanwhile. Try again.',
  refused:'Undo refused: the newest repository change is not a CMS send.',
+ blocked:'Nothing was sent. The approved content did not pass the safety check (for example an archived post, an uploaded image or an unsafe link). Fix it in the CMS and try again.',
  failed:'Nothing was sent. The website repository could not be updated.',
 };
 const REVIEW_SENT='Sent to the review branch "%B" of the website repository. This does not update the live site. The live site changes only after someone merges that branch into the main branch.';
@@ -59,7 +60,7 @@ export async function perform(action:'publish'|'undo',userId?:string):Promise<Pu
   // Audit is best-effort (existing recordAudit). Not transactional.
   await recordAudit({userId,action:action==='publish'?'PUBLISH':'UNDO',entity:'SITE_PUBLISH',entityId:r.commit,metadata:{outcome:r.outcome,deployVerified:false}});
   if(r.outcome==='conflict')throw ApiError.conflict(message);
-  if(r.outcome==='refused')throw ApiError.conflict(message);
+  if(r.outcome==='refused'||r.outcome==='blocked')throw ApiError.conflict(message);
   if(r.outcome==='failed')throw ApiError.internal(message);
   return result;
  }finally{if(temp)fs.rmSync(temp,{recursive:true,force:true});running=false;}

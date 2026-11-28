@@ -84,4 +84,16 @@ describe('CMS send and undo to a repository',()=>{
    expect(log()[0]).toBe('Teammate: raced push');
   });
  });
+ describe('guard blocks unsafe content before any commit',()=>{
+  const P=(o:object)=>({id:'i',slug:'a',title:'t',excerpt:'e',content:'c',author:'x',status:'PUBLISHED',...o});
+  const blocked=(data:object)=>{const before=g(['rev-parse','HEAD'],remote);fs.writeFileSync(snap,JSON.stringify(data));const r=run('publish');expect(r.outcome).toBe('blocked');expect(g(['rev-parse','HEAD'],remote)).toBe(before)};
+  it('archived post, upload reference, script and unsafe link are all blocked',()=>{
+   try{fs.rmSync(path.join(remote,'hooks/pre-receive'),{force:true})}catch{/* ignore */}
+   const home={home:{version:2,fields:{}}};
+   blocked({pages:home,posts:[P({status:'ARCHIVED'})]});
+   blocked({pages:home,posts:[P({coverImage:'/uploads/x.png'})]});
+   blocked({pages:home,posts:[P({content:'<script>1</script>'})]});
+   blocked({pages:home,posts:[P({excerpt:'javascript:alert(1)'})]});
+  });
+ });
 });

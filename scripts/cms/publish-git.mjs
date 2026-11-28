@@ -5,6 +5,7 @@
 import {execFileSync} from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
+import {checkStaged,Refusal} from './publish-guard.mjs';
 const [mode,workdir,branch,snapshot]=process.argv.slice(2);
 const remote=process.env.CMS_PUBLISH_REMOTE;
 const MARK='CMS publish: ';
@@ -30,6 +31,8 @@ try{
   execFileSync(process.execPath,[exporter,snapshot],{cwd:workdir,env,stdio:['ignore','pipe','pipe']});
   git(['add',...FILES]);
   if(!git(['status','--porcelain']))out({outcome:'no_changes'});
+  // Fail closed: exact paths, plain files, valid and safe content, or nothing is committed.
+  try{checkStaged(workdir)}catch(e){if(e instanceof Refusal)out({outcome:'blocked',reason:e.reason});throw e}
   git(['commit','--quiet','-m',MARK+new Date().toISOString()]);
  }else if(mode==='undo'){
   const subject=git(['log','-1','--format=%s']);
