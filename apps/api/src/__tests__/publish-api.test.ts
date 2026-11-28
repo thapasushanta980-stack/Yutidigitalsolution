@@ -129,4 +129,16 @@ run('publish API against a disposable database',()=>{
   vi.stubGlobal('fetch',async()=>{throw new Error('net')});expect((await svc.liveStatus()).state).toBe('unknown');
   vi.unstubAllGlobals();delete process.env.CMS_PUBLISH_LIVE_URL;
  });
+ it('live-status needs a signed-in active editor; the other routes keep their guard',async()=>{
+  enable();const get=(c?:string)=>{const r=request(app).get('/api/v1/admin/publish/live-status');return c?r.set('Cookie',c):r};
+  expect((await get()).status).toBe(401);
+  expect((await get(cookie.INACTIVE)).status).toBe(401);
+  for(const who of ['EDITOR','ADMIN','SUPER_ADMIN'])expect((await get(cookie[who])).status).toBe(200);
+  const body=(await get(cookie.EDITOR)).body;expect(body.success).toBe(true);expect(['live','not_yet','unknown']).toContain(body.data.state);
+  // a review-branch target never claims anything about the live site
+  const keep=process.env.CMS_PUBLISH_BRANCH;process.env.CMS_PUBLISH_BRANCH='cms/publish';
+  const r=await get(cookie.EDITOR);expect(r.body.data.state).toBe('unknown');expect(r.body.data.detail).toMatch(/review branch/);
+  process.env.CMS_PUBLISH_BRANCH=keep;
+  delete process.env.CMS_PUBLISH_ENABLED;expect((await get(cookie.EDITOR)).body.data.state).toBe('unknown');enable();
+ });
 });
