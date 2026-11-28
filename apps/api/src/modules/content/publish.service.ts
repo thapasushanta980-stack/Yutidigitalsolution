@@ -8,13 +8,23 @@ import {publishedSnapshot} from '../insights/insight.service.js';
 import {prisma} from '@yukti/database';
 import {published} from './content.service.js';
 export type Outcome='sent'|'no_changes'|'conflict'|'refused'|'failed';
-export type PublishResult={outcome:Outcome;action:'publish'|'undo';commit?:string;message:string;deployVerified:false};
+export type PublishResult={outcome:Outcome;action:'publish'|'undo';commit?:string;message:string;deployVerified:false;branch:string;reachesLiveSite:boolean};
+// Only the main branch feeds the live site rebuild. Any other branch is a review branch and never changes the live site.
+export const reachesLiveSite=(branch:string)=>branch==='main';
 const MESSAGES:Record<Outcome,string>={
  sent:'Sent to the website repository. The live site changes only after the website rebuild finishes; this page cannot confirm that yet.',
  no_changes:'Nothing to send: the approved content already matches the repository.',
  conflict:'Nothing was sent. The repository changed meanwhile. Try again.',
  refused:'Undo refused: the newest repository change is not a CMS send.',
  failed:'Nothing was sent. The website repository could not be updated.',
+};
+const REVIEW_SENT='Sent to the review branch "%B" of the website repository. This does not update the live site. The live site changes only after someone merges that branch into the main branch.';
+const REVIEW_UNDO='Undo applied on the review branch "%B". The live site was not changed.';
+const LIVE_UNDO='Undo sent to the website repository (the last CMS send was reverted). The live site changes only after the website rebuild finishes; this page cannot confirm that yet.';
+export const wording=(o:Outcome,action:'publish'|'undo',branch:string)=>{
+ if(o!=='sent')return MESSAGES[o].replace(/website repository/g,reachesLiveSite(branch)?'website repository':'review branch "'+branch+'"');
+ if(reachesLiveSite(branch))return action==='undo'?LIVE_UNDO:MESSAGES.sent;
+ return (action==='undo'?REVIEW_UNDO:REVIEW_SENT).replace('%B',branch);
 };
 let running=false;
 export function config(){
@@ -44,8 +54,8 @@ export async function perform(action:'publish'|'undo',userId?:string):Promise<Pu
    fs.writeFileSync(snapshot,JSON.stringify({pages,posts}),{mode:0o600});
   }
   const r=await run(c,action,snapshot);
-  const message=action==='undo'&&r.outcome==='sent'?'Undo sent to the website repository (the last CMS send was reverted). The live site changes only after the website rebuild finishes; this page cannot confirm that yet.':MESSAGES[r.outcome];
-  const result:PublishResult={outcome:r.outcome,action,commit:r.commit,message,deployVerified:false};
+  const message=wording(r.outcome,action,c.branch);
+  const result:PublishResult={outcome:r.outcome,action,commit:r.commit,message,deployVerified:false,branch:c.branch,reachesLiveSite:reachesLiveSite(c.branch)};
   // Audit is best-effort (existing recordAudit). Not transactional.
   await recordAudit({userId,action:action==='publish'?'PUBLISH':'UNDO',entity:'SITE_PUBLISH',entityId:r.commit,metadata:{outcome:r.outcome,deployVerified:false}});
   if(r.outcome==='conflict')throw ApiError.conflict(message);
