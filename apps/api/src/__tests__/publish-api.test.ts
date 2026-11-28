@@ -75,12 +75,12 @@ run('publish API against a disposable database',()=>{
  it('every role in the content editing set can read status; last attempt comes from the database',async()=>{
   for(const who of ['EDITOR','ADMIN','SUPER_ADMIN']){const r=await request(app).get('/api/v1/admin/publish').set('Cookie',cookie[who]);expect(r.status).toBe(200);expect(r.body.data.last).toMatchObject({action:'publish',outcome:'sent',deployVerified:false});}
  });
- it('undo reverts only the newest CMS send; refuses after a teammate push; keeps their work',async()=>{
+ it('undo reverts only the newest CMS send; reports a conflict instead of reverting an older send over newer content; keeps their work',async()=>{
   const u=await send('EDITOR','undo');expect(u.body.data.outcome).toBe('sent');expect(log()[0]).toMatch(/^Revert "CMS publish/);
   expect(showPages().home.fields.field1).toBe('APPROVED TITLE');
   const d=fs.mkdtempSync(path.join(tmp,'mate-'));g(['clone','-q',remote,d],tmp);fs.writeFileSync(path.join(d,'docs/team.md'),'teammate edit');g(['commit','-qam','Teammate: edit'],d);g(['push','-q','origin','main'],d);
   const before=g(['rev-parse','main'],remote);
-  const r=await send('ADMIN','undo');expect(r.status).toBe(409);expect(r.body.error.message).toMatch(/not a CMS send/);
+  const r=await send('ADMIN','undo');expect(r.status).toBe(409);expect(r.body.error.message).toMatch(/changed meanwhile/);
   expect(g(['rev-parse','main'],remote)).toBe(before);
  });
  it('a failing remote answers honestly, releases the lock, and records it',async()=>{
@@ -105,8 +105,28 @@ run('publish API against a disposable database',()=>{
   for(const row of await audits())expect(row.userId).toBeTruthy();
   const cfg=fs.readFileSync(path.join(tmp,'work/.git/config'),'utf8');expect(cfg).not.toContain(SECRET);
  });
- it('audit rows exist for sent, no_changes, refused and failed attempts',async()=>{
+ it('audit rows exist for sent, no_changes, conflict and failed attempts',async()=>{
   const outs=(await audits()).map(r=>JSON.parse(r.metadata||'{}').outcome);
-  for(const o of ['sent','no_changes','refused','failed'])expect(outs).toContain(o);
+  for(const o of ['sent','no_changes','conflict','failed'])expect(outs).toContain(o);
+ });
+ it('live status follows the last send: matching fingerprint is live, an undo changes what must be served, failures are never live',async()=>{
+  const svc=await import('../modules/content/publish.service.js');
+  const serve=(v:string|null,ok=true)=>vi.stubGlobal('fetch',async()=>({ok,text:async()=>v===null?'<html></html>':JSON.stringify({contentVersion:v})}));
+  process.env.CMS_PUBLISH_LIVE_URL='https://yuktids.example.org';
+  await request(app).post('/api/v1/admin/insights').set('Cookie',cookie.EDITOR).send({title:'Fingerprint post',excerpt:'fp excerpt',content:'fp body text',author:'Ed',status:'PUBLISHED'}).expect(201);
+  const r1=await send('EDITOR','publish');
+  expect([r1.status,r1.body.data?.outcome]).toEqual([200,'sent']);
+  {
+   const v1=r1.body.data.contentVersion;expect(v1).toMatch(/^[0-9a-f]{32}$/);
+   serve(v1);expect((await svc.liveStatus()).state).toBe('live');
+   serve('0'.repeat(32));expect((await svc.liveStatus()).state).toBe('not_yet');
+   serve(null);expect((await svc.liveStatus()).state).toBe('not_yet');
+   const u=await send('EDITOR','undo');
+   expect(u.status).toBe(200);{const v2=u.body.data.contentVersion;expect(v2).not.toBe(v1);
+    serve(v1);expect((await svc.liveStatus()).state).toBe('not_yet');
+    serve(v2);const ls=await svc.liveStatus();expect(ls.state).toBe('live');expect(ls.last?.action).toBe('undo');}
+  }
+  vi.stubGlobal('fetch',async()=>{throw new Error('net')});expect((await svc.liveStatus()).state).toBe('unknown');
+  vi.unstubAllGlobals();delete process.env.CMS_PUBLISH_LIVE_URL;
  });
 });
