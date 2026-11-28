@@ -1,1 +1,15 @@
-{}
+{
+  "contact": {
+    "version": 7,
+    "fields": {
+      "copy1": "Contact",
+      "copy2": "Book a call with Yukti Digital Solutions or contact our team in Biratnagar, Nepal.",
+      "copy3": "The easiest way to connect",
+      "copy4": "Book a free 30-minute call",
+      "copy5": "Choose a time in our live Cal.com calendar. Your booking confirmation and meeting details will come directly from Cal.com.",
+      "copy6": "Prefer email?",
+      "copy7": "Reach our team directly.",
+      "copy8": "For general questions or help with a booking, email us and we’ll get back to you."
+    }
+  }
+}
