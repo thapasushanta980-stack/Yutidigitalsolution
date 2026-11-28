@@ -1,5 +1,5 @@
 import {describe,it,expect,beforeAll,afterAll} from 'vitest';
-import {execFileSync} from 'node:child_process';
+import {execFileSync,spawn,spawnSync} from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -155,6 +155,30 @@ describe('CMS send and undo to a repository',()=>{
     expect(fs.existsSync(lock)).toBe(false);
     const before=r.contentVersion;fs.writeFileSync(snap,JSON.stringify({pages:{home:{version:92,fields:{}}},posts:[]}));
     expect(run('publish').contentVersion).not.toBe(before);
+   });
+  });
+  describe('lock owner and asset quota on the committed tree',()=>{
+   it('a lock held by a running publisher is never taken over, even when old; a dead owner is taken over',()=>{
+    const lock=path.join(tmp,'work.lock');
+    const holder=spawnSync(process.execPath,['-e','0']);void holder;
+    const child=spawn(process.execPath,['-e','setTimeout(()=>{},30000)'],{stdio:'ignore'});
+    try{
+     fs.mkdirSync(lock);fs.writeFileSync(path.join(lock,'pid'),String(child.pid));const old=new Date(Date.now()-3600_000);fs.utimesSync(lock,old,old);
+     fs.writeFileSync(snap,JSON.stringify({pages:{home:{version:95,fields:{}}},posts:[]}));
+     expect(run('publish').outcome).toBe('conflict');expect(fs.existsSync(lock)).toBe(true);
+    }finally{child.kill()}
+    const dead=spawnSync(process.execPath,['-e','0']);fs.writeFileSync(path.join(lock,'pid'),String(dead.pid||999999));
+    expect(run('publish').outcome).toBe('sent');expect(fs.existsSync(lock)).toBe(false);
+   });
+   it('image quota counts what is already committed in the repository',()=>{
+    const seed=path.join(tmp,'seed3');g(['clone',remote,seed],tmp);g(['pull','-q','origin','main'],seed);
+    fs.mkdirSync(path.join(seed,'apps/web/public/cms-media'),{recursive:true});
+    fs.writeFileSync(path.join(seed,'apps/web/public/cms-media/1700000000000-aaaaaaaaaaaaaaaa.png'),Buffer.alloc(39_500_000));
+    g(['add','-A'],seed);g(['commit','-qm','existing media'],seed);g(['push','-q','origin','main'],seed);
+    const up=path.join(tmp,'uploads2');fs.mkdirSync(up,{recursive:true});process.env.UPLOAD_DIR=up;
+    const NAME='1795532541999-96a3694b43a754fd.png';fs.writeFileSync(path.join(up,NAME),Buffer.concat([Buffer.from([0x89,0x50,0x4e,0x47,0x0d,0x0a,0x1a,0x0a]),Buffer.alloc(900_000,1)]));
+    fs.writeFileSync(snap,JSON.stringify({pages:{home:{version:96,fields:{}}},posts:[{id:'i',slug:'q',title:'t',excerpt:'e',content:'c',author:'x',status:'PUBLISHED',coverImage:'/uploads/'+NAME}]}));
+    const before=g(['rev-parse','HEAD'],remote);expect(run('publish').outcome).toBe('blocked');expect(g(['rev-parse','HEAD'],remote)).toBe(before);
    });
   });
  });

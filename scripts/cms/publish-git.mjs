@@ -27,7 +27,23 @@ function fresh(){
 }
 // Cross-process lock: the in-process flag in the API cannot see a second process, so take a lock folder next to the work folder.
 const lock=workdir+'.lock';
-try{fs.mkdirSync(path.dirname(lock),{recursive:true});try{fs.mkdirSync(lock)}catch{if(Date.now()-fs.statSync(lock).mtimeMs>600000){fs.rmSync(lock,{recursive:true,force:true});fs.mkdirSync(lock)}else out({outcome:'conflict'})}}catch(e){out({outcome:'failed'})}
+const alive=pid=>{try{process.kill(pid,0);return true}catch(e){return e.code==='EPERM'}};
+// A lock held by a running publisher is never taken over, however long it has been running. A lock whose owner is gone
+// (crash, kill) is taken over; a lock with no readable owner is taken over only once it is old.
+function takeLock(){
+ fs.mkdirSync(path.dirname(lock),{recursive:true});
+ for(let i=0;i<2;i++){
+  try{fs.mkdirSync(lock);fs.writeFileSync(path.join(lock,'pid'),String(process.pid));return true}catch{
+   let pid=0;try{pid=Number(fs.readFileSync(path.join(lock,'pid'),'utf8'))}catch{/* no owner file */}
+   const old=(()=>{try{return Date.now()-fs.statSync(lock).mtimeMs>600000}catch{return true}})();
+   if(pid>0&&pid!==process.pid&&alive(pid))return false;
+   if(!pid&&!old)return false;
+   fs.rmSync(lock,{recursive:true,force:true});
+  }
+ }
+ return false;
+}
+try{if(!takeLock())out({outcome:'conflict'})}catch(e){out({outcome:'failed'})}
 process.on('exit',()=>{try{fs.rmSync(lock,{recursive:true,force:true})}catch{/* ignore */}});
 try{
  fresh();

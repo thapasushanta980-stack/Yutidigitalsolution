@@ -77,13 +77,21 @@ export async function lastAttempt(){
 // website build publishes at /content-version.json with the one computed at send time. 'unknown' means it could not be checked,
 // never 'live'. Only meaningful when the send reaches the live site (target branch main).
 export type LiveState='live'|'not_yet'|'unknown';
+// Only the one configured public origin is ever contacted: https, a DNS name (no IP address, no localhost, no port, no path, no credentials).
+// The value comes from the server's environment, never from a request, and redirects are refused.
+export function safeOrigin(u?:string):u is string{
+ if(!u||!/^https:\/\/[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+\/?$/i.test(u))return false;
+ const host=u.replace(/^https:\/\//,'').replace(/\/$/,'');
+ return !/^[0-9.]+$/.test(host)&&!/(^|\.)(localhost|local|internal|localdomain)$/i.test(host);
+}
 export async function compareLive(expected:string|undefined,baseUrl:string|undefined,fetchImpl:typeof fetch=fetch):Promise<{state:LiveState;detail:string}>{
  if(!expected)return {state:'unknown',detail:'No successful send to compare with.'};
- if(!baseUrl||!/^https:\/\/[A-Za-z0-9.-]+\/?$/.test(baseUrl))return {state:'unknown',detail:'The public website address is not configured.'};
+ if(!safeOrigin(baseUrl))return {state:'unknown',detail:'The public website address is not configured.'};
  try{
   const res=await fetchImpl(baseUrl.replace(/\/$/,'')+'/content-version.json?'+Date.now(),{headers:{'cache-control':'no-cache'},signal:AbortSignal.timeout(5000),redirect:'error'});
   if(!res.ok)return {state:'not_yet',detail:'The website does not serve a content version yet.'};
-  const v=(await res.json()) as {contentVersion?:unknown};
+  const text=await res.text();if(text.length>2000)return {state:'not_yet',detail:'The website content version is not readable yet.'};
+  let v:{contentVersion?:unknown}={};try{v=JSON.parse(text)}catch{/* not json */}
   if(typeof v.contentVersion!=='string')return {state:'not_yet',detail:'The website content version is not readable yet.'};
   return v.contentVersion===expected?{state:'live',detail:'The website is serving exactly the content that was sent.'}:{state:'not_yet',detail:'The website is still serving different content. The rebuild may be running or may have failed.'};
  }catch{return {state:'unknown',detail:'The website could not be checked right now.'}}

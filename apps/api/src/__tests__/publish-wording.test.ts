@@ -30,9 +30,10 @@ describe('publish wording depends on the destination branch',()=>{
  });
 });
 
+const origin=async(u?:string)=>(await import('../modules/content/publish.service.js')).safeOrigin(u);
 const compare=async(...a:Parameters<typeof import('../modules/content/publish.service.js').compareLive>)=>(await import('../modules/content/publish.service.js')).compareLive(...a);
 describe('live confirmation compares exact content, never guesses',()=>{
- const f=(body:unknown,ok=true)=>(async()=>({ok,json:async()=>body})) as unknown as typeof fetch;
+ const f=(body:unknown,ok=true)=>(async()=>({ok,text:async()=>JSON.stringify(body)})) as unknown as typeof fetch;
  it('live only when fingerprints are equal',async()=>{
   expect((await compare('abc','https://x.test',f({contentVersion:'abc'}))).state).toBe('live');
   expect((await compare('abc','https://x.test',f({contentVersion:'old'}))).state).toBe('not_yet');
@@ -44,5 +45,17 @@ describe('live confirmation compares exact content, never guesses',()=>{
   expect((await compare('abc',undefined,f({}))).state).toBe('unknown');
   expect((await compare('abc','http://x.test',f({contentVersion:'abc'}))).state).toBe('unknown');
   expect((await compare('abc','https://x.test',(async()=>{throw new Error('net')}) as unknown as typeof fetch)).state).toBe('unknown');
+ });
+ it('only a fixed https DNS origin is ever contacted (no SSRF to internal addresses)',async()=>{
+  for(const u of['https://yuktids.com','https://yuktids.com/','https://www.yuktids.com'])expect(await origin(u)).toBe(true);
+  for(const u of['http://yuktids.com','https://127.0.0.1','https://169.254.169.254','https://10.0.0.5','https://localhost','https://db.internal','https://yuktids.com:8443','https://user:pw@yuktids.com','https://yuktids.com/path','https://yuktids.com/?x=1','https://[::1]','//yuktids.com','',undefined])expect(await origin(u as string|undefined)).toBe(false);
+  let called=0;const spy=(async()=>{called++;return {ok:true,text:async()=>'{}'}}) as unknown as typeof fetch;
+  expect((await compare('abc','https://169.254.169.254',spy)).state).toBe('unknown');expect(called).toBe(0);
+ });
+ it('missing, oversized or non-JSON fingerprint is never live',async()=>{
+  const t=(body:string,ok=true)=>(async()=>({ok,text:async()=>body})) as unknown as typeof fetch;
+  expect((await compare('abc','https://x.test',t('<html>spa fallback</html>'))).state).toBe('not_yet');
+  expect((await compare('abc','https://x.test',t('x'.repeat(5000)))).state).toBe('not_yet');
+  expect((await compare('abc','https://x.test',t('{"contentVersion":"abc"}'))).state).toBe('live');
  });
 });
