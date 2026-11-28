@@ -47,7 +47,7 @@ export function Layout() {
         </div>
         <button className="review-menu-toggle" aria-expanded={menuOpen} aria-controls="review-admin-nav" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? 'Close menu' : 'Menu'}</button>
         <nav id="review-admin-nav">
-          {NAV.filter(([p])=>!import.meta.env.VITE_CLIENT_CMS_REVIEW||['pages','insights','review-builds'].includes(p)).map(([path, label, Icon]) => (
+          {NAV.filter(([p])=>!import.meta.env.VITE_CLIENT_CMS_REVIEW||['pages','insights','review-builds','publish'].includes(p)).map(([path, label, Icon]) => (
             <NavLink
               key={path}
               onClick={() => setMenuOpen(false)}
